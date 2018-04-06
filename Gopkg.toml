@@ -26,7 +26,7 @@
 
 
 [[constraint]]
-  branch = "master"
+  revision = "468a9696b3a2b1475cba37233d9f0fdcdf00316a"
   name = "github.com/bketelsen/ponzi"
 
 [[constraint]]
@@ -88,6 +88,10 @@
 [[constraint]]
   branch = "master"
   name = "golang.org/x/crypto"
+
+[[override]]
+  revision = "36e9d2ebbde5e3f13ab2e25625fd453271d6522e"
+  name = "github.com/satori/go.uuid"
 
 [prune]
   go-tests = true

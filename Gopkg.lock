@@ -32,7 +32,6 @@
   version = "v1.5"
 
 [[projects]]
-  branch = "master"
   name = "github.com/bketelsen/ponzi"
   packages = ["."]
   revision = "468a9696b3a2b1475cba37233d9f0fdcdf00316a"
@@ -523,8 +522,7 @@
 [[projects]]
   name = "github.com/satori/go.uuid"
   packages = ["."]
-  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
-  version = "v1.2.0"
+  revision = "36e9d2ebbde5e3f13ab2e25625fd453271d6522e"
 
 [[projects]]
   branch = "master"
@@ -718,6 +716,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "937170344a0b83fadd9dd65f0f8241adb8f57c6360cccfc80c367012e3f8b0be"
+  inputs-digest = "636fe3c3d5017546d22b7bf91ca67c31aa5b4137309172478ea5705f310a27f2"
   solver-name = "gps-cdcl"
   solver-version = 1
