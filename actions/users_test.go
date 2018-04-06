@@ -1,7 +1,7 @@
 package actions
 
 import (
-	"gitlab.com/gophersnacks/website/models"
+	"github.com/gophersnacks/gbfm/models"
 )
 
 func (as *ActionSuite) Test_Users_New() {

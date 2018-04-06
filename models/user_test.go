@@ -1,7 +1,7 @@
 package models_test
 
 import (
-	"gitlab.com/gophersnacks/website/models"
+	"github.com/gophersnacks/gbfm/models"
 )
 
 func (ms *ModelSuite) Test_User_Create() {
