@@ -5,7 +5,7 @@ services:
     environment:
       - "POSTGRES_PASSWORD=postgres"
       - "POSTGRES_USER=postgres"
-      - "POSTGRES_DB=gophersnacks_development"
+      - "POSTGRES_DB=gbfm_development"
     ports:
       - "5432:5432"
 

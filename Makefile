@@ -25,18 +25,12 @@ test:
 	$(GOTEST) -v ./actions -race
 
 db-up:
-	docker run --name=gbfm_db -d -p 5432:5432 -e POSTGRES_DB=gbfm_development postgres
+	docker-compose -p dev up -d dev
 	sleep 10
 	$(SODA) migrate up
-	docker ps | grep gbfm_db
 
 db-down:
-	docker stop gbfm_db
-	docker rm gbfm_db
-
-
-teardown-dev: clean
-	$(DOCKERCOMPOSE) down
+	docker-compose -p dev down
 
 dev:
 	$(BUFFALO) dev
