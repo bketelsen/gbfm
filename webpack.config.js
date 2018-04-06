@@ -1,5 +1,6 @@
 var webpack = require("webpack");
 var glob = require("glob");
+var path = require("path");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var ManifestPlugin = require("webpack-manifest-plugin");
@@ -26,8 +27,13 @@ glob.sync("./assets/*/*.*").reduce((_, entry) => {
   
   entries[key].push(entry)
 })
-
 module.exports = {
+  resolve: {
+    modules: [
+        path.join(__dirname, "js"),
+    "node_modules"
+    ]
+  },
   entry: entries,
   output: {
     filename: "[name].[hash].js",
@@ -40,8 +46,9 @@ module.exports = {
       verbose: false,
     }),
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
+        $: "jquery",
+        jQuery: "jquery",
+        Waves: "node-waves"
     }),
     new ExtractTextPlugin("[name].[hash].css"),
     new CopyWebpackPlugin(
@@ -86,7 +93,7 @@ module.exports = {
           ]
         })
       },
-      { test: /\.(woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,use: "url-loader"},
+      { test: /\.(png|woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,use: "url-loader"},
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,use: "file-loader" },
       {
         test: require.resolve("jquery"),

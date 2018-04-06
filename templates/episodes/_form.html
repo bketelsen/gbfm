@@ -1,0 +1,11 @@
+<%= f.InputTag("Title") %>
+<%= f.InputTag("Description") %>
+<%= f.InputTag("Slug") %>
+<%= f.InputTag("ThumbnailURL") %>
+<%= f.InputTag("EmbedCode") %>
+<%= f.InputTag("DownloadURL") %>
+<%= f.CheckboxTag("Pro") %>
+<%= f.InputTag("DisplayOrder") %>
+<%= f.TextArea("Markdown",{rows: 10}) %>
+<%= f.SelectTag("SeriesID",{options: series}) %>
+<button class="btn btn-success" role="submit">Save</button>

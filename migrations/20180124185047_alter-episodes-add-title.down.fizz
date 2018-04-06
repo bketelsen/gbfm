@@ -1,0 +1,3 @@
+drop_column("episodes", "title")
+drop_column("guides", "title")
+drop_column("snacks", "title")

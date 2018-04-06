@@ -1,0 +1,41 @@
+                                   <%= for (author) in episode.AuthorList{ %>
+           <!--Card-->
+                        <div class="card mb-4 wow fadeIn">
+
+                            <div class="card-header font-weight-bold">
+                                <span>About the Author</span>
+                                <span class="pull-right">
+                                    <a href="">
+                                        <i class="fa fa-facebook mr-2"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-twitter mr-2"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-instagram mr-2"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-linkedin mr-2"></i>
+                                    </a>
+                                </span>
+                            </div>
+
+                            <!--Card content-->
+                            <div class="card-body">
+
+                                <div class="media d-block d-md-flex mt-3">
+                                    <img class="d-flex mb-3 mx-auto z-depth-1" src="<%= imageTag(author.Photo) %>" alt="<%= author.Name %>"
+                                        style="width: 100px;">
+                                    <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                        <h5 class="mt-0 font-weight-bold"><%= author.Name %>
+                                        </h5>
+                                        <%= author.Description %>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--/.Card-->
+
+                        <% } %>

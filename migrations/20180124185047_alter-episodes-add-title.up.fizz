@@ -1,0 +1,3 @@
+  add_column("episodes","title", "string", { "default": "" })
+  add_column("guides","title", "string", { "default": "" })
+  add_column("snacks","title", "string", { "default": "" })

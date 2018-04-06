@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>Edit Episode</h1>
+</div>
+
+<%= form_for(episode, {action: episodePath({ episode_id: episode.ID }), method: "PUT"}) { %>
+  <%= partial("episodes/form.html") %>
+  <a href="<%= episodePath({ episode_id: episode.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<% } %>

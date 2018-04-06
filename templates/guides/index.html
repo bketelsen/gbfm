@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>Guides</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li><a href="<%= newGuidesPath() %>" class="btn btn-primary">Create New Guide</a></li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>Slug</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Markdown</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (guide) in guides { %>
+      <tr>
+      <td><%= guide.Slug %></td>
+        <td><%= guide.Name %></td>
+        <td><%= guide.Description %></td>
+        <td><%= guide.Markdown %></td>
+        <td>
+          <div class="pull-right">
+            <a href="<%= guidePath({ guide_id: guide.ID }) %>" class="btn btn-info">View</a>
+            <a href="<%= editGuidePath({ guide_id: guide.ID }) %>" class="btn btn-warning">Edit</a>
+            <a href="<%= guidePath({ guide_id: guide.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>

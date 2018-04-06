@@ -1,0 +1,7 @@
+create_table("authors", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("slug", "string", {})
+	t.Column("name", "string", {})
+	t.Column("description", "string", {})
+	t.Column("photo_url", "string", {})
+})

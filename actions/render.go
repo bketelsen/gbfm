@@ -3,6 +3,7 @@ package actions
 import (
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/packr"
+	"github.com/gophersnacks/gbfm/models"
 )
 
 var r *render.Engine
@@ -19,6 +20,9 @@ func init() {
 
 		// Add template helpers here:
 		Helpers: render.Helpers{
+			"imageTag": func(source string) string {
+				return models.BaseURL + source
+			},
 			// uncomment for non-Bootstrap form helpers:
 			// "form":     plush.FormHelper,
 			// "form_for": plush.FormForHelper,

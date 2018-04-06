@@ -1,0 +1,12 @@
+create_table("snacks", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("slug", "string", {})
+	t.Column("description", "string", {})
+	t.Column("thumbnail_url", "string", {})
+	t.Column("embed_code", "string", {})
+	t.Column("download_url", "string", {})
+	t.Column("markdown", "string", {})
+	t.Column("pro", "bool", {})
+	t.Column("keywords", "string", {})
+	t.Column("author_id","uuid", {})
+})

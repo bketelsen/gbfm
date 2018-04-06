@@ -1,0 +1,34 @@
+<%= for (episode) in episodes { %>
+
+                <!--Grid row-->
+                <div class="row mt-3 wow fadeIn">
+
+                    <!--Grid column-->
+                    <div class="col-lg-5 col-xl-4 mb-4">
+                        <!--Featured image-->
+                        <div class="view overlay rounded z-depth-1">
+                            <img src="<%= imageTag(episode.Thumbnail) %>" class="img-fluid" alt="<%= episode.Slug %>">
+                            <a href="/episodes/<%= episode.Slug %>">
+                                <div class="mask"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-7 col-xl-7 ml-xl-4 mb-4">
+                        <h3 class="mb-3 font-weight-bold dark-grey-text">
+                            <strong><%= episode.Title %></strong>
+                        </h3>
+                        <%= markdown(episode.Description ) %>
+                        <a href="/episodes/<%= episode.Slug %>" class="btn btn-primary btn-md">Learn Now!
+                            <i class="fa fa-play ml-2"></i>
+                        </a>
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+                <hr class="mb-5">
+<% } %>

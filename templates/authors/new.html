@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>New Author</h1>
+</div>
+
+<%= form_for(author, {action: authorsPath(), method: "POST"}) { %>
+  <%= partial("authors/form.html") %>
+  <a href="<%= authorsPath() %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<% } %>

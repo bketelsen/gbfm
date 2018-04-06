@@ -53,9 +53,24 @@ func App() *buffalo.App {
 			app.Stop(err)
 		}
 		app.Use(T.Middleware())
-
+		admin := app.Group("/admin")
+		admin.Use(SetCurrentUser)
+		admin.Use(AdminAuthorize)
+		admin.GET("/", AdminHandler)
+		app.Use(SetCurrentUser)
 		app.GET("/", HomeHandler)
-
+		app.GET("/users/new", UsersNew)
+		app.POST("/users", UsersCreate)
+		app.GET("/signin", AuthNew)
+		app.POST("/signin", AuthCreate)
+		app.POST("/token", AuthToken)
+		app.DELETE("/signout", AuthDestroy)
+		app.Resource("/series", SeriesResource{})
+		app.Resource("/guides", GuidesResource{})
+		app.GET("/authors", AuthorList)
+		app.GET("/authors/{name}", AuthorShow)
+		app.GET("/episodes", EpisodeList)
+		app.GET("/episodes/{name}", EpisodeShow)
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 

@@ -1,192 +1,250 @@
-<style media="screen">
-  * {
-    -webkit-transition: all .38s;
-    /* Safari */
-    transition: all .38s;
-  }
+<!--Main layout-->
+        <%= partial("partials/jumbo.html") %>
 
-  .container {
-    min-width: 320px;
-  }
+            <!--Section: Cards-->
+            <section class="text-center">
 
-  header {
-    background-color: #62a5ee;
-    padding: 10px 20px;
-    box-sizing: border-box;
-  }
+                <!--Grid row-->
+                <div class="row mb-4 wow fadeIn">
 
-  .logo img {
-    width: 80px;
-  }
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-12 mb-4">
 
-  .titles h1 {
-    font-size: 30px;
-    font-weight: 300;
-    color: white;
-    margin-bottom: 13px;
-    margin-top: 5px;
-  }
+                        <!--Card-->
+                        <div class="card">
 
-  .titles h2 {
-    font-weight: 300;
-    font-size: 18px;
-    display: inline-block;
-    margin: 0;
-  }
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                <div class="embed-responsive embed-responsive-16by9">
+									<!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cXTThxoywNQ" allowfullscreen></iframe> -->
+                                </div>
+                            </div>
 
-  .titles a {
-    color: white;
-    text-decoration: underline;
-  }
+                            <!--Card content-->
+                            <div class="card-body">
+                                <!--Title-->
+                                <h4 class="card-title">MDB Quick Start</h4>
+                                <!--Text-->
+                                <p class="card-text">Get started with MDBootstrap, the world's most popular Material Design framework for building
+                                    responsive, mobile-first sites.</p>
+                                <p class="card-text">
+                                    <strong>5 minutes, a few clicks and... done. You will be surprised at how easy it is.</strong>
+                                </p>
+                            </div>
 
-  .titles i {
-    margin-right: 5px;
-    text-decoration: none;
-  }
+                        </div>
+                        <!--/.Card-->
 
-  .titles .documentation {
-    margin-left: 28px;
-  }
+                    </div>
+                    <!--Grid column-->
 
-  .subtitle {
-    color: white;
-    margin: 0;
-    padding: 13px 0;
-    background-color: #2a3543;
-    margin-bottom: 20px;
-  }
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-6 mb-4">
 
-  .subtitle h3 {
-    font-size: 22px;
-    font-weight: 400;
-    margin: 0;
-  }
+                        <!--Card-->
+                        <div class="card">
 
-  table {
-    font-size: 14px;
-  }
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                <img src="https://mdbootstrap.com/wp-content/uploads/2017/11/brandflow-tutorial-fb.jpg" class="img-fluid" alt="">
+                                <a href="https://mdbootstrap.com/automated-app-start/" target="_blank">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
 
-  table.table tbody tr td {
-    border-top: 0;
-    padding: 10px;
-  }
+                            <!--Card content-->
+                            <div class="card-body">
+                                <!--Title-->
+                                <h4 class="card-title">Bootstrap Automation</h4>
+                                <!--Text-->
+                                <p class="card-text">Learn how to create a smart website which learns your user and reacts properly to his behavior.</p>
+                                <a href="https://mdbootstrap.com/automated-app-start/" target="_blank" class="btn btn-primary btn-md">Start tutorial
+                                    <i class="fa fa-play ml-2"></i>
+                                </a>
+                            </div>
 
-  .foot {
-    text-align: right;
-    text-align: right;
-    color: #c5c5c5;
-    font-weight: 300;
-  }
+                        </div>
+                        <!--/.Card-->
 
-  .foot a {
-    color: #8b8b8b;
-    text-decoration: underline;
-  }
+                    </div>
+                    <!--Grid column-->
 
-  .centered {
-    text-align: center;
-  }
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-6 mb-4">
 
-  @media all and (max-width: 770px) {
-    .titles h1 {
-      font-size: 25px;
-      margin: 15px 0 5px 0;
-    }
-  }
+                        <!--Card-->
+                        <div class="card">
 
-  @media all and (max-width: 640px) {
-    .titles h1 {
-      font-size: 23px;
-      margin: 15px 0 5px 0;
-    }
-    .titles h2 {
-      font-size: 15px;
-    }
-    .titles .documentation {
-      margin-left: 10px;
-    }
-  }
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                <img src="https://mdbootstrap.com/wp-content/uploads/2018/01/push-fb.jpg" class="img-fluid" alt="">
+                                <a href="https://mdbootstrap.com/web-push-start/" target="_blank">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
 
-  @media all and (max-width: 530px) {
-    .titles h1 {
-      font-size: 20px;
-      margin: 5px 0;
-    }
-    .logo {
-      padding: 0
-    }
-    .logo img {
-      width: 100%
-    }
-    .titles .documentation {
-      margin-left: 0px;
-      margin-top: 5px;
-      display: block;
-    }
-  }
-</style>
+                            <!--Card content-->
+                            <div class="card-body">
+                                <!--Title-->
+                                <h4 class="card-title">Push notifications</h4>
+                                <!--Text-->
+                                <p class="card-text">Push messaging provides a simple and effective way to re-engage with your users and in this
+                                    tutorial you'll learn how to add push notifications to your web app</p>
+                                <a href="https://mdbootstrap.com/web-push-start/" target="_blank" class="btn btn-primary btn-md">Start tutorial
+                                    <i class="fa fa-play ml-2"></i>
+                                </a>
+                            </div>
 
-<header>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-1 col-sm-2 col-xs-2 logo">
-        <a href="<%= rootPath() %>"><img src="<%= rootPath() %>assets/images/logo.svg" alt=""></a>
-      </div>
-      <div class="col-md-9 col-sm-9 col-xs-10 titles">
-        <h1><%= t("welcome_greeting") %> [v0.11.0]</h1>
-        <h2>
-          <a href="https://github.com/gobuffalo/buffalo"><i class="fa fa-github" aria-hidden="true"></i> https://github.com/gobuffalo/buffalo</a>
-        </h2>
-        <h2 class="documentation">
-          <a href="http://gobuffalo.io/"><i class="fa fa-book" aria-hidden="true"></i> Documentation</a>
-        </h2>
-      </div>
-    </div>
-  </div>
+                        </div>
+                        <!--/.Card-->
 
-</header>
+                    </div>
+                    <!--Grid column-->
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="subtitle">
-      <div class="container">
-        <h3>Defined Routes</h3>
-      </div>
-    </div>
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr text-align="left">
-            <th class="centered">METHOD</th>
-            <th>PATH</th>
-            <th>NAME</th>
-            <th>HANDLER</th>
-          </tr>
-        </thead>
-        <tbody>
+                </div>
+                <!--Grid row-->
 
-          <%= for (r) in routes { %>
-            <tr>
-              <td class="centered">
-                <%= r.Method %>
-              </td>
-              <td>
-                <%= if (r.Method != "GET" || r.Path ~= "{") { %>
-                  <%= r.Path %>
-                <% } else { %>
-                  <a href="<%= r.Path %>"><%= r.Path %></a>
-                <% } %>
-              </td>
-              <td>
-                <%= r.PathName %>
-              </td>
-              <td><code><%= r.HandlerName %></code></td>
-            </tr>
-          <% } %>
+                <!--Grid row-->
+                <div class="row mb-4 wow fadeIn">
 
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-<div class="foot"> <span> Powered by <a href="http://gobuffalo.io/">gobuffalo.io</a></span> </div>
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-12 mb-4">
+
+                        <!--Card-->
+                        <div class="card">
+
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-angular.jpg" class="img-fluid" alt="">
+                                <a href="https://mdbootstrap.com/angular/" target="_blank">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
+
+                            <!--Card content-->
+                            <div class="card-body">
+                                <!--Title-->
+                                <h4 class="card-title">MDB with Angular</h4>
+                                <!--Text-->
+                                <p class="card-text">Built with Angular 5, Bootstrap 4 and TypeScript. CLI version available. </p>
+                                <a href="https://mdbootstrap.com/angular/" target="_blank" class="btn btn-primary btn-md">Free download
+                                    <i class="fa fa-download ml-2"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                        <!--/.Card-->
+
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-6 mb-4">
+
+                        <!--Card-->
+                        <div class="card">
+
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-react.jpg" class="img-fluid" alt="">
+                                <a href="https://mdbootstrap.com/react/" target="_blank">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
+
+                            <!--Card content-->
+                            <div class="card-body">
+                                <!--Title-->
+                                <h4 class="card-title">MDB with React</h4>
+                                <!--Text-->
+                                <p class="card-text">Based on the latest Bootstrap 4 and React 16. </p>
+                                <a href="https://mdbootstrap.com/react/" target="_blank" class="btn btn-primary btn-md">Free download
+                                    <i class="fa fa-download ml-2"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                        <!--/.Card-->
+
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-6 mb-4">
+
+                        <!--Card-->
+                        <div class="card">
+
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-vue.jpg" class="img-fluid" alt="">
+                                <a href="https://mdbootstrap.com/vue/" target="_blank">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
+
+                            <!--Card content-->
+                            <div class="card-body">
+                                <!--Title-->
+                                <h4 class="card-title">MDB with Vue</h4>
+                                <!--Text-->
+                                <p class="card-text">Based on the latest Bootstrap 4 and Vue 2.5.7. </p>
+                                <a href="https://mdbootstrap.com/vue/" target="_blank" class="btn btn-primary btn-md">Free download
+                                    <i class="fa fa-download ml-2"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                        <!--/.Card-->
+
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+                <!--Pagination-->
+                <nav class="d-flex justify-content-center wow fadeIn">
+                    <ul class="pagination pg-blue">
+
+                        <!--Arrow left-->
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">4</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">5</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!--Pagination-->
+
+            </section>
+            <!--Section: Cards-->
+
+
+    <!--Main layout-->

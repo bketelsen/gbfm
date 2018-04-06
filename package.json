@@ -8,7 +8,9 @@
     "babel-core": "~6.26.0",
     "babel-loader": "~7.1.2",
     "babel-preset-env": "~1.5.2",
+    "bootstrap": "^4.0.0",
     "bootstrap-sass": "~3.3.7",
+    "c3": "^0.5.2",
     "clean-webpack-plugin": "~0.1.17",
     "copy-webpack-plugin": "~4.0.1",
     "css-loader": "~0.28.4",
@@ -18,15 +20,22 @@
     "font-awesome": "~4.7.0",
     "gopherjs-loader": "^0.0.1",
     "jquery": "~3.2.1",
+    "jquery-circle-progress": "^1.2.2",
     "jquery-ujs": "~1.2.2",
+    "mdbootstrap": "^4.5.0",
     "node-sass": "~4.7.2",
     "npm-install-webpack-plugin": "4.0.5",
     "path": "~0.12.7",
+    "popper": "^1.0.1",
+    "popper.js": "^1.14.2",
     "sass-loader": "~6.0.6",
     "style-loader": "~0.20.1",
     "uglifyjs-webpack-plugin": "~0.4.6",
     "url-loader": "~0.6.2",
     "webpack": "~3.10.0",
     "webpack-manifest-plugin": "~1.2.1"
+  },
+  "devDependencies": {
+    "node-waves": "^0.7.6"
   }
 }

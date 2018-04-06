@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1>Series#Show</h1>
+</div>
+
+<ul class="list-unstyled list-inline">
+  <li><a href="/series" class="btn btn-info">Back to all Series</a></li>
+  <li><a href="<%= editSeriesPath({ series_id: series.ID })%>" class="btn btn-warning">Edit</a></li>
+  <li><a href="<%= seriesPath({ series_id: series.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</ul>
+
+<p>
+  <strong>Name</strong>: <%= series.Name %>
+</p>
+<p>
+  <strong>Slug</strong>: <%= series.Slug %>
+</p>
+<p>
+  <strong>Description</strong>: <%= series.Description %>
+</p>
+<p>
+  <strong>IconURL</strong>: <%= series.IconURL %>
+</p>
+
+<%= for (e) in episodes { %>
+<p>
+    <strong>Episode</strong>: <%= e.ID %>: <%= e.Title %>
+</p>
+<% } %>

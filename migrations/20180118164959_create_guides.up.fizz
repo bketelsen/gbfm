@@ -1,0 +1,9 @@
+create_table("guides", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("slug", "string", {})
+	t.Column("name", "string", {})
+	t.Column("description", "string", {})
+	t.Column("markdown", "string", {})
+	t.Column("keywords", "string", {})
+	t.Column("author_id","uuid", {})
+})
