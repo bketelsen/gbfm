@@ -4,4 +4,4 @@ import (
 	"github.com/gophersnacks/gbfm/actions/renderengine"
 )
 
-var r = renderengine.New("..")
+var r = renderengine.New("application.html")

@@ -6,10 +6,10 @@ import (
 )
 
 // New returns a new render engine
-func New(rootRel string) *render.Engine {
+func New(layout string) *render.Engine {
 	return render.New(render.Options{
 		// HTML layout to be used for all HTML requests:
-		HTMLLayout: "application.html",
+		HTMLLayout: layout,
 
 		// Box containing all of the templates:
 		TemplatesBox: TemplatesBox,
