@@ -78,12 +78,8 @@ func App() *buffalo.App {
 		app.POST("/signin", AuthCreate)
 		app.POST("/token", AuthToken)
 		app.DELETE("/signout", AuthDestroy)
-		app.Resource("/series", SeriesResource{})
-		app.Resource("/guides", GuidesResource{})
 		app.GET("/authors", AuthorList)
 		app.GET("/authors/{name}", AuthorShow)
-		app.GET("/episodes", EpisodeList)
-		app.GET("/episodes/{name}", EpisodeShow)
 		app.ServeFiles("/", renderengine.AssetsBox) // serve files from the public directory
 	}
 
