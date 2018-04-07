@@ -5,11 +5,14 @@ import (
 	"github.com/gobuffalo/buffalo/middleware"
 	"github.com/gobuffalo/buffalo/middleware/ssl"
 	"github.com/gobuffalo/envy"
+	"github.com/gophersnacks/gbfm/actions/renderengine"
 	"github.com/unrolled/secure"
 
 	"github.com/gobuffalo/buffalo/middleware/csrf"
 	"github.com/gobuffalo/buffalo/middleware/i18n"
 	"github.com/gobuffalo/packr"
+	"github.com/gophersnacks/gbfm/actions/gbfm"
+	"github.com/gophersnacks/gbfm/actions/snacks"
 	"github.com/gophersnacks/gbfm/models"
 )
 
@@ -57,8 +60,18 @@ func App() *buffalo.App {
 		admin.Use(SetCurrentUser)
 		admin.Use(AdminAuthorize)
 		admin.GET("/", AdminHandler)
+
+		// have caddy mux hostnames to these paths
+		snacksGroup := app.Group("/snacks")
+		snacks.AddRoutes(snacksGroup)
+
+		gbfmGroup := app.Group("/gbfm")
+		gbfm.AddRoutes(gbfmGroup)
+
+		// gifm := app.Group("/gifm")
+
 		app.Use(SetCurrentUser)
-		app.GET("/", HomeHandler)
+		app.GET("/", homeHandler)
 		app.GET("/users/new", UsersNew)
 		app.POST("/users", UsersCreate)
 		app.GET("/signin", AuthNew)
@@ -71,7 +84,7 @@ func App() *buffalo.App {
 		app.GET("/authors/{name}", AuthorShow)
 		app.GET("/episodes", EpisodeList)
 		app.GET("/episodes/{name}", EpisodeShow)
-		app.ServeFiles("/", assetsBox) // serve files from the public directory
+		app.ServeFiles("/", renderengine.AssetsBox) // serve files from the public directory
 	}
 
 	return app
