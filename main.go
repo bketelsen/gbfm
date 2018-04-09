@@ -10,10 +10,25 @@ import (
 )
 
 func main() {
-	app := actions.App()
 	baseURL := defaults.String(os.Getenv("CMS_URL"), "https://content.gophersnacks.com")
 	models.BaseURL = baseURL
-	if err := app.Serve(); err != nil {
-		log.Fatal(err)
-	}
+
+	gbfmApp := actions.GBFMApp()
+	snacksApp := actions.SnacksApp()
+
+	errCh := make(chan error)
+	go func() {
+		if err := gbfmApp.Serve(); err != nil {
+			log.Printf("ERROR: gbfm app crashed")
+			errCh <- err
+		}
+	}()
+	go func() {
+		if err := snacksApp.Serve(); err != nil {
+			log.Printf("ERROR: snacks app crashed")
+			errCh <- err
+		}
+	}()
+	err := <-errCh
+	log.Fatal(err)
 }
