@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        TODO: subscribe form goes here
+    </div>
+    <div class="row container text-center">
+        <%= for (snack) in snacks { %>
+        <h3>
+            <a href="<%= snack.URL %>" target="_blank"><%= snack.Title %></a>
+        </h3>
+        <p><%= snack.Summary %></p>
+        <%= for (topic) in snack.Topics { %>
+            #<%= topic %>
+        <% } %>
+    </div>
+</div>

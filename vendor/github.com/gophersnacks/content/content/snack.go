@@ -15,7 +15,6 @@ type Snack struct {
 	item.Item
 
 	Title     string   `json:"title"`
-	Author    string   `json:"author"`
 	Sponsored bool     `json:"sponsored"`
 	URL       string   `json:"url"`
 	Summary   string   `json:"summary"`
@@ -37,13 +36,6 @@ func (s *Snack) MarshalEditor() ([]byte, error) {
 				"label":       "Title",
 				"type":        "text",
 				"placeholder": "Enter the Title here",
-			}),
-		},
-		editor.Field{
-			View: editor.Input("Author", s, map[string]string{
-				"label":       "Author",
-				"type":        "text",
-				"placeholder": "Enter the Author here",
 			}),
 		},
 		editor.Field{
