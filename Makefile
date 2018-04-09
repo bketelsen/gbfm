@@ -33,5 +33,5 @@ db-down:
 	docker-compose -p dev down
 
 dev:
-	$(BUFFALO) dev
+	CMS_URL=http://localhost:8080 $(BUFFALO) dev
 
