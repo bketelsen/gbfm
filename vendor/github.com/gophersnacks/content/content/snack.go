@@ -22,7 +22,7 @@ type Snack struct {
 	Comment   string   `json:"comment"`
 	SnackSlug string   `json:"snack_slug"`
 	Topics    []string `json:"topics"`
-	Authors   string   `json:"authors"`
+	Authors   []string `json:"authors"`
 }
 
 // MarshalEditor writes a buffer of html to edit a Snack within the CMS
@@ -82,19 +82,19 @@ func (s *Snack) MarshalEditor() ([]byte, error) {
 			}),
 		},
 		editor.Field{
-			View: reference.Select("Author", s, map[string]string{
-				"label": "Author",
-			},
-				"Author",
-				"{{.name}}",
-			),
-		},
-		editor.Field{
 			View: editor.InputRepeater("Topics", s, map[string]string{
 				"label":       "Topics",
 				"type":        "text",
 				"placeholder": "Enter a topic here",
 			}),
+		},
+		editor.Field{
+			View: reference.SelectRepeater("Authors", s, map[string]string{
+				"label": "Author",
+			},
+				"Author",
+				"{{.name}}",
+			),
 		},
 	)
 
