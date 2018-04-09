@@ -10,4 +10,5 @@ var r = renderengine.New("snacks/application.html")
 // AddRoutes adds routes for the GopherSnacks site
 func AddRoutes(app *buffalo.App) {
 	app.GET("/", homeHandler)
+	app.GET("/snack/{snack_id}", snackHandler)
 }
