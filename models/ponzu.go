@@ -20,17 +20,25 @@ type AuthorListResult struct {
 type EpisodeListResult struct {
 	Data []content.Episode `json:"data"`
 }
+type GifmListResult struct {
+	Data []content.Gifm `json:"data"`
+}
 type GuideListResult struct {
 	Data []content.Guide `json:"data"`
 }
 type SeriesListResult struct {
 	Data []content.Series `json:"data"`
 }
+type SnackListResult struct {
+	Data []content.Snack `json:"data"`
+}
 
 var authorCache *ponzi.Cache
 var episodeCache *ponzi.Cache
+var gifmCache *ponzi.Cache
 var guideCache *ponzi.Cache
 var seriesCache *ponzi.Cache
+var snackCache *ponzi.Cache
 
 func initAuthorCache() {
 	if authorCache == nil {
@@ -42,6 +50,11 @@ func initEpisodeCache() {
 		episodeCache = ponzi.New(BaseURL, 1*time.Minute, 30*time.Second)
 	}
 }
+func initGifmCache() {
+	if gifmCache == nil {
+		gifmCache = ponzi.New(BaseURL, 1*time.Minute, 30*time.Second)
+	}
+}
 func initGuideCache() {
 	if guideCache == nil {
 		guideCache = ponzi.New(BaseURL, 1*time.Minute, 30*time.Second)
@@ -50,6 +63,11 @@ func initGuideCache() {
 func initSeriesCache() {
 	if seriesCache == nil {
 		seriesCache = ponzi.New(BaseURL, 1*time.Minute, 30*time.Second)
+	}
+}
+func initSnackCache() {
+	if snackCache == nil {
+		snackCache = ponzi.New(BaseURL, 1*time.Minute, 30*time.Second)
 	}
 }
 
@@ -79,6 +97,19 @@ func GetEpisode(id int) (content.Episode, error) {
 	return sp.Data[0], err
 
 }
+func GetGifm(id int) (content.Gifm, error) {
+	initGifmCache()
+	var sp GifmListResult
+	err := gifmCache.Get(id, "Gifm", &sp)
+	if err != nil {
+		return content.Gifm{}, err
+	}
+	if len(sp.Data) == 0 {
+		return content.Gifm{}, errors.New("Not Found")
+	}
+	return sp.Data[0], err
+
+}
 func GetGuide(id int) (content.Guide, error) {
 	initGuideCache()
 	var sp GuideListResult
@@ -101,6 +132,19 @@ func GetSeries(id int) (content.Series, error) {
 	}
 	if len(sp.Data) == 0 {
 		return content.Series{}, errors.New("Not Found")
+	}
+	return sp.Data[0], err
+
+}
+func GetSnack(id int) (content.Snack, error) {
+	initSnackCache()
+	var sp SnackListResult
+	err := snackCache.Get(id, "Snack", &sp)
+	if err != nil {
+		return content.Snack{}, err
+	}
+	if len(sp.Data) == 0 {
+		return content.Snack{}, errors.New("Not Found")
 	}
 	return sp.Data[0], err
 
@@ -132,6 +176,19 @@ func GetEpisodeBySlug(slug string) (content.Episode, error) {
 	return sp.Data[0], err
 
 }
+func GetGifmBySlug(slug string) (content.Gifm, error) {
+	initGifmCache()
+	var sp GifmListResult
+	err := gifmCache.GetBySlug(slug, "Gifm", &sp)
+	if err != nil {
+		return content.Gifm{}, err
+	}
+	if len(sp.Data) == 0 {
+		return content.Gifm{}, errors.New("Not Found")
+	}
+	return sp.Data[0], err
+
+}
 func GetGuideBySlug(slug string) (content.Guide, error) {
 	initGuideCache()
 	var sp GuideListResult
@@ -154,6 +211,19 @@ func GetSeriesBySlug(slug string) (content.Series, error) {
 	}
 	if len(sp.Data) == 0 {
 		return content.Series{}, errors.New("Not Found")
+	}
+	return sp.Data[0], err
+
+}
+func GetSnackBySlug(slug string) (content.Snack, error) {
+	initSnackCache()
+	var sp SnackListResult
+	err := snackCache.GetBySlug(slug, "Snack", &sp)
+	if err != nil {
+		return content.Snack{}, err
+	}
+	if len(sp.Data) == 0 {
+		return content.Snack{}, errors.New("Not Found")
 	}
 	return sp.Data[0], err
 
@@ -185,6 +255,19 @@ func GetEpisodeList() ([]content.Episode, error) {
 	return sp.Data, err
 
 }
+func GetGifmList() ([]content.Gifm, error) {
+	initGifmCache()
+	var sp GifmListResult
+	err := gifmCache.GetAll("Gifm", &sp)
+	if err != nil {
+		return []content.Gifm{}, err
+	}
+	if len(sp.Data) == 0 {
+		return []content.Gifm{}, errors.New("Not Found")
+	}
+	return sp.Data, err
+
+}
 func GetGuideList() ([]content.Guide, error) {
 	initGuideCache()
 	var sp GuideListResult
@@ -207,6 +290,19 @@ func GetSeriesList() ([]content.Series, error) {
 	}
 	if len(sp.Data) == 0 {
 		return []content.Series{}, errors.New("Not Found")
+	}
+	return sp.Data, err
+
+}
+func GetSnackList() ([]content.Snack, error) {
+	initSnackCache()
+	var sp SnackListResult
+	err := snackCache.GetAll("Snack", &sp)
+	if err != nil {
+		return []content.Snack{}, err
+	}
+	if len(sp.Data) == 0 {
+		return []content.Snack{}, errors.New("Not Found")
 	}
 	return sp.Data, err
 
