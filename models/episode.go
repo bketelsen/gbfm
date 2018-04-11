@@ -25,15 +25,15 @@ type Episode struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
-	Title       string    `json:"title"`
-	Description string    `json:"description"`
-	Thumbnail   string    `json:"thumbnail"`
-	EmbedCode   string    `json:"embed_code"`
-	Body        string    `json:"body"`
-	Pro         bool      `json:"pro"`
-	Repo        string    `json:"repo"`
-	Keywords    []string  `json:"keywords"`
-	Authors     []string  `json:"authors"`
+	Title       string    `json:"title" db:"title"`
+	Description string    `json:"description" db:"description"`
+	Thumbnail   string    `json:"thumbnail" db:"thumbnail"`
+	EmbedCode   string    `json:"embed_code" db:"embed_code"`
+	Body        string    `json:"body" db:"body"`
+	Pro         bool      `json:"pro" db:"pro"`
+	Repo        string    `json:"repo" db:"repo"`
+	Keywords    []string  `json:"keywords" db:"keywords"`
+	Authors     []string  `json:"authors" db:"authors"`
 }
 
 // NewEpisode creates a new Episode. Use this instead of calling new(Episode)
@@ -59,10 +59,10 @@ func (e *Episode) MarshalEditor() ([]byte, error) {
 		// is the string version of each Episode field, and must follow
 		// this pattern for auto-decoding and auto-encoding reasons:
 		editor.Field{
-			View: editor.Input("EpisodeSlug", e, map[string]string{
-				"label":       "EpisodeSlug",
+			View: editor.Input("Slug", e, map[string]string{
+				"label":       "Slug",
 				"type":        "text",
-				"placeholder": "Enter the EpisodeSlug here",
+				"placeholder": "Enter the Slug here",
 			}),
 		},
 		editor.Field{
