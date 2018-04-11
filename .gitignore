@@ -10,9 +10,8 @@ public/assets/
 .vscode/
 .grifter/
 .env
-analytics.db system.db
 uploads/
 ponzu
 ponzu-server
-analytics.db
 system.db
+analytics.db

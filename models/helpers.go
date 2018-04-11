@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/gophersnacks/content/content"
+	"github.com/gophersnacks/gbfm/content"
 )
 
 type FullEpisode struct {

@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/gophersnacks/content/content"
+	"github.com/gophersnacks/gbfm/content"
 )
 
 // FullSnack is a complete snack and its authors
