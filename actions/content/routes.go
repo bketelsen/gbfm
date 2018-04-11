@@ -14,7 +14,9 @@ func AddRoutes(app *buffalo.App) {
 
 	app.GET("/admin", adaptHandler(adminHandler))
 
-	app.ANY("/admin/init", adaptHandler(initHandler))
+	buffaloInitHandler := adaptHandler(initHandler)
+	app.ANY("/admin/init", buffaloInitHandler)
+	app.Middleware.Skip(Auth, buffaloInitHandler)
 
 	app.ANY("/admin/login", adaptHandler(loginHandler))
 	app.GET("/admin/logout", adaptHandler(logoutHandler))
