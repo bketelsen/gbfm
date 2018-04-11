@@ -63,10 +63,6 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/gophersnacks/content"
-
-[[constraint]]
-  branch = "master"
   name = "github.com/markbates/going"
 
 [[constraint]]

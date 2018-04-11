@@ -7,7 +7,7 @@ package models
 
 import (
 	"github.com/bketelsen/ponzi"
-	"github.com/gophersnacks/content/content"
+	"github.com/gophersnacks/gbfm/content"
 	"github.com/pkg/errors"
 	"time"
 )
