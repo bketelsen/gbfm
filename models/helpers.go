@@ -9,7 +9,7 @@ import (
 )
 
 type FullEpisode struct {
-	Episode    *content.Episode
+	Episode    *Episode
 	AuthorList []*content.Author
 }
 
@@ -34,7 +34,7 @@ func GetFullEpisodeBySlug(id string) (*FullEpisode, error) {
 	return &fe, nil
 }
 
-func AuthorIDsForEpisode(m content.Episode) []int {
+func AuthorIDsForEpisode(m Episode) []int {
 	var authors []int
 	for _, s := range m.Authors {
 		i, err := getID(s)

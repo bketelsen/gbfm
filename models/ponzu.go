@@ -18,7 +18,7 @@ type AuthorListResult struct {
 	Data []content.Author `json:"data"`
 }
 type EpisodeListResult struct {
-	Data []content.Episode `json:"data"`
+	Data []Episode `json:"data"`
 }
 type GifmListResult struct {
 	Data []content.Gifm `json:"data"`
@@ -84,15 +84,15 @@ func GetAuthor(id int) (content.Author, error) {
 	return sp.Data[0], err
 
 }
-func GetEpisode(id int) (content.Episode, error) {
+func GetEpisode(id int) (Episode, error) {
 	initEpisodeCache()
 	var sp EpisodeListResult
 	err := episodeCache.Get(id, "Episode", &sp)
 	if err != nil {
-		return content.Episode{}, err
+		return Episode{}, err
 	}
 	if len(sp.Data) == 0 {
-		return content.Episode{}, errors.New("Not Found")
+		return Episode{}, errors.New("Not Found")
 	}
 	return sp.Data[0], err
 
@@ -163,15 +163,15 @@ func GetAuthorBySlug(slug string) (content.Author, error) {
 	return sp.Data[0], err
 
 }
-func GetEpisodeBySlug(slug string) (content.Episode, error) {
+func GetEpisodeBySlug(slug string) (Episode, error) {
 	initEpisodeCache()
 	var sp EpisodeListResult
 	err := episodeCache.GetBySlug(slug, "Episode", &sp)
 	if err != nil {
-		return content.Episode{}, err
+		return Episode{}, err
 	}
 	if len(sp.Data) == 0 {
-		return content.Episode{}, errors.New("Not Found")
+		return Episode{}, errors.New("Not Found")
 	}
 	return sp.Data[0], err
 
@@ -242,15 +242,15 @@ func GetAuthorList() ([]content.Author, error) {
 	return sp.Data, err
 
 }
-func GetEpisodeList() ([]content.Episode, error) {
+func GetEpisodeList() ([]Episode, error) {
 	initEpisodeCache()
 	var sp EpisodeListResult
 	err := episodeCache.GetAll("Episode", &sp)
 	if err != nil {
-		return []content.Episode{}, err
+		return []Episode{}, err
 	}
 	if len(sp.Data) == 0 {
-		return []content.Episode{}, errors.New("Not Found")
+		return []Episode{}, errors.New("Not Found")
 	}
 	return sp.Data, err
 

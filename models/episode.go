@@ -2,26 +2,53 @@ package models
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/bosssauce/reference"
 
+	"github.com/gobuffalo/uuid"
 	"github.com/gophersnacks/gbfm/pkg/management/editor"
 	"github.com/gophersnacks/gbfm/pkg/system/item"
+	suuid "github.com/satori/go.uuid"
 )
 
-type Episode struct {
-	item.Item `db:"-"`
+func init() {
+	item.Types["Episode"] = func() interface{} { return NewEpisode() }
+}
 
-	EpisodeSlug string   `json:"episode_slug" db:"episode_slug"`
-	Title       string   `json:"title"`
-	Description string   `json:"description"`
-	Thumbnail   string   `json:"thumbnail"`
-	EmbedCode   string   `json:"embed_code"`
-	Body        string   `json:"body"`
-	Pro         bool     `json:"pro"`
-	Repo        string   `json:"repo"`
-	Keywords    []string `json:"keywords"`
-	Authors     []string `json:"authors"`
+// Episode represents an episode
+type Episode struct {
+	*ponzuSluggable
+	*ponzuPartialIdentifiable
+	*ponzuSearchable
+
+	ID          uuid.UUID `json:"id" db:"id"`
+	CreatedAt   time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Thumbnail   string    `json:"thumbnail"`
+	EmbedCode   string    `json:"embed_code"`
+	Body        string    `json:"body"`
+	Pro         bool      `json:"pro"`
+	Repo        string    `json:"repo"`
+	Keywords    []string  `json:"keywords"`
+	Authors     []string  `json:"authors"`
+}
+
+// NewEpisode creates a new Episode. Use this instead of calling new(Episode)
+func NewEpisode() *Episode {
+	return &Episode{
+		ponzuSluggable:           new(ponzuSluggable),
+		ponzuPartialIdentifiable: new(ponzuPartialIdentifiable),
+		ponzuSearchable:          new(ponzuSearchable),
+	}
+}
+
+// UniqueID implements part of
+// https://godoc.org/github.com/ponzu-cms/ponzu/system/item#Identifiable
+func (e *Episode) UniqueID() suuid.UUID {
+	return buffaloUUIDToSatori(e.ID)
 }
 
 // MarshalEditor writes a buffer of html to edit a Episode within the CMS
@@ -108,12 +135,8 @@ func (e *Episode) MarshalEditor() ([]byte, error) {
 	return view, nil
 }
 
-func init() {
-	item.Types["Episode"] = func() interface{} { return new(Episode) }
-}
-
 // String defines how a Episode is printed. Update it using more descriptive
 // fields from the Episode struct type
 func (e *Episode) String() string {
-	return e.EpisodeSlug
+	return e.Slug
 }
