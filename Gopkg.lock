@@ -463,6 +463,12 @@
   version = "v1.10.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/nilslice/email"
+  packages = ["."]
+  revision = "64c3efa303b70ea8a3f5419e2efc61a92d0a6e63"
+
+[[projects]]
   name = "github.com/nilslice/jwt"
   packages = ["."]
   revision = "2481f5ad3dd561843c154c0d57d1d81d76276aae"
@@ -663,6 +669,8 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = [
+    "acme",
+    "acme/autocert",
     "bcrypt",
     "blowfish",
     "ssh/terminal"
@@ -675,7 +683,11 @@
   packages = [
     "context",
     "html",
-    "html/atom"
+    "html/atom",
+    "http2",
+    "http2/hpack",
+    "idna",
+    "lex/httplex"
   ]
   revision = "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
 
@@ -697,12 +709,20 @@
 [[projects]]
   name = "golang.org/x/text"
   packages = [
+    "collate",
+    "collate/build",
+    "internal/colltab",
     "internal/gen",
+    "internal/tag",
     "internal/triegen",
     "internal/ucd",
+    "language",
+    "secure/bidirule",
     "transform",
+    "unicode/bidi",
     "unicode/cldr",
-    "unicode/norm"
+    "unicode/norm",
+    "unicode/rangetable"
   ]
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
@@ -716,6 +736,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "636fe3c3d5017546d22b7bf91ca67c31aa5b4137309172478ea5705f310a27f2"
+  inputs-digest = "ff3dc7e87661314077ab54a405daa2b2526f4d3dce6d69ac7892f8f8c5a9542d"
   solver-name = "gps-cdcl"
   solver-version = 1
