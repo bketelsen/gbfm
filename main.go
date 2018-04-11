@@ -15,7 +15,6 @@ func main() {
 
 	gbfmApp := actions.GBFMApp()
 	snacksApp := actions.SnacksApp()
-
 	errCh := make(chan error)
 	go func() {
 		if err := gbfmApp.Serve(); err != nil {
@@ -26,6 +25,12 @@ func main() {
 	go func() {
 		if err := snacksApp.Serve(); err != nil {
 			log.Printf("ERROR: snacks app crashed")
+			errCh <- err
+		}
+	}()
+	go func() {
+		if err := actions.ContentApp(); err != nil {
+			log.Printf("ERROR: content app crashed")
 			errCh <- err
 		}
 	}()
