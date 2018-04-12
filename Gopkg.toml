@@ -58,14 +58,6 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/markbates/going"
-
-[[constraint]]
-  branch = "master"
-  name = "github.com/markbates/grift"
-
-[[constraint]]
-  branch = "master"
   name = "github.com/murlokswarm/log"
 
 [[constraint]]
