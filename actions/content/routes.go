@@ -18,12 +18,12 @@ func AddRoutes(app *buffalo.App) {
 
 	app.GET("/admin", homeHandler)
 	mResource := &modelResource{}
-	app.Resource("/admin/{model_name}", mResource)
 
 	app.GET("/admin/login", loginHandler)
 	app.POST("/admin/login", attemptLoginHandler)
 	app.Middleware.Skip(Auth, loginHandler, attemptLoginHandler)
 
+	app.Resource("/admin/{model_name}", mResource)
 	// buffaloInitHandler := adaptHandler(initHandler)
 	// app.ANY("/admin/init", buffaloInitHandler)
 	// app.Middleware.Skip(Auth, buffaloInitHandler)
