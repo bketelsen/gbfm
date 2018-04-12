@@ -7,10 +7,7 @@ import (
 	"github.com/gobuffalo/buffalo/middleware/ssl"
 	"github.com/gophersnacks/gbfm/actions/content"
 	"github.com/gophersnacks/gbfm/actions/renderengine"
-	_ "github.com/gophersnacks/gbfm/content"
 	"github.com/gophersnacks/gbfm/models"
-	"github.com/gophersnacks/gbfm/pkg/system/api/analytics"
-	"github.com/gophersnacks/gbfm/pkg/system/db"
 	"github.com/unrolled/secure"
 )
 
@@ -18,14 +15,6 @@ import (
 //
 // The second parameter returned should be called by the caller in a defer
 func ContentApp() (*buffalo.App, func()) {
-	db.Init()
-	analytics.Init()
-	go db.InitSearchIndex()
-	closeFunc := func() {
-		db.Close()
-		analytics.Close()
-	}
-
 	app := buffalo.New(buffalo.Options{
 		Addr:        "0.0.0.0:8080",
 		Env:         ENV,
@@ -55,5 +44,5 @@ func ContentApp() (*buffalo.App, func()) {
 	content.AddRoutes(app)
 	app.ServeFiles("/", renderengine.AssetsBox) // serve files from the public directory
 
-	return app, closeFunc
+	return app, func() {} // TODO: remove the close func
 }

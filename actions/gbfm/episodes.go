@@ -1,6 +1,8 @@
 package gbfm
 
 import (
+	"net/http"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gophersnacks/gbfm/models"
 	"github.com/pkg/errors"
@@ -9,11 +11,11 @@ import (
 // EpisodeList gets all Episodes. This function is mapped to the path
 // GET /episodes
 func EpisodeList(c buffalo.Context) error {
-	ee, err := models.GetEpisodeList()
-	if err != nil {
-		return c.Error(500, err)
+	epList := new([]models.Episode)
+	if err := models.DB.Eager().All(epList); err != nil {
+		return c.Error(http.StatusInternalServerError, err)
 	}
-	c.Set("episodes", ee)
+	c.Set("episodes", epList)
 	return c.Render(200, r.HTML("episodes/album.html"))
 }
 
@@ -24,9 +26,9 @@ func EpisodeShow(c buffalo.Context) error {
 	if slug == "" {
 		return c.Error(404, errors.New("Not Found"))
 	}
-	episode, err := models.GetFullEpisodeBySlug(slug)
-	if err != nil {
-		return c.Error(500, err)
+	episode := new(models.Episode)
+	if err := models.DB.Eager().Where("slug = ?", slug).First(episode); err != nil {
+		return c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set("episode", episode)
 	return c.Render(200, r.HTML("episodes/show.html"))
