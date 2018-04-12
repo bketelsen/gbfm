@@ -5,16 +5,9 @@ import (
 	"time"
 
 	"github.com/bosssauce/reference"
-
 	"github.com/gobuffalo/uuid"
-	"github.com/gophersnacks/gbfm/pkg/management/editor"
-	"github.com/gophersnacks/gbfm/pkg/system/item"
-	suuid "github.com/satori/go.uuid"
+	"github.com/ponzu-cms/ponzu/management/editor"
 )
-
-func init() {
-	item.Types["Episode"] = func() interface{} { return NewEpisode() }
-}
 
 // Episode represents an episode
 type Episode struct {
