@@ -9,9 +9,9 @@ import (
 type Author struct {
 	coreModel
 	slugger
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Photo       string `json:"photo"`
+	Name        string `json:"name" db:"name"`
+	Description string `json:"description" db:"description"`
+	Photo       string `json:"photo_url" db:"photo_url"`
 	// TODO: has_many's for the content models
 }
 
