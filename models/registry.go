@@ -4,10 +4,12 @@ import (
 	"fmt"
 )
 
-var registry = map[string]func() (CoreTemplater, []CoreTemplater){}
+// for each type name, provide a function that returns an empty type and an empty list of
+// that type
+var registry = map[string]func() (interface{}, interface{}){}
 
 // EmptyFromRegistry returns a new model
-func EmptyFromRegistry(name string) (CoreTemplater, error) {
+func EmptyFromRegistry(name string) (interface{}, error) {
 	fn, ok := registry[name]
 	if !ok {
 		return nil, fmt.Errorf("unknown model %s", name)
@@ -17,7 +19,7 @@ func EmptyFromRegistry(name string) (CoreTemplater, error) {
 }
 
 // EmptyListFromRegistry returns a new list of models
-func EmptyListFromRegistry(name string) ([]CoreTemplater, error) {
+func EmptyListFromRegistry(name string) (interface{}, error) {
 	fn, ok := registry[name]
 	if !ok {
 		return nil, fmt.Errorf("unknown model %s", name)
