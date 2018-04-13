@@ -11,6 +11,10 @@ type modelResource struct{}
 
 func (m *modelResource) List(c buffalo.Context) error {
 	modelName := c.Param("model_name")
+	tpls, err := getTemplateNames(modelName)
+	if err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
 	list, err := models.EmptyListFromRegistry(modelName)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
@@ -19,10 +23,15 @@ func (m *modelResource) List(c buffalo.Context) error {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set("models", list)
-	return c.Render(http.StatusOK, r.HTML("admin/index.html"))
+	return c.Render(http.StatusOK, r.HTML(tpls.Index))
 }
 func (m *modelResource) Show(c buffalo.Context) error {
 	modelName := c.Param("model_name")
+	tpls, err := getTemplateNames(modelName)
+	if err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
+
 	id := c.Param("admin_model_id")
 	single, err := models.EmptyFromRegistry(modelName)
 	if err != nil {
@@ -32,8 +41,9 @@ func (m *modelResource) Show(c buffalo.Context) error {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set("model", single)
-	return c.Render(http.StatusOK, r.HTML(single.GetShowTemplateName()))
+	return c.Render(http.StatusOK, r.HTML(tpls.Show))
 }
+
 func (m *modelResource) New(buffalo.Context) error     { return nil }
 func (m *modelResource) Create(buffalo.Context) error  { return nil }
 func (m *modelResource) Edit(buffalo.Context) error    { return nil }
