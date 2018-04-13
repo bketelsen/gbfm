@@ -1,12 +1,21 @@
 create_table("snacks", func(t) {
 	t.Column("id", "uuid", {"primary": true})
 	t.Column("slug", "string", {})
-	t.Column("description", "string", {})
-	t.Column("thumbnail_url", "string", {})
-	t.Column("embed_code", "string", {})
-	t.Column("download_url", "string", {})
-	t.Column("markdown", "string", {})
-	t.Column("pro", "bool", {})
-	t.Column("keywords", "string", {})
-	t.Column("author_id","uuid", {})
+	t.Column("title", "string", {})
+	t.Column("sponsored", "bool", {})
+	t.Column("url", "string", {})
+	t.Column("summary", "string", {})
+	t.Column("comment", "string", {})
+})
+
+create_table("snacks_topics", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("snack_id", "uuid", {})
+	t.Column("topic_id", "uuid", {})
+})
+
+create_table("snacks_authors", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("snack_id", "uuid", {})
+	t.Column("author_id", "uuid", {})
 })
