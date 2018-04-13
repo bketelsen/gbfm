@@ -7,6 +7,7 @@ create_table("episodes", func(t) {
 	t.Column("embed_code", "string", {})
 	t.Column("body", "string", {})
 	t.Column("pro", "bool", {})
+	t.Column("repo", "string", {})
 })
 
 create_table("episodes_topics", func(t) {
