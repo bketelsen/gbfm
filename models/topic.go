@@ -5,6 +5,7 @@ type Topic struct {
 	coreModel
 	slugger
 	Name string `json:"name" db:"name"`
+	// TODO: has_many's for the content models
 }
 
 func init() {
