@@ -4,13 +4,13 @@ package models
 type GIFM struct {
 	coreModel
 	slugger
-	Title       string   `json:"title"`
-	EmdedCode   string   `json:"emded_code"`
-	GithubLink  string   `json:"github_link"`
-	Sponsor     string   `json:"sponsor"`
-	Description string   `json:"description"`
-	Topics      []Topic  `json:"topics" db:"topics" many_to_many:"topics_gifm"`
-	Authors     []Author `json:"authors" db:"authors" many_to_many:"authors_gifm"`
+	Title       string   `json:"title" db:"title"`
+	EmdedCode   string   `json:"emded_code" db:"embed_code"`
+	GithubLink  string   `json:"github_link" db:"github_link"`
+	Sponsor     string   `json:"sponsor" db:"sponsor"`
+	Description string   `json:"description" db:"description"`
+	Topics      []Topic  `json:"topics" db:"topics" many_to_many:"gifm_topics"`
+	Authors     []Author `json:"authors" db:"authors" many_to_many:"gifm_authors"`
 }
 
 func init() {
