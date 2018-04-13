@@ -15,3 +15,9 @@ type Episode struct {
 	Topics      []Topic  `json:"topics" db:"topics" has_many:"topics"`
 	Authors     []Author `json:"authors" db:"authors" has_many:"authors"`
 }
+
+func init() {
+	registry["episode"] = func() (interface{}, interface{}) {
+		return new(Episode), new([]Episode)
+	}
+}

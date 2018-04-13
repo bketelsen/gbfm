@@ -11,3 +11,9 @@ type Series struct {
 	Keywords    []string `json:"keywords"`
 	Episodes    []string `json:"episodes"`
 }
+
+func init() {
+	registry["series"] = func() (interface{}, interface{}) {
+		return new(Series), new([]Series)
+	}
+}

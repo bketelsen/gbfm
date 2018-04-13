@@ -14,3 +14,9 @@ type Snack struct {
 	Topics    []Topic  `json:"topics" db:"topics" has_many:"topics"`
 	Authors   []Author `json:"authors" db:"authors" has_many:"authors"`
 }
+
+func init() {
+	registry["snack"] = func() (interface{}, interface{}) {
+		return new(Snack), new([]Snack)
+	}
+}

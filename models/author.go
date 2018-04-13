@@ -22,3 +22,9 @@ func GetAuthor(tx *pop.Connection, id uuid.UUID) (*Author, error) {
 	}
 	return a, nil
 }
+
+func init() {
+	registry["author"] = func() (interface{}, interface{}) {
+		return new(Author), new([]Author)
+	}
+}

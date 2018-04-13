@@ -10,3 +10,9 @@ type GIFM struct {
 	Sponsor     string `json:"sponsor"`
 	Description string `json:"description"`
 }
+
+func init() {
+	registry["gifm"] = func() (interface{}, interface{}) {
+		return new(GIFM), new([]GIFM)
+	}
+}

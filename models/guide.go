@@ -13,3 +13,9 @@ type Guide struct {
 	Topics      []Topic `json:"topics" db:"topics" has_many:"topics"`
 	Author      Author  `json:"author" db:"author" has_one:"author"`
 }
+
+func init() {
+	registry["guide"] = func() (interface{}, interface{}) {
+		return new(Guide), new([]Guide)
+	}
+}
