@@ -6,3 +6,9 @@ type Topic struct {
 	slugger
 	Name string `json:"name" db:"name"`
 }
+
+func init() {
+	registry["topic"] = func() (interface{}, interface{}) {
+		return new(Topic), new([]Topic)
+	}
+}
