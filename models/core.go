@@ -32,13 +32,6 @@ func (c coreModel) GetUpdatedAt() time.Time {
 	return c.UpdatedAt
 }
 
-// Templater lets you define the templates that the model should use
-type Templater interface {
-	GetShowTemplateName() string
-	GetEditTemplateName() string
-	GetNewTemplateName() string
-}
-
 // Slugger is a model that has a slug
 type Slugger interface {
 	GetSlug() string
@@ -51,9 +44,4 @@ type slugger struct {
 
 func (s slugger) GetSlug() string {
 	return s.Slug
-}
-
-type CoreTemplater interface {
-	Core
-	Templater
 }
