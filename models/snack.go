@@ -11,8 +11,8 @@ type Snack struct {
 	Summary   string   `json:"summary"`
 	Comment   string   `json:"comment"`
 	SnackSlug string   `json:"snack_slug"`
-	Topics    []Topic  `json:"topics" db:"topics" has_many:"topics"`
-	Authors   []Author `json:"authors" db:"authors" has_many:"authors"`
+	Topics    []Topic  `json:"topics" db:"topics" many_to_many:"topics_snacks"`
+	Authors   []Author `json:"authors" db:"authors" many_to_many:"authors_snacks"`
 }
 
 func init() {

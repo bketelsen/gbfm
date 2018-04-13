@@ -8,8 +8,8 @@ type Series struct {
 	Thumbnail   string   `json:"thumbnail"`
 	Body        string   `json:"body"`
 	Pro         bool     `json:"pro"`
-	Keywords    []string `json:"keywords"`
-	Episodes    []string `json:"episodes"`
+	Topics      []Topic  `json:"topics" db:"topics" many_to_many:"topics_series"`
+	Authors     []Author `json:"authors" db:"authors" many_to_many:"authors_series"`
 }
 
 func init() {
