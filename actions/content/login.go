@@ -14,8 +14,9 @@ func loginHandler(c buffalo.Context) error {
 	if IsValid(c) {
 		return c.Redirect(http.StatusFound, "/admin")
 	}
-
-	return c.Render(http.StatusOK, r.HTML("admin/login.html"))
+	u := new(models.User)
+	c.Set("user", u)
+	return c.Render(http.StatusOK, r.HTML("auth/new.html"))
 }
 
 func attemptLoginHandler(c buffalo.Context) error {
