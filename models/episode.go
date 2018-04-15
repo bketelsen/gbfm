@@ -1,9 +1,17 @@
 package models
 
+import (
+	"time"
+
+	"github.com/gobuffalo/uuid"
+)
+
 // Episode represents an episode
 type Episode struct {
-	coreModel
-	slugger
+	ID        uuid.UUID `json:"id" db:"id"`
+	CreatedAt time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+	Slug      string    `json:"slug" db:"slug"`
 
 	Title        string   `json:"title" db:"title"`
 	Description  string   `json:"description" db:"description"`
@@ -20,4 +28,20 @@ func init() {
 	registry["episode"] = func() (interface{}, interface{}) {
 		return new(Episode), new([]Episode)
 	}
+}
+
+func (a Episode) GetID() uuid.UUID {
+	return a.ID
+}
+
+func (a Episode) GetCreatedAt() time.Time {
+	return a.CreatedAt
+}
+
+func (a Episode) GetUpdatedAt() time.Time {
+	return a.UpdatedAt
+}
+
+func (a Episode) GetSlug() string {
+	return a.Slug
 }

@@ -1,9 +1,17 @@
 package models
 
+import (
+	"time"
+
+	"github.com/gobuffalo/uuid"
+)
+
 // Snack is a snack - a small piece of news
 type Snack struct {
-	coreModel
-	slugger
+	ID        uuid.UUID `json:"id" db:"id"`
+	CreatedAt time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+	Slug      string    `json:"slug" db:"slug"`
 
 	Title     string   `json:"title" db:"title"`
 	Sponsored bool     `json:"sponsored" db:"sponsored"`
@@ -18,4 +26,20 @@ func init() {
 	registry["snack"] = func() (interface{}, interface{}) {
 		return new(Snack), new([]Snack)
 	}
+}
+
+func (a Snack) GetID() uuid.UUID {
+	return a.ID
+}
+
+func (a Snack) GetCreatedAt() time.Time {
+	return a.CreatedAt
+}
+
+func (a Snack) GetUpdatedAt() time.Time {
+	return a.UpdatedAt
+}
+
+func (a Snack) GetSlug() string {
+	return a.Slug
 }

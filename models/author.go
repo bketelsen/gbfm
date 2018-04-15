@@ -1,14 +1,19 @@
 package models
 
 import (
+	"time"
+
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
 )
 
 // Author is an author
 type Author struct {
-	coreModel
-	slugger
+	ID        uuid.UUID `json:"id" db:"id"`
+	CreatedAt time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+	Slug      string    `json:"slug" db:"slug"`
+
 	Name        string `json:"name" db:"name"`
 	Description string `json:"description" db:"description"`
 	Photo       string `json:"photo_url" db:"photo_url"`
@@ -28,4 +33,19 @@ func init() {
 	registry["author"] = func() (interface{}, interface{}) {
 		return new(Author), new([]Author)
 	}
+}
+func (a Author) GetID() uuid.UUID {
+	return a.ID
+}
+
+func (a Author) GetCreatedAt() time.Time {
+	return a.CreatedAt
+}
+
+func (a Author) GetUpdatedAt() time.Time {
+	return a.UpdatedAt
+}
+
+func (a Author) GetSlug() string {
+	return a.Slug
 }
