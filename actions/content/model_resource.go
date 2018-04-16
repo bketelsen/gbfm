@@ -39,7 +39,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	}
 	id, err := getModelID(c)
 	if err != nil {
-		return c.Error(StatusBadRequest, err)
+		return c.Error(http.StatusBadRequest, err)
 	}
 
 	tpls, err := getTemplateNames(modelName)
