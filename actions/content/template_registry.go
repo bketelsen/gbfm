@@ -57,6 +57,7 @@ type templateNames struct {
 	Index string
 }
 
+// TODO: deal with plurals
 func getTemplateNames(s string) (*templateNames, error) {
 	tn, ok := templateRegistry[s]
 	if !ok {
