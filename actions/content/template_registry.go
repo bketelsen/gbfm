@@ -61,7 +61,11 @@ type templateNames struct {
 func getTemplateNames(s string) (*templateNames, error) {
 	tn, ok := templateRegistry[s]
 	if !ok {
-		return nil, fmt.Errorf("unknown model %s", s)
+		depluralized, depluralizedFound := templateRegistry[s[0:len(s)-2]]
+		if !depluralizedFound {
+			return nil, fmt.Errorf("unknown model %s", s)
+		}
+		tn = depluralized
 	}
 	return tn, nil
 }
