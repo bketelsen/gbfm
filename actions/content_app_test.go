@@ -6,7 +6,7 @@ import (
 	"github.com/gobuffalo/suite"
 )
 
-type GBFMActionSuite struct {
+type ContentActionSuite struct {
 	*suite.Action
 }
 
