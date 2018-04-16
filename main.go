@@ -2,20 +2,16 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/gophersnacks/gbfm/actions"
-	"github.com/gophersnacks/gbfm/models"
-	"github.com/markbates/going/defaults"
+	"github.com/gophersnacks/gbfm/actions/content"
 )
 
 func main() {
-	baseURL := defaults.String(os.Getenv("CMS_URL"), "https://content.gophersnacks.com")
-	models.BaseURL = baseURL
 
 	gbfmApp := actions.GBFMApp()
 	snacksApp := actions.SnacksApp()
-	contentApp, contentClose := actions.ContentApp()
+	contentApp, contentClose := content.App()
 
 	errCh := make(chan error)
 	go func() {

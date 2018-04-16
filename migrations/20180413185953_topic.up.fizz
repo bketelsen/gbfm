@@ -1,0 +1,5 @@
+create_table("topics", func(t) {
+    t.Column("id", "uuid", {"primary": true})
+    t.Column("slug", "string", {})
+    t.Column("name", "string", {})
+})

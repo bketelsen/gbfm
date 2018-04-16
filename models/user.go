@@ -13,6 +13,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// User is a user in the system
 type User struct {
 	ID                   uuid.UUID `json:"id" db:"id"`
 	CreatedAt            time.Time `json:"created_at" db:"created_at"`
@@ -85,4 +86,12 @@ func (u *User) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
 		&validators.StringIsPresent{Field: u.Password, Name: "Password"},
 		&validators.StringsMatch{Name: "Password", Field: u.Password, Field2: u.PasswordConfirmation, Message: "Password does not match confirmation"},
 	), err
+}
+
+// ComparePassword compares the given plain-text password with u.PasswordHash.
+// Returns nil if the passwords match, non-nil otherwise
+//
+// Do not save password to any stable storage or log it
+func (u *User) ComparePassword(password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(u.PasswordHash), []byte(password))
 }

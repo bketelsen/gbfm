@@ -1,13 +1,23 @@
 create_table("episodes", func(t) {
 	t.Column("id", "uuid", {"primary": true})
-	t.Column("description", "string", {})
 	t.Column("slug", "string", {})
+	t.Column("title", "string", {})
+	t.Column("description", "string", {})
 	t.Column("thumbnail_url", "string", {})
 	t.Column("embed_code", "string", {})
-	t.Column("download_url", "string", {})
-	t.Column("markdown", "string", {})
+	t.Column("body", "string", {})
 	t.Column("pro", "bool", {})
-	t.Column("keywords", "string", {})
-    t.Column("series_id", "uuid", {})
-	t.Column("author_id","uuid", {})
+	t.Column("repo", "string", {})
+})
+
+create_table("episodes_topics", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("episode_id", "uuid", {})
+	t.Column("topic_id", "uuid", {})
+})
+
+create_table("episodes_authors", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("episode_id", "uuid", {})
+	t.Column("author_id", "uuid", {})
 })

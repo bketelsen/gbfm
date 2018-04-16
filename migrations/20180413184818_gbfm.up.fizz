@@ -1,0 +1,21 @@
+create_table("gbfm", func(t) {
+    t.Column("id", "uuid", {"primary": true})
+    t.Column("slug", "string", {})
+    t.Column("embed_code", "string", {})
+    t.Column("github_link", "string", {})
+    t.Column("sponsor", "string", {})
+    t.Column("description", "string", {})
+})
+
+create_table("gifm_topics", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("topic_id", "uuid", {})
+	t.Column("gifm_id", "uuid", {})
+})
+
+create_table("gifm_authors", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("topic_id", "uuid", {})
+	t.Column("gifm_id", "uuid", {})
+})
+

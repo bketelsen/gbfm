@@ -4,7 +4,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/middleware"
 	"github.com/gobuffalo/buffalo/middleware/ssl"
-	"github.com/gophersnacks/gbfm/actions/renderengine"
+	"github.com/gophersnacks/gbfm/pkg/render"
 	"github.com/unrolled/secure"
 
 	"github.com/gobuffalo/buffalo/middleware/csrf"
@@ -56,7 +56,7 @@ func GBFMApp() *buffalo.App {
 	app.DELETE("/signout", AuthDestroy)
 	app.GET("/authors", AuthorList)
 	app.GET("/authors/{name}", AuthorShow)
-	app.ServeFiles("/", renderengine.AssetsBox) // serve files from the public directory
+	app.ServeFiles("/", render.AssetsBox) // serve files from the public directory
 
 	return app
 }

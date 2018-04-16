@@ -9,9 +9,8 @@ import (
 
 // homeHandler is a default handler to serve up a home page
 func homeHandler(c buffalo.Context) error {
-	snacks, err := models.GetSnackList()
-	if err != nil {
-		c.Logger().Errorf("error getting snack list (%s)", err)
+	snacks := new([]models.Snack)
+	if err := models.DB.Eager().All(snacks); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set("snacks", snacks)
