@@ -11,6 +11,8 @@ import (
 	"github.com/unrolled/secure"
 )
 
+var r = render.New("gbfm/application.html")
+
 // App is where all routes and middleware for the admin interface are defined.
 //
 // The second parameter returned should be called by the caller in a defer
@@ -41,7 +43,17 @@ func App() (*buffalo.App, func()) {
 
 	// Setup and use translations:
 	app.Use(web.Translator.Middleware())
-	AddRoutes(app)
+	app.Use(Auth)
+
+	app.GET("/", homeHandler)
+	mResource := &modelResource{}
+
+	app.GET("/login", loginHandler)
+	app.POST("/login", attemptLoginHandler)
+	app.Middleware.Skip(Auth, loginHandler, attemptLoginHandler)
+
+	app.Resource("/{model_name}", mResource)
+
 	app.ServeFiles("/", render.AssetsBox) // serve files from the public directory
 
 	return app, func() {} // TODO: remove the close func

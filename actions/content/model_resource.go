@@ -88,7 +88,7 @@ func (m *modelResource) Create(c buffalo.Context) error {
 		return c.Error(http.StatusBadRequest, err)
 	}
 
-	return c.Redirect(http.StatusFound, "/admin/%s/%s", modelName, empty.GetID())
+	return c.Redirect(http.StatusFound, "/%s/%s", modelName, empty.GetID())
 }
 
 // GET /admin/{model_name}/{admin_model_id}/edit
@@ -138,7 +138,7 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 	if err := models.DB.Destroy(empty); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	redirPath := "/admin"
+	redirPath := "/"
 	if c.Param("redir_path") != "" {
 		redirPath = c.Param("redir_path")
 	}
@@ -146,7 +146,7 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 }
 
 func getModelName(c buffalo.Context) (string, error) {
-	modelName := c.Param("admin_model_name")
+	modelName := c.Param("model_name")
 	if modelName == "" {
 		return "", errors.New("model name not found")
 	}
@@ -154,7 +154,7 @@ func getModelName(c buffalo.Context) (string, error) {
 }
 
 func getModelID(c buffalo.Context) (string, error) {
-	modelID := c.Param("admin_model_id")
+	modelID := c.Param("model_id")
 	if modelID == "" {
 		return "", errors.New("model ID not found")
 	}

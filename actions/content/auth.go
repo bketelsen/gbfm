@@ -17,7 +17,7 @@ func Auth(next buffalo.Handler) buffalo.Handler {
 		if IsValid(c) {
 			return next(c)
 		}
-		return c.Redirect(http.StatusFound, "/admin/login")
+		return c.Redirect(http.StatusFound, "/login")
 	}
 }
 
