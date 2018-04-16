@@ -1,7 +1,7 @@
 package actions
 
 import (
-	"github.com/gophersnacks/gbfm/actions/renderengine"
+	"github.com/gophersnacks/gbfm/pkg/render"
 )
 
-var r = renderengine.New("application.html")
+var r = render.New("application.html")

@@ -10,7 +10,7 @@ var Translator *i18n.Translator
 
 func init() {
 	var err error
-	if Translator, err = i18n.New(packr.NewBox("../locales"), "en-US"); err != nil {
+	if Translator, err = i18n.New(packr.NewBox("../../locales"), "en-US"); err != nil {
 		panic(err)
 	}
 }

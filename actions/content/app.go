@@ -5,8 +5,8 @@ import (
 	"github.com/gobuffalo/buffalo/middleware"
 	"github.com/gobuffalo/buffalo/middleware/csrf"
 	"github.com/gobuffalo/buffalo/middleware/ssl"
-	"github.com/gophersnacks/gbfm/actions/renderengine"
 	"github.com/gophersnacks/gbfm/models"
+	"github.com/gophersnacks/gbfm/pkg/render"
 	"github.com/gophersnacks/gbfm/pkg/web"
 	"github.com/unrolled/secure"
 )
@@ -42,7 +42,7 @@ func App() (*buffalo.App, func()) {
 	// Setup and use translations:
 	app.Use(web.Translator.Middleware())
 	AddRoutes(app)
-	app.ServeFiles("/", renderengine.AssetsBox) // serve files from the public directory
+	app.ServeFiles("/", render.AssetsBox) // serve files from the public directory
 
 	return app, func() {} // TODO: remove the close func
 }

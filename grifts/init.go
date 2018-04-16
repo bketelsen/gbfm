@@ -2,10 +2,10 @@ package grifts
 
 import (
 	"github.com/gobuffalo/buffalo"
-	"github.com/gophersnacks/gbfm/actions"
+	"github.com/gophersnacks/gbfm/actions/content"
 )
 
 func init() {
-	a, _ := actions.ContentApp()
+	a, _ := content.App()
 	buffalo.Grifts(a)
 }

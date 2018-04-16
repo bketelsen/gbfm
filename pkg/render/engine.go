@@ -1,4 +1,4 @@
-package renderengine
+package render
 
 import (
 	"github.com/gobuffalo/buffalo/render"
