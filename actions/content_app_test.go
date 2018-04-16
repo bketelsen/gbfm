@@ -11,6 +11,8 @@ type ContentActionSuite struct {
 }
 
 func Test_Content(t *testing.T) {
-	as := &ActionSuite{suite.NewAction(ContentApp())}
+	app, close := ContentApp()
+	defer close()
+	as := &ActionSuite{suite.NewAction(app)}
 	suite.Run(t, as)
 }
