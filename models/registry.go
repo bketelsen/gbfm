@@ -2,6 +2,8 @@ package models
 
 import (
 	"fmt"
+
+	"github.com/jinzhu/inflection"
 )
 
 // for each type name, provide a function that returns an empty type and an empty list of
@@ -12,7 +14,7 @@ var registry = map[string]func() (IDer, interface{}){}
 func EmptyFromRegistry(name string) (IDer, error) {
 	fn, ok := registry[name]
 	if !ok {
-		depluralized, ok := registry[0 : len(name)-2]
+		depluralized, ok := registry(inflection.Singular(name))
 		if !ok {
 			return nil, fmt.Errorf("unknown model %s", name)
 		}

@@ -2,6 +2,7 @@ package content
 
 import (
 	"fmt"
+	"github.com/jinzhu/inflection"
 )
 
 var templateRegistry = map[string]*templateNames{
@@ -61,7 +62,7 @@ type templateNames struct {
 func getTemplateNames(s string) (*templateNames, error) {
 	tn, ok := templateRegistry[s]
 	if !ok {
-		depluralized, depluralizedFound := templateRegistry[s[0:len(s)-2]]
+		depluralized, depluralizedFound := templateRegistry[inflection.Singular(s)]
 		if !depluralizedFound {
 			return nil, fmt.Errorf("unknown model %s", s)
 		}

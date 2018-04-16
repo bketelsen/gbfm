@@ -191,6 +191,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  revision = "04140366298a54a039076d798123ffa108fff46c"
+
+[[projects]]
+  branch = "master"
   name = "github.com/jmoiron/sqlx"
   packages = [
     ".",
@@ -357,11 +363,6 @@
   version = "v1.5.1"
 
 [[projects]]
-  name = "github.com/satori/go.uuid"
-  packages = ["."]
-  revision = "36e9d2ebbde5e3f13ab2e25625fd453271d6522e"
-
-[[projects]]
   branch = "master"
   name = "github.com/serenize/snaker"
   packages = ["."]
@@ -504,6 +505,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d0bfcdbca757a462c56bf2160838205615a8e948e46991f5df447c3bf6721edf"
+  inputs-digest = "6fdd2f363e97be35e97861360c0fcada81985c8ba6804723c72d9f173bf62a1e"
   solver-name = "gps-cdcl"
   solver-version = 1
