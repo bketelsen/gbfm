@@ -7,5 +7,5 @@ import (
 )
 
 func homeHandler(c buffalo.Context) error {
-	return c.Render(http.StatusOK, r.HTML("admin/index.html"))
+	return c.Render(http.StatusOK, r.HTML("admin.html"))
 }

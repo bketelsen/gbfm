@@ -1,6 +1,7 @@
 package content
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -29,21 +30,25 @@ func attemptLoginHandler(c buffalo.Context) error {
 		Password string
 	}{}
 	if err := c.Bind(str); err != nil {
+		fmt.Println("error binding post")
 		c.Flash().Add("error", "email or password missing")
 		return c.Redirect(http.StatusUnauthorized, "/admin/login")
 	}
 	// check email & password
 	usr := new(models.User)
 	if err := models.DB.Where("email = ?", str.Email).First(usr); err != nil {
+		fmt.Println("error with sql statement", err)
 		c.Flash().Add("error", "email not found")
 		return c.Redirect(http.StatusFound, "/admin/login")
 	}
 	if usr == nil {
+		fmt.Println("empty user")
 		c.Flash().Add("error", "no such user")
 		return c.Redirect(http.StatusFound, "/admin/login")
 	}
 
 	if !IsUser(usr, str.Password) {
+		fmt.Println("password check fails")
 		c.Flash().Add("error", "invalid password")
 		return c.Redirect(http.StatusFound, "/admin/login")
 	}

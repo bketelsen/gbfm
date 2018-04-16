@@ -1,5 +1,5 @@
 create_table("topics", func(t) {
-    add_column("id", "uuid", {"primary": true})
-    add_column("slug", "string", {})
-    add_column("name", "string", {})
+    t.Column("id", "uuid", {"primary": true})
+    t.Column("slug", "string", {})
+    t.Column("name", "string", {})
 })

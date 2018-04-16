@@ -1,10 +1,10 @@
 create_table("gbfm", func(t) {
-    add_column("id", "uuid", {"primary": true})
-    add_column("slug", "string", {})
-    add_column("embed_code", "string", {})
-    add_column("github_link", "string", {})
-    add_column("sponsor", "string", {})
-    add_column("description", "string", {})
+    t.Column("id", "uuid", {"primary": true})
+    t.Column("slug", "string", {})
+    t.Column("embed_code", "string", {})
+    t.Column("github_link", "string", {})
+    t.Column("sponsor", "string", {})
+    t.Column("description", "string", {})
 })
 
 create_table("gifm_topics", func(t) {

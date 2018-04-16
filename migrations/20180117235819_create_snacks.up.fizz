@@ -4,6 +4,7 @@ create_table("snacks", func(t) {
 	t.Column("title", "string", {})
 	t.Column("sponsored", "bool", {})
 	t.Column("url", "string", {})
+	t.Column("embed_code", "string", {})
 	t.Column("summary", "string", {})
 	t.Column("comment", "string", {})
 })
