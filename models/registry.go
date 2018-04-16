@@ -14,7 +14,7 @@ var registry = map[string]func() (IDer, interface{}){}
 func EmptyFromRegistry(name string) (IDer, error) {
 	fn, ok := registry[name]
 	if !ok {
-		depluralized, ok := registry(inflection.Singular(name))
+		depluralized, ok := registry[inflection.Singular(name)]
 		if !ok {
 			return nil, fmt.Errorf("unknown model %s", name)
 		}
