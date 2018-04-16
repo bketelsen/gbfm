@@ -18,6 +18,7 @@ type Author struct {
 	Description string `json:"description" db:"description"`
 	Photo       string `json:"photo_url" db:"photo_url"`
 	// TODO: has_many's for the content models
+	// TODO: associate with a user
 }
 
 // GetAuthor returns an author by the given ID
