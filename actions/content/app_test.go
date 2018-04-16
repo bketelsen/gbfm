@@ -1,4 +1,4 @@
-package actions
+package content
 
 import (
 	"testing"
@@ -6,12 +6,12 @@ import (
 	"github.com/gobuffalo/suite"
 )
 
-type ContentActionSuite struct {
+type ActionSuite struct {
 	*suite.Action
 }
 
-func Test_Content(t *testing.T) {
-	app, close := ContentApp()
+func TestActions(t *testing.T) {
+	app, close := App()
 	defer close()
 	as := &ActionSuite{suite.NewAction(app)}
 	suite.Run(t, as)

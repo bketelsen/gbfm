@@ -4,13 +4,14 @@ import (
 	"log"
 
 	"github.com/gophersnacks/gbfm/actions"
+	"github.com/gophersnacks/gbfm/actions/content"
 )
 
 func main() {
 
 	gbfmApp := actions.GBFMApp()
 	snacksApp := actions.SnacksApp()
-	contentApp, contentClose := actions.ContentApp()
+	contentApp, contentClose := content.App()
 
 	errCh := make(chan error)
 	go func() {
