@@ -30,18 +30,22 @@ func init() {
 	}
 }
 
+// GetID implements IDer
 func (a Episode) GetID() uuid.UUID {
 	return a.ID
 }
 
+// GetCreatedAt implements Core
 func (a Episode) GetCreatedAt() time.Time {
 	return a.CreatedAt
 }
 
+// GetUpdatedAt implements Core
 func (a Episode) GetUpdatedAt() time.Time {
 	return a.UpdatedAt
 }
 
+// GetSlug implements Slugger
 func (a Episode) GetSlug() string {
 	return a.Slug
 }
