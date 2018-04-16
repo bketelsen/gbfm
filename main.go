@@ -5,12 +5,13 @@ import (
 
 	"github.com/gophersnacks/gbfm/actions"
 	"github.com/gophersnacks/gbfm/actions/content"
+	"github.com/gophersnacks/gbfm/actions/snacks"
 )
 
 func main() {
 
 	gbfmApp := actions.GBFMApp()
-	snacksApp := actions.SnacksApp()
+	snacksApp := snacks.App()
 	contentApp, contentClose := content.App()
 
 	errCh := make(chan error)
