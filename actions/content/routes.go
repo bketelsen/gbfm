@@ -16,6 +16,7 @@ var r = renderengine.New("gbfm/application.html")
 func AddRoutes(app *buffalo.App) {
 	app.Use(Auth)
 
+	app.GET("/", homeHandler)
 	app.GET("/admin", homeHandler)
 	mResource := &modelResource{}
 
