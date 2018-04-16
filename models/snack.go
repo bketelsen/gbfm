@@ -23,7 +23,7 @@ type Snack struct {
 }
 
 func init() {
-	registry["snack"] = func() (interface{}, interface{}) {
+	registry["snack"] = func() (IDer, interface{}) {
 		return new(Snack), new([]Snack)
 	}
 }

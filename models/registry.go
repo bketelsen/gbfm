@@ -6,10 +6,10 @@ import (
 
 // for each type name, provide a function that returns an empty type and an empty list of
 // that type
-var registry = map[string]func() (interface{}, interface{}){}
+var registry = map[string]func() (IDer, interface{}){}
 
 // EmptyFromRegistry returns a new model
-func EmptyFromRegistry(name string) (interface{}, error) {
+func EmptyFromRegistry(name string) (IDer, error) {
 	fn, ok := registry[name]
 	if !ok {
 		return nil, fmt.Errorf("unknown model %s", name)

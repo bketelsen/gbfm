@@ -17,7 +17,7 @@ type Topic struct {
 }
 
 func init() {
-	registry["topic"] = func() (interface{}, interface{}) {
+	registry["topic"] = func() (IDer, interface{}) {
 		return new(Topic), new([]Topic)
 	}
 }

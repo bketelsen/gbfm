@@ -23,7 +23,7 @@ type Guide struct {
 }
 
 func init() {
-	registry["guide"] = func() (interface{}, interface{}) {
+	registry["guide"] = func() (IDer, interface{}) {
 		return new(Guide), new([]Guide)
 	}
 }

@@ -6,9 +6,14 @@ import (
 	"github.com/gobuffalo/uuid"
 )
 
+// IDer is a model that exposes its ID
+type IDer interface {
+	GetID() uuid.UUID
+}
+
 // Core represents the core of a model
 type Core interface {
-	GetID() uuid.UUID
+	IDer
 	GetCreatedAt() time.Time
 	GetUpdatedAt() time.Time
 }

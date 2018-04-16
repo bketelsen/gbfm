@@ -25,7 +25,7 @@ type Episode struct {
 }
 
 func init() {
-	registry["episode"] = func() (interface{}, interface{}) {
+	registry["episode"] = func() (IDer, interface{}) {
 		return new(Episode), new([]Episode)
 	}
 }

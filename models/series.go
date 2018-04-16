@@ -21,7 +21,7 @@ type Series struct {
 }
 
 func init() {
-	registry["series"] = func() (interface{}, interface{}) {
+	registry["series"] = func() (IDer, interface{}) {
 		return new(Series), new([]Series)
 	}
 }
