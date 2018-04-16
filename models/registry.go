@@ -12,7 +12,11 @@ var registry = map[string]func() (IDer, interface{}){}
 func EmptyFromRegistry(name string) (IDer, error) {
 	fn, ok := registry[name]
 	if !ok {
-		return nil, fmt.Errorf("unknown model %s", name)
+		depluralized, ok := registry[0 : len(name)-2]
+		if !ok {
+			return nil, fmt.Errorf("unknown model %s", name)
+		}
+		fn = depluralized
 	}
 	single, _ := fn()
 	return single, nil
