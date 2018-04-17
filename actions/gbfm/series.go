@@ -28,11 +28,12 @@ type SeriesResource struct {
 // GET /series
 func (v SeriesResource) List(c buffalo.Context) error {
 	seriesList := []models.Series{}
-	// TODO: pagination
-	if err := models.DB.Eager().All(&seriesList); err != nil {
+	q := models.DB.Eager().PaginateFromParams(c.Request().URL.Query())
+	if err := q.All(&seriesList); err != nil {
 		c.Error(http.StatusInternalServerError, err)
 	}
-	c.Set("series_list", seriesList)
+	c.Set("series", seriesList)
+	c.Set("pagination", q.Paginator)
 	return c.Render(http.StatusOK, r.HTML("series/index.html"))
 }
 
