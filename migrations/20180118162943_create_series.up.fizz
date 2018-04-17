@@ -8,14 +8,12 @@ create_table("series", func(t) {
 	t.Column("pro", "bool", {})
 })
 
-create_table("series_topics", func(t) {
-	t.Column("id", "uuid", {"primary": true})
+create_table("topics_series", func(t) {
 	t.Column("series_id", "uuid", {})
 	t.Column("topic_id", "uuid", {})
 })
 
-create_table("series_authors", func(t) {
-	t.Column("id", "uuid", {"primary": true})
+create_table("authors_series", func(t) {
 	t.Column("series_id", "uuid", {})
 	t.Column("author_id", "uuid", {})
 })

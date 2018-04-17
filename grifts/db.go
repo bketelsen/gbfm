@@ -10,24 +10,7 @@ import (
 )
 
 var _ = grift.Namespace("db", func() {
-	grift.Add("users", func(c *grift.Context) error {
-		fmt.Println("Inserting user")
-		brian := models.User{}
-		brian.Email = "brian@gophersnacks.com"
-		brian.Password = "gopher"
-		brian.PasswordConfirmation = "gopher"
-		brian.Admin = true
-		if v, err := brian.Create(models.DB); err != nil {
-			if v.Error() != "" {
-				return errors.WithStack(v)
-			}
-
-			if err != nil {
-				return err
-			}
-		}
-
-		fmt.Println("selecting user")
+	grift.Add("listusers", func(c *grift.Context) error {
 		u := []models.User{}
 		err := models.DB.All(&u)
 		if err != nil {
