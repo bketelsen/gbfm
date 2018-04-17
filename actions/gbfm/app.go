@@ -12,7 +12,7 @@ import (
 	"github.com/gophersnacks/gbfm/models"
 )
 
-var r = render.New("gbfm/application.html")
+var r = render.New("common_layout.html")
 
 // App is where all routes and middleware for gobeyond5minutes.com are defined
 func App() *buffalo.App {
@@ -34,6 +34,12 @@ func App() *buffalo.App {
 	// Protect against CSRF attacks. https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
 	// Remove to disable this.
 	app.Use(csrf.New)
+
+	app.Use(web.LayoutMiddleware(
+		"Go Beyond Five Minutes",
+		"gbfm/partials/nav.html",
+		"gbfm/partials/footer.html",
+	))
 
 	// Wraps each request in a transaction.
 	//  c.Value("tx").(*pop.PopTransaction)
