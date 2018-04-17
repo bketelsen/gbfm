@@ -8,12 +8,18 @@ import (
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gophersnacks/gbfm/pkg/render"
+	"github.com/gophersnacks/gbfm/pkg/web"
 )
 
-var r = render.New("gbfm/application.html")
+var r = render.New("common_layout.html")
 
 // AddRoutes adds admin routes
 func AddRoutes(app *buffalo.App) {
+	app.Use(web.LayoutMiddleware(
+		"Gopher Enterprises",
+		"admin/nav.html",
+		"admin/footer.html",
+	))
 	app.Use(Auth)
 
 	app.GET("/", homeHandler)
