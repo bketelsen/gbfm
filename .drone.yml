@@ -1,0 +1,17 @@
+workspace:
+  base: /go
+  path: src/github.com/gophersnacks/gbfm
+
+pipeline:
+  ping:
+    image: postgres
+    commands:
+      - sleep 15
+  build:
+    image: golang:1.10
+    commands:
+      - go test ./...
+
+services:
+  postgres:
+    image: postgres
