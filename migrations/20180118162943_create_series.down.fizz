@@ -1,1 +1,3 @@
 drop_table("series")
+drop_table("series_authors")
+drop_table("series_topics")

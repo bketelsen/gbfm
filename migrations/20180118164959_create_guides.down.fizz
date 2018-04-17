@@ -1,1 +1,3 @@
 drop_table("guides")
+drop_table("guides_authors")
+drop_table("guides_topics")
