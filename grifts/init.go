@@ -6,6 +6,5 @@ import (
 )
 
 func init() {
-	a, _ := content.App()
-	buffalo.Grifts(a)
+	buffalo.Grifts(content.App())
 }
