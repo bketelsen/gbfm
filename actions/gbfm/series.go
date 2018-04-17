@@ -46,6 +46,4 @@ func (v SeriesResource) Show(c buffalo.Context) error {
 	}
 	c.Set("series", series)
 	return c.Render(http.StatusOK, r.HTML("gbfm/series.html"))
-
-	return nil
 }
