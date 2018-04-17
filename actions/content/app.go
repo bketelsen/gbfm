@@ -11,7 +11,7 @@ import (
 	"github.com/unrolled/secure"
 )
 
-var r = render.New("gbfm/application.html")
+var r = render.New("common_layout.html")
 
 // App is where all routes and middleware for the admin interface are defined.
 //
@@ -35,6 +35,12 @@ func App() (*buffalo.App, func()) {
 	// Protect against CSRF attacks. https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
 	// Remove to disable this.
 	app.Use(csrf.New)
+
+	app.Use(web.LayoutMiddleware(
+		"Gopher Enterprises",
+		"admin/nav.html",
+		"admin/footer.html",
+	))
 
 	// Wraps each request in a transaction.
 	//  c.Value("tx").(*pop.PopTransaction)
