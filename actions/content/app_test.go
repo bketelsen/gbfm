@@ -11,8 +11,6 @@ type ActionSuite struct {
 }
 
 func TestActions(t *testing.T) {
-	app, close := App()
-	defer close()
-	as := &ActionSuite{suite.NewAction(app)}
+	as := &ActionSuite{suite.NewAction(App())}
 	suite.Run(t, as)
 }

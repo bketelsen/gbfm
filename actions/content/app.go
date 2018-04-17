@@ -16,7 +16,7 @@ var r = render.New("gbfm/application.html")
 // App is where all routes and middleware for the admin interface are defined.
 //
 // The second parameter returned should be called by the caller in a defer
-func App() (*buffalo.App, func()) {
+func App() *buffalo.App {
 	app := buffalo.New(buffalo.Options{
 		Addr:        "0.0.0.0:8080",
 		Env:         web.ENV,
@@ -58,5 +58,5 @@ func App() (*buffalo.App, func()) {
 
 	app.ServeFiles("/", render.AssetsBox) // serve files from the public directory
 
-	return app, func() {} // TODO: remove the close func
+	return app
 }
