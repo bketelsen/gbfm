@@ -16,8 +16,8 @@ type Series struct {
 	ThumbnailURL string    `json:"thumbnail_url" db:"thumbnail_url`
 	Body         string    `json:"body" db:"body"`
 	Pro          bool      `json:"pro" db:"pro"`
-	Topics       []Topic   `json:"topics" db:"topics" many_to_many:"series_topics"`
-	Authors      []Author  `json:"authors" db:"authors" many_to_many:"series_authors"`
+	Topics       []Topic   `json:"topics" many_to_many:"series_topics"`
+	Authors      []Author  `json:"authors" many_to_many:"series_authors"`
 }
 
 func init() {
