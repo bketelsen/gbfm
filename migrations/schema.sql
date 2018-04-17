@@ -319,7 +319,9 @@ CREATE TABLE snacks (
     summary character varying(255) NOT NULL,
     comment character varying(255) NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    authors character varying(255) NOT NULL,
+    topics character varying(255) NOT NULL
 );
 
 
