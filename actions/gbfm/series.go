@@ -33,7 +33,7 @@ func (v SeriesResource) List(c buffalo.Context) error {
 		c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set("series_list", seriesList)
-	return c.Render(http.StatusOK, r.HTML("gbfm/series_list.html"))
+	return c.Render(http.StatusOK, r.HTML("series/index.html"))
 }
 
 // Show gets the data for one Series. This function is mapped to
@@ -45,5 +45,5 @@ func (v SeriesResource) Show(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 	c.Set("series", series)
-	return c.Render(http.StatusOK, r.HTML("gbfm/series.html"))
+	return c.Render(http.StatusOK, r.HTML("series/show.html"))
 }
