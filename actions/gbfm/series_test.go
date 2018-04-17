@@ -1,7 +1,7 @@
 package gbfm
 
 func (as *ActionSuite) Test_SeriesResource_List() {
-	//as.Fail("Not Implemented!")
+	as.Fail("Not Implemented!")
 }
 
 func (as *ActionSuite) Test_SeriesResource_Show() {
