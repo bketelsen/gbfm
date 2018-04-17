@@ -50,9 +50,13 @@ func App() (*buffalo.App, func()) {
 	app.GET("/admin", homeHandler)
 	mResource := &modelResource{}
 
-	app.GET("/admin/login", loginHandler)
-	app.POST("/admin/login", attemptLoginHandler)
-	app.Middleware.Skip(Auth, loginHandler, attemptLoginHandler)
+	login := &loginHandlers{
+		successRedir: "/admin",
+		showFormPath: "/admin/login",
+	}
+	app.GET("/admin/login", login.showForm)
+	app.POST("/admin/login", login.try)
+	app.Middleware.Skip(Auth, login.showForm, login.try)
 
 	app.Resource("/admin/{model_name}", mResource)
 
