@@ -146,7 +146,7 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 }
 
 func getModelName(c buffalo.Context) (string, error) {
-	modelName := c.Param("admin_model_name")
+	modelName := c.Param("model_name")
 	if modelName == "" {
 		return "", errors.New("model name not found")
 	}
