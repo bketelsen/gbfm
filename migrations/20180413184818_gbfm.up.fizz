@@ -7,12 +7,12 @@ create_table("gbfm", func(t) {
     t.Column("description", "string", {})
 })
 
-create_table("topics_gifm", func(t) {
+create_table("gifm_topics", func(t) {
 	t.Column("topic_id", "uuid", {})
 	t.Column("gifm_id", "uuid", {})
 })
 
-create_table("authors_gifm", func(t) {
+create_table("gifm_authors", func(t) {
 	t.Column("topic_id", "uuid", {})
 	t.Column("gifm_id", "uuid", {})
 })

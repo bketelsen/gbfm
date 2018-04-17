@@ -10,12 +10,12 @@ create_table("episodes", func(t) {
 	t.Column("repo", "string", {})
 })
 
-create_table("topics_episodes", func(t) {
+create_table("episodes_topics", func(t) {
 	t.Column("episode_id", "uuid", {})
 	t.Column("topic_id", "uuid", {})
 })
 
-create_table("authors_episodes", func(t) {
+create_table("episodes_authors", func(t) {
 	t.Column("episode_id", "uuid", {})
 	t.Column("author_id", "uuid", {})
 })

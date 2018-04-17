@@ -51,154 +51,6 @@ CREATE TABLE public.authors (
 ALTER TABLE public.authors OWNER TO postgres;
 
 --
--- Name: authors_episodes; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.authors_episodes (
-    id integer NOT NULL,
-    episode_id uuid NOT NULL,
-    author_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.authors_episodes OWNER TO postgres;
-
---
--- Name: authors_episodes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.authors_episodes_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.authors_episodes_id_seq OWNER TO postgres;
-
---
--- Name: authors_episodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.authors_episodes_id_seq OWNED BY public.authors_episodes.id;
-
-
---
--- Name: authors_gifm; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.authors_gifm (
-    id integer NOT NULL,
-    topic_id uuid NOT NULL,
-    gifm_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.authors_gifm OWNER TO postgres;
-
---
--- Name: authors_gifm_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.authors_gifm_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.authors_gifm_id_seq OWNER TO postgres;
-
---
--- Name: authors_gifm_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.authors_gifm_id_seq OWNED BY public.authors_gifm.id;
-
-
---
--- Name: authors_guides; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.authors_guides (
-    id integer NOT NULL,
-    guide_id uuid NOT NULL,
-    author_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.authors_guides OWNER TO postgres;
-
---
--- Name: authors_guides_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.authors_guides_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.authors_guides_id_seq OWNER TO postgres;
-
---
--- Name: authors_guides_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.authors_guides_id_seq OWNED BY public.authors_guides.id;
-
-
---
--- Name: authors_series; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.authors_series (
-    id integer NOT NULL,
-    series_id uuid NOT NULL,
-    author_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.authors_series OWNER TO postgres;
-
---
--- Name: authors_series_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.authors_series_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.authors_series_id_seq OWNER TO postgres;
-
---
--- Name: authors_series_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.authors_series_id_seq OWNED BY public.authors_series.id;
-
-
---
 -- Name: authors_snacks; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -258,6 +110,80 @@ CREATE TABLE public.episodes (
 ALTER TABLE public.episodes OWNER TO postgres;
 
 --
+-- Name: episodes_authors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.episodes_authors (
+    id integer NOT NULL,
+    episode_id uuid NOT NULL,
+    author_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.episodes_authors OWNER TO postgres;
+
+--
+-- Name: episodes_authors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.episodes_authors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.episodes_authors_id_seq OWNER TO postgres;
+
+--
+-- Name: episodes_authors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.episodes_authors_id_seq OWNED BY public.episodes_authors.id;
+
+
+--
+-- Name: episodes_topics; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.episodes_topics (
+    id integer NOT NULL,
+    episode_id uuid NOT NULL,
+    topic_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.episodes_topics OWNER TO postgres;
+
+--
+-- Name: episodes_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.episodes_topics_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.episodes_topics_id_seq OWNER TO postgres;
+
+--
+-- Name: episodes_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.episodes_topics_id_seq OWNED BY public.episodes_topics.id;
+
+
+--
 -- Name: gbfm; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -274,6 +200,80 @@ CREATE TABLE public.gbfm (
 
 
 ALTER TABLE public.gbfm OWNER TO postgres;
+
+--
+-- Name: gifm_authors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.gifm_authors (
+    id integer NOT NULL,
+    topic_id uuid NOT NULL,
+    gifm_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.gifm_authors OWNER TO postgres;
+
+--
+-- Name: gifm_authors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.gifm_authors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gifm_authors_id_seq OWNER TO postgres;
+
+--
+-- Name: gifm_authors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.gifm_authors_id_seq OWNED BY public.gifm_authors.id;
+
+
+--
+-- Name: gifm_topics; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.gifm_topics (
+    id integer NOT NULL,
+    topic_id uuid NOT NULL,
+    gifm_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.gifm_topics OWNER TO postgres;
+
+--
+-- Name: gifm_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.gifm_topics_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gifm_topics_id_seq OWNER TO postgres;
+
+--
+-- Name: gifm_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.gifm_topics_id_seq OWNED BY public.gifm_topics.id;
+
 
 --
 -- Name: guides; Type: TABLE; Schema: public; Owner: postgres
@@ -294,6 +294,80 @@ CREATE TABLE public.guides (
 
 
 ALTER TABLE public.guides OWNER TO postgres;
+
+--
+-- Name: guides_authors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.guides_authors (
+    id integer NOT NULL,
+    guide_id uuid NOT NULL,
+    author_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.guides_authors OWNER TO postgres;
+
+--
+-- Name: guides_authors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.guides_authors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.guides_authors_id_seq OWNER TO postgres;
+
+--
+-- Name: guides_authors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.guides_authors_id_seq OWNED BY public.guides_authors.id;
+
+
+--
+-- Name: guides_topics; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.guides_topics (
+    id integer NOT NULL,
+    guide_id uuid NOT NULL,
+    topic_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.guides_topics OWNER TO postgres;
+
+--
+-- Name: guides_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.guides_topics_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.guides_topics_id_seq OWNER TO postgres;
+
+--
+-- Name: guides_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.guides_topics_id_seq OWNED BY public.guides_topics.id;
+
 
 --
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: postgres
@@ -324,6 +398,80 @@ CREATE TABLE public.series (
 
 
 ALTER TABLE public.series OWNER TO postgres;
+
+--
+-- Name: series_authors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.series_authors (
+    id integer NOT NULL,
+    series_id uuid NOT NULL,
+    author_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.series_authors OWNER TO postgres;
+
+--
+-- Name: series_authors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.series_authors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.series_authors_id_seq OWNER TO postgres;
+
+--
+-- Name: series_authors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.series_authors_id_seq OWNED BY public.series_authors.id;
+
+
+--
+-- Name: series_topics; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.series_topics (
+    id integer NOT NULL,
+    series_id uuid NOT NULL,
+    topic_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.series_topics OWNER TO postgres;
+
+--
+-- Name: series_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.series_topics_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.series_topics_id_seq OWNER TO postgres;
+
+--
+-- Name: series_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.series_topics_id_seq OWNED BY public.series_topics.id;
+
 
 --
 -- Name: snacks; Type: TABLE; Schema: public; Owner: postgres
@@ -359,154 +507,6 @@ CREATE TABLE public.topics (
 
 
 ALTER TABLE public.topics OWNER TO postgres;
-
---
--- Name: topics_episodes; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.topics_episodes (
-    id integer NOT NULL,
-    episode_id uuid NOT NULL,
-    topic_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.topics_episodes OWNER TO postgres;
-
---
--- Name: topics_episodes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.topics_episodes_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.topics_episodes_id_seq OWNER TO postgres;
-
---
--- Name: topics_episodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.topics_episodes_id_seq OWNED BY public.topics_episodes.id;
-
-
---
--- Name: topics_gifm; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.topics_gifm (
-    id integer NOT NULL,
-    topic_id uuid NOT NULL,
-    gifm_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.topics_gifm OWNER TO postgres;
-
---
--- Name: topics_gifm_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.topics_gifm_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.topics_gifm_id_seq OWNER TO postgres;
-
---
--- Name: topics_gifm_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.topics_gifm_id_seq OWNED BY public.topics_gifm.id;
-
-
---
--- Name: topics_guides; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.topics_guides (
-    id integer NOT NULL,
-    guide_id uuid NOT NULL,
-    topic_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.topics_guides OWNER TO postgres;
-
---
--- Name: topics_guides_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.topics_guides_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.topics_guides_id_seq OWNER TO postgres;
-
---
--- Name: topics_guides_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.topics_guides_id_seq OWNED BY public.topics_guides.id;
-
-
---
--- Name: topics_series; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.topics_series (
-    id integer NOT NULL,
-    series_id uuid NOT NULL,
-    topic_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.topics_series OWNER TO postgres;
-
---
--- Name: topics_series_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.topics_series_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.topics_series_id_seq OWNER TO postgres;
-
---
--- Name: topics_series_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.topics_series_id_seq OWNED BY public.topics_series.id;
-
 
 --
 -- Name: topics_snacks; Type: TABLE; Schema: public; Owner: postgres
@@ -562,34 +562,6 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- Name: authors_episodes id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.authors_episodes ALTER COLUMN id SET DEFAULT nextval('public.authors_episodes_id_seq'::regclass);
-
-
---
--- Name: authors_gifm id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.authors_gifm ALTER COLUMN id SET DEFAULT nextval('public.authors_gifm_id_seq'::regclass);
-
-
---
--- Name: authors_guides id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.authors_guides ALTER COLUMN id SET DEFAULT nextval('public.authors_guides_id_seq'::regclass);
-
-
---
--- Name: authors_series id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.authors_series ALTER COLUMN id SET DEFAULT nextval('public.authors_series_id_seq'::regclass);
-
-
---
 -- Name: authors_snacks id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -597,31 +569,59 @@ ALTER TABLE ONLY public.authors_snacks ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- Name: topics_episodes id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: episodes_authors id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.topics_episodes ALTER COLUMN id SET DEFAULT nextval('public.topics_episodes_id_seq'::regclass);
-
-
---
--- Name: topics_gifm id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.topics_gifm ALTER COLUMN id SET DEFAULT nextval('public.topics_gifm_id_seq'::regclass);
+ALTER TABLE ONLY public.episodes_authors ALTER COLUMN id SET DEFAULT nextval('public.episodes_authors_id_seq'::regclass);
 
 
 --
--- Name: topics_guides id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: episodes_topics id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.topics_guides ALTER COLUMN id SET DEFAULT nextval('public.topics_guides_id_seq'::regclass);
+ALTER TABLE ONLY public.episodes_topics ALTER COLUMN id SET DEFAULT nextval('public.episodes_topics_id_seq'::regclass);
 
 
 --
--- Name: topics_series id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: gifm_authors id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.topics_series ALTER COLUMN id SET DEFAULT nextval('public.topics_series_id_seq'::regclass);
+ALTER TABLE ONLY public.gifm_authors ALTER COLUMN id SET DEFAULT nextval('public.gifm_authors_id_seq'::regclass);
+
+
+--
+-- Name: gifm_topics id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.gifm_topics ALTER COLUMN id SET DEFAULT nextval('public.gifm_topics_id_seq'::regclass);
+
+
+--
+-- Name: guides_authors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.guides_authors ALTER COLUMN id SET DEFAULT nextval('public.guides_authors_id_seq'::regclass);
+
+
+--
+-- Name: guides_topics id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.guides_topics ALTER COLUMN id SET DEFAULT nextval('public.guides_topics_id_seq'::regclass);
+
+
+--
+-- Name: series_authors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.series_authors ALTER COLUMN id SET DEFAULT nextval('public.series_authors_id_seq'::regclass);
+
+
+--
+-- Name: series_topics id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.series_topics ALTER COLUMN id SET DEFAULT nextval('public.series_topics_id_seq'::regclass);
 
 
 --
@@ -629,30 +629,6 @@ ALTER TABLE ONLY public.topics_series ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.topics_snacks ALTER COLUMN id SET DEFAULT nextval('public.topics_snacks_id_seq'::regclass);
-
-
---
--- Name: authors_episodes authors_episodes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.authors_episodes
-    ADD CONSTRAINT authors_episodes_pkey PRIMARY KEY (id);
-
-
---
--- Name: authors_gifm authors_gifm_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.authors_gifm
-    ADD CONSTRAINT authors_gifm_pkey PRIMARY KEY (id);
-
-
---
--- Name: authors_guides authors_guides_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.authors_guides
-    ADD CONSTRAINT authors_guides_pkey PRIMARY KEY (id);
 
 
 --
@@ -664,19 +640,19 @@ ALTER TABLE ONLY public.authors
 
 
 --
--- Name: authors_series authors_series_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.authors_series
-    ADD CONSTRAINT authors_series_pkey PRIMARY KEY (id);
-
-
---
 -- Name: authors_snacks authors_snacks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.authors_snacks
     ADD CONSTRAINT authors_snacks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: episodes_authors episodes_authors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.episodes_authors
+    ADD CONSTRAINT episodes_authors_pkey PRIMARY KEY (id);
 
 
 --
@@ -688,11 +664,43 @@ ALTER TABLE ONLY public.episodes
 
 
 --
+-- Name: episodes_topics episodes_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.episodes_topics
+    ADD CONSTRAINT episodes_topics_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: gbfm gbfm_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.gbfm
     ADD CONSTRAINT gbfm_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gifm_authors gifm_authors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.gifm_authors
+    ADD CONSTRAINT gifm_authors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gifm_topics gifm_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.gifm_topics
+    ADD CONSTRAINT gifm_topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: guides_authors guides_authors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.guides_authors
+    ADD CONSTRAINT guides_authors_pkey PRIMARY KEY (id);
 
 
 --
@@ -704,11 +712,35 @@ ALTER TABLE ONLY public.guides
 
 
 --
+-- Name: guides_topics guides_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.guides_topics
+    ADD CONSTRAINT guides_topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: series_authors series_authors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.series_authors
+    ADD CONSTRAINT series_authors_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: series series_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.series
     ADD CONSTRAINT series_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: series_topics series_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.series_topics
+    ADD CONSTRAINT series_topics_pkey PRIMARY KEY (id);
 
 
 --
@@ -720,43 +752,11 @@ ALTER TABLE ONLY public.snacks
 
 
 --
--- Name: topics_episodes topics_episodes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.topics_episodes
-    ADD CONSTRAINT topics_episodes_pkey PRIMARY KEY (id);
-
-
---
--- Name: topics_gifm topics_gifm_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.topics_gifm
-    ADD CONSTRAINT topics_gifm_pkey PRIMARY KEY (id);
-
-
---
--- Name: topics_guides topics_guides_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.topics_guides
-    ADD CONSTRAINT topics_guides_pkey PRIMARY KEY (id);
-
-
---
 -- Name: topics topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.topics
     ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
-
-
---
--- Name: topics_series topics_series_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.topics_series
-    ADD CONSTRAINT topics_series_pkey PRIMARY KEY (id);
 
 
 --
