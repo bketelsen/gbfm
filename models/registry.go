@@ -14,11 +14,11 @@ var registry = map[string]func() (IDer, interface{}){}
 func EmptyFromRegistry(name string) (IDer, error) {
 	fn, ok := registry[name]
 	if !ok {
-		depluralized, ok := registry[inflection.Singular(name)]
+		singular := inflection.Singular(name)
+		fn, ok = registry[singular]
 		if !ok {
-			return nil, fmt.Errorf("unknown model %s", name)
+			return nil, fmt.Errorf("unknown model %s / %s", name, singular)
 		}
-		fn = depluralized
 	}
 	single, _ := fn()
 	return single, nil
@@ -28,7 +28,11 @@ func EmptyFromRegistry(name string) (IDer, error) {
 func EmptyListFromRegistry(name string) (interface{}, error) {
 	fn, ok := registry[name]
 	if !ok {
-		return nil, fmt.Errorf("unknown model %s", name)
+		singular := inflection.Singular(name)
+		fn, ok = registry[singular]
+		if !ok {
+			return nil, fmt.Errorf("unknown model %s / %s", name, singular)
+		}
 	}
 	_, list := fn()
 	return list, nil
