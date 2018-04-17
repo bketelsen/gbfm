@@ -35,6 +35,12 @@ func App() *buffalo.App {
 	// Remove to disable this.
 	app.Use(csrf.New)
 
+	app.Use(web.LayoutMiddleware(
+		"GopherSnacks",
+		"snacks/partials/nav.html",
+		"snacks/partials/footer.html",
+	))
+
 	// Wraps each request in a transaction.
 	//  c.Value("tx").(*pop.PopTransaction)
 	// Remove to disable this.
