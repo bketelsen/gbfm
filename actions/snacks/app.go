@@ -12,6 +12,8 @@ import (
 	"github.com/gophersnacks/gbfm/pkg/web"
 )
 
+var r = render.New("snacks/application.html")
+
 // App is where all routes and middleware for gophersnacks.com are defined
 func App() *buffalo.App {
 	app := buffalo.New(buffalo.Options{

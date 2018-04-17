@@ -12,6 +12,8 @@ import (
 	"github.com/gophersnacks/gbfm/models"
 )
 
+var r = render.New("gbfm/application.html")
+
 // App is where all routes and middleware for gobeyond5minutes.com are defined
 func App() *buffalo.App {
 	app := buffalo.New(buffalo.Options{
