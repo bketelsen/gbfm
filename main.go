@@ -3,15 +3,15 @@ package main
 import (
 	"log"
 
-	"github.com/gophersnacks/gbfm/actions"
 	"github.com/gophersnacks/gbfm/actions/content"
 	"github.com/gophersnacks/gbfm/actions/gbfm"
+	"github.com/gophersnacks/gbfm/actions/snacks"
 )
 
 func main() {
 
+	snacksApp := snacks.App()
 	gbfmApp := gbfm.App()
-	snacksApp := actions.SnacksApp()
 	contentApp, contentClose := content.App()
 
 	errCh := make(chan error)

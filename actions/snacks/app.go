@@ -1,4 +1,4 @@
-package actions
+package snacks
 
 import (
 	"github.com/gobuffalo/buffalo"
@@ -8,24 +8,24 @@ import (
 	"github.com/unrolled/secure"
 
 	"github.com/gobuffalo/buffalo/middleware/csrf"
-	"github.com/gophersnacks/gbfm/actions/snacks"
 	"github.com/gophersnacks/gbfm/models"
+	"github.com/gophersnacks/gbfm/pkg/web"
 )
 
-// SnacksApp is where all routes and middleware for gophersnacks.com are defined
-func SnacksApp() *buffalo.App {
+// App is where all routes and middleware for gophersnacks.com are defined
+func App() *buffalo.App {
 	app := buffalo.New(buffalo.Options{
 		Addr:        "0.0.0.0:3000",
-		Env:         ENV,
+		Env:         web.ENV,
 		SessionName: "_snacks_session",
 	})
 	// Automatically redirect to SSL
 	app.Use(ssl.ForceSSL(secure.Options{
-		SSLRedirect:     ENV == "production",
+		SSLRedirect:     web.ENV == "production",
 		SSLProxyHeaders: map[string]string{"X-Forwarded-Proto": "https"},
 	}))
 
-	if ENV == "development" {
+	if web.ENV == "development" {
 		app.Use(middleware.ParameterLogger)
 	}
 
@@ -38,24 +38,11 @@ func SnacksApp() *buffalo.App {
 	// Remove to disable this.
 	app.Use(middleware.PopTransaction(models.DB))
 
-	app.Use(translator.Middleware())
+	app.Use(web.Translator.Middleware())
 
-	snacks.AddRoutes(app)
+	app.GET("/", homeHandler)
+	app.GET("/snack/{snack_slug}", snackHandler)
 
-	admin := app.Group("/admin")
-	admin.Use(SetCurrentUser)
-	admin.Use(AdminAuthorize)
-	admin.GET("/", AdminHandler)
-
-	app.Use(SetCurrentUser)
-	app.GET("/users/new", UsersNew)
-	app.POST("/users", UsersCreate)
-	app.GET("/signin", AuthNew)
-	app.POST("/signin", AuthCreate)
-	app.POST("/token", AuthToken)
-	app.DELETE("/signout", AuthDestroy)
-	app.GET("/authors", AuthorList)
-	app.GET("/authors/{name}", AuthorShow)
 	app.ServeFiles("/", render.AssetsBox) // serve files from the public directory
 
 	return app
