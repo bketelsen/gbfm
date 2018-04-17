@@ -5,11 +5,12 @@ import (
 
 	"github.com/gophersnacks/gbfm/actions"
 	"github.com/gophersnacks/gbfm/actions/content"
+	"github.com/gophersnacks/gbfm/actions/gbfm"
 )
 
 func main() {
 
-	gbfmApp := actions.GBFMApp()
+	gbfmApp := gbfm.App()
 	snacksApp := actions.SnacksApp()
 	contentApp, contentClose := content.App()
 
