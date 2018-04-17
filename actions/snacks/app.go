@@ -12,6 +12,8 @@ import (
 	"github.com/gophersnacks/gbfm/pkg/web"
 )
 
+var r = render.New("snacks/application.html")
+
 // App is where all routes and middleware for gophersnacks.com are defined
 func App() *buffalo.App {
 	app := buffalo.New(buffalo.Options{
@@ -32,6 +34,12 @@ func App() *buffalo.App {
 	// Protect against CSRF attacks. https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
 	// Remove to disable this.
 	app.Use(csrf.New)
+
+	app.Use(web.LayoutMiddleware(
+		"GopherSnacks",
+		"snacks/partials/nav.html",
+		"snacks/partials/footer.html",
+	))
 
 	// Wraps each request in a transaction.
 	//  c.Value("tx").(*pop.PopTransaction)
