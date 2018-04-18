@@ -16,11 +16,13 @@ var Connections = map[string]*Connection{}
 // Connection represents all of the necessary details for
 // talking with a datastore
 type Connection struct {
-	ID      string
-	Store   store
-	Dialect dialect
-	Elapsed int64
-	TX      *Tx
+	ID          string
+	Store       store
+	Dialect     dialect
+	Elapsed     int64
+	TX          *Tx
+	eager       bool
+	eagerFields []string
 }
 
 func (c *Connection) String() string {
@@ -35,6 +37,11 @@ func (c *Connection) URL() string {
 // MigrationURL returns the datasource connection string used for running the migrations
 func (c *Connection) MigrationURL() string {
 	return c.Dialect.MigrationURL()
+}
+
+// MigrationTableName returns the name of the table to track migrations
+func (c *Connection) MigrationTableName() string {
+	return c.Dialect.Details().MigrationTableName()
 }
 
 // NewConnection creates a new connection, and sets it's `Dialect`

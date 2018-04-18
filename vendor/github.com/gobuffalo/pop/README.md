@@ -84,9 +84,15 @@ Now that you have your connection to the database you can start executing querie
 
 Pop features CLI support via the `soda` command for the following operations:
 
-* creating databases
-* dropping databases
-* migrating databases
+```bash
+Available Commands:
+  create      Creates databases for you
+  drop        Drops databases for you
+  generate
+  help        Help about any command
+  migrate     Runs migrations against your database.
+  schema      Tools for working with your database schema
+```
 
 ### Installing CLI Support
 
@@ -97,7 +103,7 @@ $ go get github.com/gobuffalo/pop/...
 $ go install github.com/gobuffalo/pop/soda
 ```
 
-**with** sqlite 3 support:
+**With** sqlite 3 support:
 
 ```bash
 $ go get -u -v -tags sqlite github.com/gobuffalo/pop/...
@@ -176,7 +182,20 @@ The `models/user.go` file contains a structure named `User` with fields `ID`, `C
 
 The `models/user_test.go` contains tests for the User model and they must be implemented by you.
 
-The other two files correspond to the migrations as explained below.
+The other two files correspond to the migrations as explained below. By default, it generates `.fizz` files but you can also generate `.sql` files by adding the flag `--migration-type sql` to the command. Be aware, that you will need to specify the appropriate environment, because `.sql` files are for specific databases.
+
+```bash
+$ soda generate model user name:text email:text --migration-type sql -e development
+```
+
+If `development`is associated with a `postgresql`configuration, running this command will generate the following files:
+
+```text
+models/user.go
+models/user_test.go
+migrations/20170115024143_create_users.postgres.up.sql
+migrations/20170115024143_create_users.postgres.down.sql
+```
 
 ### Migrations
 
@@ -228,12 +247,22 @@ The `soda` command will run the migrations using the following command:
 $ soda migrate up
 ```
 
-Migrations will be run in sequential order. The previously run migrations will be kept track of in a table named `schema_migrations` in the database.
+Migrations will be run in sequential order. 
 
 Migrations can also be run in reverse to rollback the schema.
 
 ```bash
 $ soda migrate down
+```
+
+The previously run migrations will be kept track of in a table named `schema_migration` in the database. The table name can be configured by setting `migration_table_name` of the configuration options. The example below will use `migrations` as the table name.
+
+```yaml
+development:
+  dialect: "postgres"
+  url: "your_db_development"
+  options:
+    migration_table_name: migrations
 ```
 
 #### Find
@@ -242,7 +271,7 @@ user := models.User{}
 err := tx.Find(&user, id)
 ```
 
-#### Query
+#### Query All
 ```go
 tx := models.DB
 query := tx.Where("id = 1").Where("name = 'Mark'")
@@ -268,6 +297,80 @@ sql, args := query.ToSQL(&pop.Model{Value: models.UserRole{}}, "user_roles.*",
   "roles.name as role_name", "u.first_name", "u.last_name")
 //log.Printf("sql: %s, args: %v", sql, args)
 err := models.DB.RawQuery(sql, args...).All(&roles)
+```
+
+#### Create
+```go
+// Create one record.
+user := models.User{}
+user.Name = "Mark"
+err := tx.Create(&user)
+
+// Create many records.
+users := models.Users{
+  {Name:"Mark"},
+  {Name: "Larry"},
+}
+
+err := tx.Create(&users)
+```
+
+#### Save
+```go
+// Save one record.
+user := models.User{}
+user.Name = "Mark"
+err := tx.Save(&user)
+
+// Save many records.
+users := models.Users{
+  {Name:"Mark"},
+  {Name: "Larry"},
+}
+
+err := tx.Save(&users)
+```
+
+#### Update
+```go
+// Update one record.
+user := models.User{}
+user.Name = "Mark"
+err := tx.Create(&user)
+
+user.Name = "Mark Bates"
+err = tx.Update(&user)
+
+// Update many records.
+users := models.Users{
+  {Name:"Mark"},
+  {Name: "Larry"},
+}
+
+err := tx.Create(&users)
+
+users[0].Name = "Mark Bates"
+users[1].Name = "Larry Morales"
+err := tx.Update(&users)
+```
+
+#### Destroy
+```go
+// Destroy one record.
+user := models.User{}
+user.Name = "Mark"
+err := tx.Create(&user)
+
+err = tx.Destroy(&user)
+
+// Destroy many records.
+users := models.Users{
+  {Name:"Mark"},
+  {Name: "Larry"},
+}
+err := tx.Create(&users)
+
+err = tx.Destroy(&users)
 ```
 
 ### Eager Loading
@@ -345,7 +448,7 @@ err  = tx.Eager("Books").Where("name = 'Mark'").All(&u) // preload only Books as
  pop allows you to eager loading nested associations by using `.` character to concatenate them. Take a look at the example bellow.
 ```go
 tx.Eager("Books.User").First(&u)  // will load all Books for u and for every Book will load the user which will be the same as u.
-``` 
+```
 ```go
  tx.Eager("Books.Writers").First(&u)  // will load all Books for u and for every Book will load all Writers.
 ```
@@ -355,6 +458,52 @@ tx.Eager("Books.Writers.Book").First(&u)  // will load all Books for u and for e
 ```go
 tx.Eager("Books.Writers").Eager("FavoriteSong").First(&u)  // will load all Books for u and for every Book will load all Writers. And Also it will load the favorite song for user.
 ```
+
+#### Eager Creation
+pop allows you to eager create models and their associations in just one simple statement, you don't need to create every association separately anymore.
+
+```go
+user := User{
+  Name: "Mark Bates",
+  Books: Books{{Title: "Pop Book", Description: "Pop Book", Isbn: "PB1"}},
+  FavoriteSong: Song{Title: "Don't know the title"},
+  Houses: Addresses{
+    Address{HouseNumber: 1, Street: "Golang"},
+  },
+}
+```
+
+```go
+err := tx.Eager().Create(&user)
+```
+
+The above sentence will do this:
+
+1. It will notice `Books` is a `has_many` association and it will realize that to actually store every book it will need to get the `User ID` first. So, it proceeds to store first `User` data so it can retrieve an **ID** and then use that ID to fill `UserID` field in every `Book` in `Books`. Later it stores all books in database.
+
+2. `FavoriteSong` is a `has_one` association and it uses same logic described in `has_many` association. Since `User` data was previously saved before creating all books, it already knows that `User` got an `ID` so it fills its `UserID` field with that value and `FavoriteSong` is then stored in database.
+
+3. `Houses` for this example is a `many_to_many` relationship and it will have to deal with two tables in this case: `users` and `addresses`. It will need to store all addresses first in `addresses` table before save them in the many to many table. Because `User` was already stored, it already have an `ID`. This is a special case to deal with, since this behavior is different to all other associations, it managed to solve it by let it implement the `AssociationCreatableStatement` interface, all other associations implement by default `AssociationCreatable` interface.
+
+For `belongs_to` association like shown in the example bellow, it will need first to create `User` to retrieve **ID** value and then fill its `UserID` field before be saved in database.
+
+```go
+book := Book{
+   Title:      "Pop Book",
+   Description: "Pop Book",
+   Isbn:        "PB1",
+   User: User{
+        Name: nulls.NewString("Larry"),
+   },
+}
+```
+
+```go
+tx.Eager().Create(&book)
+```
+
+All these cases are assuming that none of models and associations has previously been saved in database.
+
 
 #### Callbacks
 Pop provides a means to execute code before and after database operations.

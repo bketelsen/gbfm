@@ -18,8 +18,8 @@ type Snack struct {
 	URL       string   `json:"url" db:"url"`
 	Summary   string   `json:"summary" db:"summary"`
 	Comment   string   `json:"comment" db:"summary"`
-	Topics    []Topic  `json:"topics"  many_to_many:"topics_snacks"`
-	Authors   []Author `json:"authors"  many_to_many:"authors_snacks"`
+	Topics    []Topic  `json:"topics" many_to_many:"topics_snacks"`
+	Authors   []Author `json:"authors" many_to_many:"authors_snacks"`
 }
 
 func init() {
