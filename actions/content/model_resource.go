@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/pop"
 	"github.com/gophersnacks/gbfm/models"
 )
 
@@ -12,6 +13,7 @@ type modelResource struct{}
 
 // /admin/{model_name}
 func (m *modelResource) List(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
 	if err != nil {
 		c.Logger().Errorf("model name %s not found", modelName)
@@ -27,10 +29,12 @@ func (m *modelResource) List(c buffalo.Context) error {
 		c.Logger().Errorf("model registry lookup for %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
-	if err := models.DB.All(list); err != nil {
+	q := tx.Q().PaginateFromParams(c.Request().URL.Query())
+	if err := q.All(list); err != nil {
 		c.Logger().Errorf("fetching model list for %s", modelName)
 		return c.Error(http.StatusInternalServerError, err)
 	}
+	c.Set("pagination", q.Paginator)
 	c.Set(modelName, list)
 	return c.Render(http.StatusOK, r.HTML(tpls.Index))
 }
