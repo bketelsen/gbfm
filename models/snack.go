@@ -18,6 +18,7 @@ type Snack struct {
 	URL       string   `json:"url" db:"url"`
 	Summary   string   `json:"summary" db:"summary"`
 	Comment   string   `json:"comment" db:"summary"`
+	EmbedCode string   `json:"embed_code" db:"embed_code"`
 	Topics    []Topic  `json:"topics" many_to_many:"topics_snacks"`
 	Authors   []Author `json:"authors" many_to_many:"authors_snacks"`
 }
@@ -34,6 +35,7 @@ func init() {
 				URL:       namer.NameSep("-"),
 				Summary:   namer.Name(),
 				Comment:   namer.Name(),
+				EmbedCode: namer.NameSep("-"),
 			}
 		},
 	}
