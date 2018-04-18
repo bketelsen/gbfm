@@ -23,7 +23,7 @@ func (as ActionSuite) TestModelList() {
 }
 
 func (as ActionSuite) TestModelNew() {
-	r, db := as.Require(), as.DB
+	r := as.Require()
 	for modelName := range templateRegistry {
 		r.NoError(as.login())
 		as.T().Logf("model %s", modelName)
