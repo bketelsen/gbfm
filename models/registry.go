@@ -6,34 +6,58 @@ import (
 	"github.com/jinzhu/inflection"
 )
 
+type registryFuncs struct {
+	// a function that returns an empty model
+	empty func() IDer
+	// a function that returns a models that is full of sample data.
+	//
+	// useful for testing
+	sample func() IDer
+	// a function that returns a list of empty models
+	list func() interface{}
+}
+
 // for each type name, provide a function that returns an empty type and an empty list of
 // that type
-var registry = map[string]func() (IDer, interface{}){}
+var registry = map[string]*registryFuncs{}
 
-// EmptyFromRegistry returns a new model
+// EmptyFromRegistry returns a new empty model
 func EmptyFromRegistry(name string) (IDer, error) {
-	fn, ok := registry[name]
+	funcs, ok := registry[name]
 	if !ok {
 		singular := inflection.Singular(name)
-		fn, ok = registry[singular]
+		funcs, ok = registry[singular]
 		if !ok {
 			return nil, fmt.Errorf("unknown model %s / %s", name, singular)
 		}
 	}
-	single, _ := fn()
-	return single, nil
+	return funcs.empty(), nil
+}
+
+// SampleFromRegistry returns a new model that is full of sample data.
+//
+// useful for testing
+func SampleFromRegistry(name string) (IDer, error) {
+	funcs, ok := registry[name]
+	if !ok {
+		singular := inflection.Singular(name)
+		funcs, ok = registry[singular]
+		if !ok {
+			return nil, fmt.Errorf("unknown model %s / %s", name, singular)
+		}
+	}
+	return funcs.sample(), nil
 }
 
 // EmptyListFromRegistry returns a new list of models
 func EmptyListFromRegistry(name string) (interface{}, error) {
-	fn, ok := registry[name]
+	funcs, ok := registry[name]
 	if !ok {
 		singular := inflection.Singular(name)
-		fn, ok = registry[singular]
+		funcs, ok = registry[singular]
 		if !ok {
 			return nil, fmt.Errorf("unknown model %s / %s", name, singular)
 		}
 	}
-	_, list := fn()
-	return list, nil
+	return funcs.list(), nil
 }

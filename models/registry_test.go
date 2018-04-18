@@ -6,23 +6,22 @@ import (
 
 func (ms ModelSuite) TestRegistryFuncs() {
 	r := ms.Require()
-	for name, expectedFunc := range registry {
-		expectedIDer, expectedList := expectedFunc()
+	for name, expectedFuncs := range registry {
 
 		IDer, err := EmptyFromRegistry(name)
 		r.NoError(err)
-		r.Equal(expectedIDer, IDer)
+		r.Equal(expectedFuncs.empty(), IDer)
 
 		IDer, err = EmptyFromRegistry(inflection.Plural(name))
 		r.NoError(err)
-		r.Equal(expectedIDer, IDer)
+		r.Equal(expectedFuncs.empty(), IDer)
 
 		list, err := EmptyListFromRegistry(name)
 		r.NoError(err)
-		r.Equal(expectedList, list)
+		r.Equal(expectedFuncs.list(), list)
 
 		list, err = EmptyListFromRegistry(inflection.Plural(name))
 		r.NoError(err)
-		r.Equal(expectedList, list)
+		r.Equal(expectedFuncs.list(), list)
 	}
 }

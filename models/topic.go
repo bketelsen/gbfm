@@ -17,8 +17,10 @@ type Topic struct {
 }
 
 func init() {
-	registry["topic"] = func() (IDer, interface{}) {
-		return new(Topic), new([]Topic)
+	registry["topic"] = &registryFuncs{
+		empty: func() IDer { return new(Topic) },
+		list:  func() interface{} { return new([]Topic) },
+		// TODO: sample
 	}
 }
 

@@ -21,9 +21,7 @@ type Series struct {
 }
 
 func init() {
-	registry["series"] = func() (IDer, interface{}) {
-		return new(Series), new([]Series)
-	}
+	registry["series"] = &registryFuncs{}
 }
 
 // GetID implements IDer

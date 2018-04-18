@@ -22,9 +22,22 @@ type Guide struct {
 	Authors      []Author  `json:"authors" many_to_many:"guides_authors"`
 }
 
+func sampleGuide() *Guide {
+	return &Guide{
+		Slug:         namer.NameSep("-"),
+		Title:        namer.Name(),
+		Description:  namer.Name(),
+		ThumbnailURL: namer.Name(),
+		EmbedCode:    namer.Name(),
+		Body:         namer.Name(),
+		Pro:          true,
+	}
+}
 func init() {
-	registry["guide"] = func() (IDer, interface{}) {
-		return new(Guide), new([]Guide)
+	registry["guide"] = &registryFuncs{
+		empty:  func() IDer { return new(Guide) },
+		sample: func() IDer { return sampleGuide() },
+		list:   func() interface{} { return []Guide{} },
 	}
 }
 

@@ -22,8 +22,10 @@ type GIFM struct {
 }
 
 func init() {
-	registry["gifm"] = func() (IDer, interface{}) {
-		return new(GIFM), new([]GIFM)
+	registry["gifm"] = &registryFuncs{
+		list:  func() interface{} { return []GIFM{} },
+		empty: func() IDer { return new(GIFM) },
+		// TODO : sample
 	}
 }
 

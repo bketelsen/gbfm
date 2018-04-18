@@ -23,8 +23,10 @@ type Snack struct {
 }
 
 func init() {
-	registry["snack"] = func() (IDer, interface{}) {
-		return new(Snack), new([]Snack)
+	registry["snack"] = &registryFuncs{
+		list:  func() interface{} { return new([]Snack) },
+		empty: func() IDer { return new(Snack) },
+		// TODO: sample
 	}
 }
 
