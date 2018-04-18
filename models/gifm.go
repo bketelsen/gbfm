@@ -38,6 +38,13 @@ func init() {
 	}
 }
 
+// TableName implements the pop TableNamer interface. This needs to be
+// implemented because pop will automatically infer the table name from
+// the struct name as "g_i_f_ms". This is because it separates capital
+// letters with underscores
+func (a GIFM) TableName() string {
+	return "gbfms"
+}
 func (a GIFM) GetID() uuid.UUID {
 	return a.ID
 }
