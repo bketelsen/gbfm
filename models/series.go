@@ -18,7 +18,7 @@ type Series struct {
 	Pro          bool      `json:"pro" db:"pro"`
 	Topics       []Topic   `json:"topics" many_to_many:"series_topics"`
 	Authors      []Author  `json:"authors" many_to_many:"series_authors"`
-	Episodes     []Episode `json:"episodes" many_to_many:"series_episodes"`
+	Episodes     []Episode `json:"episodes" many_to_many:"series_episodes" order_by:"created_at desc"`
 }
 
 func init() {
