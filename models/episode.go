@@ -23,6 +23,7 @@ type Episode struct {
 	Repo         string   `json:"repo" db:"repo"`
 	Topics       []Topic  `json:"topics" many_to_many:"episodes_topics"`
 	Authors      []Author `json:"authors" many_to_many:"episodes_authors"`
+	Series       []Series `json:"series_ids" many_to_many:"episodes_series"`
 }
 
 func init() {
