@@ -1,7 +1,7 @@
 package content
 
 import (
-	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
@@ -41,7 +41,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	id, err := getModelID(c)
+	id, err := getModelID(c, modelName)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
@@ -101,7 +101,7 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	modelID, err := getModelID(c)
+	modelID, err := getModelID(c, modelName)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
@@ -128,7 +128,7 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	modelID, err := getModelID(c)
+	modelID, err := getModelID(c, modelName)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
@@ -152,15 +152,15 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 func getModelName(c buffalo.Context) (string, error) {
 	modelName := c.Param("model_name")
 	if modelName == "" {
-		return "", errors.New("model name not found")
+		return "", fmt.Errorf("model name %s not found", modelName)
 	}
 	return modelName, nil
 }
 
-func getModelID(c buffalo.Context) (string, error) {
-	modelID := c.Param("admin_model_id")
+func getModelID(c buffalo.Context, name string) (string, error) {
+	modelID := c.Param("model_id")
 	if modelID == "" {
-		return "", errors.New("model ID not found")
+		return "", fmt.Errorf("model ID not found for %s", name)
 	}
 	return modelID, nil
 }
