@@ -17,3 +17,8 @@ create_table("series_authors", func(t) {
 	t.Column("series_id", "uuid", {})
 	t.Column("author_id", "uuid", {})
 })
+
+create_table("series_episodes", func(t) {
+	t.Column("series_id", "uuid", {})
+	t.Column("episode_id", "uuid", {})
+})
