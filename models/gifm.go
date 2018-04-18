@@ -6,7 +6,14 @@ import (
 	"github.com/gobuffalo/uuid"
 )
 
-// GIFM is a go in 5 minutes entry
+// GIFM is a go in 5 minutes entry.
+//
+// This does not match the migrations. It's called GIFM and the migration
+// creates a "gbfm" table. TODOs:
+//
+// - Rename this GBFM
+// - Change the TableName func to return "gbfm"
+//
 type GIFM struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
