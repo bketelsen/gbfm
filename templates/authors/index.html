@@ -13,13 +13,13 @@
   <tbody>
     <%= for (author) in authors { %>
       <tr>
-      <td><%= author.AuthorSlug %></td>
+      <td><%= author.Slug %></td>
         <td><%= author.Name %></td>
         <td><%= markdown(author.Description) %></td>
         <td><%= author.Photo %></td>
         <td>
           <div class="pull-right">
-              <a href="/authors/<%= author.AuthorSlug %>" class="btn btn-info">View</a>
+              <a href="/authors/<%= author.Slug %>" class="btn btn-info">View</a>
           </div>
         </td>
       </tr>
