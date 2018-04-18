@@ -49,6 +49,9 @@ func App() *buffalo.App {
 	// Setup and use translations:
 	app.Use(web.Translator.Middleware())
 	app.GET("/", homeHandler)
+
+	app.GET("/authors", AuthorList)
+	app.GET("/authors/{name}", AuthorShow)
 	app.GET("/series", SeriesList)
 	app.GET("/series/{name}", SeriesShow)
 	app.GET("/guides", GuideList)
