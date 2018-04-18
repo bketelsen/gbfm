@@ -20,7 +20,12 @@ func init() {
 	registry["topic"] = &registryFuncs{
 		empty: func() IDer { return new(Topic) },
 		list:  func() interface{} { return new([]Topic) },
-		// TODO: sample
+		sample: func() IDer {
+			return &Topic{
+				Slug: namer.NameSep("-"),
+				Name: namer.Name(),
+			}
+		},
 	}
 }
 

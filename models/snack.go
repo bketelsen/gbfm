@@ -26,7 +26,16 @@ func init() {
 	registry["snack"] = &registryFuncs{
 		list:  func() interface{} { return new([]Snack) },
 		empty: func() IDer { return new(Snack) },
-		// TODO: sample
+		sample: func() IDer {
+			return &Snack{
+				Slug:      namer.NameSep("-"),
+				Title:     namer.Name(),
+				Sponsored: true,
+				URL:       namer.NameSep("-"),
+				Summary:   namer.Name(),
+				Comment:   namer.Name(),
+			}
+		},
 	}
 }
 

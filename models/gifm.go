@@ -25,7 +25,16 @@ func init() {
 	registry["gifm"] = &registryFuncs{
 		list:  func() interface{} { return []GIFM{} },
 		empty: func() IDer { return new(GIFM) },
-		// TODO : sample
+		sample: func() IDer {
+			return &GIFM{
+				Slug:        namer.NameSep("-"),
+				Title:       namer.Name(),
+				EmdedCode:   namer.NameSep("-"),
+				GithubLink:  namer.NameSep("-"),
+				Sponsor:     namer.Name(),
+				Description: namer.Name(),
+			}
+		},
 	}
 }
 

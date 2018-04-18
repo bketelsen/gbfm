@@ -21,7 +21,20 @@ type Series struct {
 }
 
 func init() {
-	registry["series"] = &registryFuncs{}
+	registry["series"] = &registryFuncs{
+		empty: func() IDer { return &Series{} },
+		list:  func() interface{} { return []Series{} },
+		sample: func() IDer {
+			return &Series{
+				Slug:         namer.NameSep("-"),
+				Title:        namer.Name(),
+				Description:  namer.Name(),
+				ThumbnailURL: namer.NameSep("-"),
+				Body:         namer.Name(),
+				Pro:          true,
+			}
+		},
+	}
 }
 
 // GetID implements IDer

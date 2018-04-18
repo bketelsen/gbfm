@@ -28,7 +28,18 @@ func init() {
 	registry["episode"] = &registryFuncs{
 		empty: func() IDer { return new(Episode) },
 		list:  func() interface{} { return new([]Episode) },
-		// TODO: sample
+		sample: func() IDer {
+			return &Episode{
+				Slug:         namer.NameSep("-"),
+				Title:        namer.Name(),
+				Description:  namer.Name(),
+				ThumbnailURL: namer.NameSep("-"),
+				EmbedCode:    namer.NameSep("-"),
+				Body:         namer.Name(),
+				Pro:          true,
+				Repo:         namer.NameSep("-"),
+			}
+		},
 	}
 }
 
