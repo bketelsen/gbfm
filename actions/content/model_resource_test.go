@@ -6,6 +6,7 @@ import (
 
 	"github.com/gobuffalo/uuid"
 	"github.com/gophersnacks/gbfm/models"
+	"github.com/jinzhu/inflection"
 )
 
 func (as ActionSuite) TestModelList() {
@@ -16,7 +17,7 @@ func (as ActionSuite) TestModelList() {
 		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
 		r.NoError(db.Create(singleModel))
-		res := as.HTML("/admin/%s", modelName).Get()
+		res := as.HTML("/admin/%s", inflection.Plural(modelName)).Get()
 		r.Equal(http.StatusOK, res.Code)
 	}
 }
