@@ -23,9 +23,11 @@
         <td><%= series.ThumbnailURL %></td>
         <td>
           <div class="pull-right">
-            <a href="<%= seriesPath({ series_id: series.ID }) %>" class="btn btn-info">View</a>
+            <% let viewDeletePath = "/admin/series/" + series.ID %>
+            <a href="<%= viewDeletePath %>" class="btn btn-info">View</a>
+            <% let editPath = viewDeletePath + "/edit" %>
             <a href="<%= editSeriesPath({ series_id: series.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= seriesPath({ series_id: series.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <a href="<%= viewDeletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
           </div>
         </td>
       </tr>
