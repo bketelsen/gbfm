@@ -13,8 +13,9 @@ type registryFuncs struct {
 	//
 	// useful for testing
 	sample func() IDer
-	// a function that returns a list of empty models. this must return a pointer
-	// to a list.
+	// a function that returns a _pointer_ to an empty list of a model. it really needs
+	// to return a pointer, or you'll get crazy errors when you use it to get
+	// a list of models from the DB.
 	//
 	// for example, the registry entry for an Episode must be this:
 	//
@@ -54,7 +55,19 @@ func SampleFromRegistry(name string) (IDer, error) {
 	return funcs.sample(), nil
 }
 
-// EmptyListFromRegistry returns a new list of models
+// EmptyListFromRegistry returns a new empty list of a model with name.
+//
+// For example, if you want to call this function to get all Episodes, use the
+// following:
+//
+//	list, err := EmptyListFromRegistry("episodes")
+//	if err != nil {
+//		panic(err)
+//	}
+//	err := DB.All(list) // do not use &list here or you'll get SQL errors!
+//	if err != nil {
+//		panic(err)
+//	}
 func EmptyListFromRegistry(name string) (interface{}, error) {
 	funcs, ok := registry[name]
 	if !ok {
