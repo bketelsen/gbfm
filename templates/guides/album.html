@@ -1,14 +1,32 @@
-<main role="main">
 
-  <%= partial("guides/jumbotron.html") %>
 
-  <div class="album py-5 bg-light">
-    <div class="container">
+ <!--Section: Jumbotron-->
+            <section class="card gradient-custom wow fadeIn">
 
-      <div class="row">
-         <%= partial("guides/card.html") %>
-      </div>
-    </div>
-  </div>
+                <!-- Content -->
+                <div class="card-body text-white text-center py-5 px-5 my-5">
 
-</main>
+                    <h1 class="mb-4">
+                        <strong>Guides</strong>
+                    </h1>
+                    <p>
+                        <strong>Walk-throughs and some other words</strong>
+                    </p>
+                    <!-- <a target="_blank" href="https://mdbootstrap.com/bootstrap-tutorial/" class="btn btn-outline-white btn-lg">Start free tutorial
+                        <i class="fa fa-graduation-cap ml-2"></i>
+                    </a> // add CTA here later -->
+
+                </div>
+                <!-- Content -->
+            </section>
+            <!--Section: Jumbotron-->
+
+            <!--Section: Cards-->
+            <section class="pt-5">
+
+                <%= partial("guides/card.html") %>
+
+
+
+            </section>
+            <!--Section: Cards-->

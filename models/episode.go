@@ -20,8 +20,8 @@ type Episode struct {
 	Body         string   `json:"body" db:"body"`
 	Pro          bool     `json:"pro" db:"pro"`
 	Repo         string   `json:"repo" db:"repo"`
-	Topics       []Topic  `json:"topics" db:"topics" many_to_many:"episodes_topics"`
-	Authors      []Author `json:"authors" db:"authors" many_to_many:"episodes_authors"`
+	Topics       []Topic  `json:"topics"  many_to_many:"episodes_topics"`
+	Authors      []Author `json:"authors"  many_to_many:"episodes_authors"`
 }
 
 func init() {
