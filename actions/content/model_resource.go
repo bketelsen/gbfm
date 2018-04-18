@@ -31,7 +31,7 @@ func (m *modelResource) List(c buffalo.Context) error {
 		c.Logger().Errorf("fetching model list for %s", modelName)
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	c.Set("models", list)
+	c.Set(modelName, list)
 	return c.Render(http.StatusOK, r.HTML(tpls.Index))
 }
 
@@ -58,7 +58,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	if err := models.DB.Where("id = ?", id).First(single); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	c.Set("model", single)
+	c.Set(modelName, single)
 	return c.Render(http.StatusOK, r.HTML(tpls.Show))
 }
 
