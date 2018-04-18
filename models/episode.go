@@ -15,6 +15,7 @@ type Episode struct {
 
 	Title        string   `json:"title" db:"title"`
 	Description  string   `json:"description" db:"description"`
+	Markdown     string   `json:"markdown" db:"markdown"`
 	ThumbnailURL string   `json:"thumbnail_url" db:"thumbnail_url"`
 	EmbedCode    string   `json:"embed_code" db:"embed_code"`
 	Body         string   `json:"body" db:"body"`
