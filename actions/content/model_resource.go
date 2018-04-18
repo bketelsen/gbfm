@@ -14,17 +14,21 @@ type modelResource struct{}
 func (m *modelResource) List(c buffalo.Context) error {
 	modelName, err := getModelName(c)
 	if err != nil {
+		c.Logger().Errorf("model name %s not found", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 	tpls, err := getTemplateNames(modelName)
 	if err != nil {
+		c.Logger().Errorf("template for model %s not found", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 	list, err := models.EmptyListFromRegistry(modelName)
 	if err != nil {
+		c.Logger().Errorf("model registry lookup for %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 	if err := models.DB.All(list); err != nil {
+		c.Logger().Errorf("fetching model list for %s", modelName)
 		return c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set("models", list)
