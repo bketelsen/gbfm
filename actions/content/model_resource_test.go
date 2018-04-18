@@ -22,6 +22,16 @@ func (as ActionSuite) TestModelList() {
 	}
 }
 
+func (as ActionSuite) TestModelNew() {
+	r, db := as.Require(), as.DB
+	for modelName := range templateRegistry {
+		r.NoError(as.Login())
+		as.T().Logf("model %s", modelName)
+		res := as.HTML("/admin/%s/new", modelName).Get()
+		r.Equal(http.StatusOK, res.Code)
+	}
+}
+
 func (as ActionSuite) TestModelShow() {
 	r, db := as.Require(), as.DB
 	r.NoError(as.login())
