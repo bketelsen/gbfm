@@ -2,7 +2,7 @@
   <h1>New Guide</h1>
 </div>
 
-<%= form_for(guide, {action: /admin/guides/new, method: "POST"}) { %>
+<%= form_for(guide, {action: "/admin/guides", method: "POST"}) { %>
   <%= partial("guides/form.html") %>
   <a href="/admin/guides" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>

@@ -9,7 +9,8 @@ import (
 	"github.com/gophersnacks/gbfm/models"
 )
 
-type modelResource struct{}
+type modelResource struct {
+}
 
 // /admin/{model_name}
 func (m *modelResource) List(c buffalo.Context) error {
@@ -79,7 +80,12 @@ func (m *modelResource) New(c buffalo.Context) error {
 		return c.Error(http.StatusBadRequest, err)
 	}
 
+	empty, err := models.EmptyFromRegistry(modelName)
+	if err != nil {
+		return c.Error(http.StatusNotFound, err)
+	}
 	c.Set("model_name", modelName)
+	c.Set(modelName, empty)
 	return c.Render(http.StatusOK, r.HTML(templateNames.New))
 }
 
