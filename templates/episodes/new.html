@@ -2,7 +2,7 @@
   <h1>New Episode</h1>
 </div>
 
-<%= form_for(episode, {action: episodesPath(), method: "POST"}) { %>
+<%= form_for(episode, {action: "/admin/episodes", method: "POST"}) { %>
   <%= partial("episodes/form.html") %>
-  <a href="<%= episodesPath() %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+  <a href="/admin/episodes" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>
