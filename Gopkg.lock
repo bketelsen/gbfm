@@ -116,8 +116,8 @@
     "fizz/translators",
     "nulls"
   ]
-  revision = "dc1f230b8ca3cfddd729717fe8f57a40c7971f67"
-  version = "v4.3.1"
+  revision = "f3c6f37f77403f0a59d6666ca8529d9dd1b4281b"
+  version = "v4.5.0"
 
 [[projects]]
   name = "github.com/gobuffalo/suite"
@@ -505,6 +505,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6fdd2f363e97be35e97861360c0fcada81985c8ba6804723c72d9f173bf62a1e"
+  inputs-digest = "7efb1993730d2b997cd43cbb70959728b8396cbf90e58a2685fbd1735821fe17"
   solver-name = "gps-cdcl"
   solver-version = 1

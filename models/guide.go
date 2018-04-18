@@ -18,8 +18,8 @@ type Guide struct {
 	EmbedCode    string    `json:"embed_code" db:"embed_code"`
 	Body         string    `json:"body" db:"body"`
 	Pro          bool      `json:"pro" db:"pro"`
-	Topics       []Topic   `json:"topics" db:"topics" many_to_many:"guides_topics"`
-	Authors      []Author  `json:"authors" db:"authors" many_to_many:"guides_authors"`
+	Topics       []Topic   `json:"topics" many_to_many:"guides_topics"`
+	Authors      []Author  `json:"authors" many_to_many:"guides_authors"`
 }
 
 func init() {
