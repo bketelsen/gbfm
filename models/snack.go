@@ -17,7 +17,7 @@ type Snack struct {
 	Sponsored bool     `json:"sponsored" db:"sponsored"`
 	URL       string   `json:"url" db:"url"`
 	Summary   string   `json:"summary" db:"summary"`
-	Comment   string   `json:"comment" db:"summary"`
+	Comment   string   `json:"comment" db:"comment"`
 	EmbedCode string   `json:"embed_code" db:"embed_code"`
 	Topics    []Topic  `json:"topics" many_to_many:"topics_snacks"`
 	Authors   []Author `json:"authors" many_to_many:"authors_snacks"`
