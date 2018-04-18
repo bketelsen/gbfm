@@ -41,6 +41,7 @@ func (m *modelResource) List(c buffalo.Context) error {
 
 // /admin/{model_name}/{admin_model_id}
 func (m *modelResource) Show(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
@@ -59,7 +60,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	if err := models.DB.Where("id = ?", id).First(single); err != nil {
+	if err := tx.Where("id = ?", id).First(single); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set(modelName, single)
@@ -101,6 +102,7 @@ func (m *modelResource) Create(c buffalo.Context) error {
 
 // GET /admin/{model_name}/{admin_model_id}/edit
 func (m *modelResource) Edit(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
@@ -117,7 +119,7 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	if err := models.DB.Find(empty, modelID); err != nil {
+	if err := tx.Find(empty, modelID); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 	c.Set("model", empty)
@@ -128,6 +130,7 @@ func (m *modelResource) Update(buffalo.Context) error { return nil }
 
 // DELETE /admin/{model_name}/{admin_model_id}
 func (m *modelResource) Destroy(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
@@ -140,10 +143,10 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	if err := models.DB.Find(empty, modelID); err != nil {
+	if err := tx.Find(empty, modelID); err != nil {
 		return c.Error(http.StatusNotAcceptable, err)
 	}
-	if err := models.DB.Destroy(empty); err != nil {
+	if err := tx.Destroy(empty); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 	redirPath := "/admin"
