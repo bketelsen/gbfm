@@ -21,6 +21,7 @@ func (as ActionSuite) TestModelList() {
 
 func (as ActionSuite) TestModelShow() {
 	r, db := as.Require(), as.DB
+	r.NoError(as.login())
 	for modelName := range templateRegistry {
 		singleModel, err := models.EmptyFromRegistry(modelName)
 		r.NoError(err)
