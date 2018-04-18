@@ -103,7 +103,10 @@ func (m *modelResource) Create(c buffalo.Context) error {
 	if err := c.Bind(empty); err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	if err := tx.Create(empty); err != nil {
+	verrs, err := tx.Eager().ValidateAndCreate(empty)
+	if verrs.HasAny() {
+		return c.Error(http.StatusBadRequest, verrs)
+	} else if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 
