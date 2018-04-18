@@ -24,7 +24,7 @@ func (m *modelResource) List(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	if err := models.DB.All(&list); err != nil {
+	if err := models.DB.All(list); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set("models", list)
