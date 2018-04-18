@@ -52,7 +52,7 @@ func (as ActionSuite) TestModelDestroy() {
 		r.NoError(as.modelIsGone(modelName, singleModel.GetID()))
 
 		// now try making sure that the redir path param works
-		singleModel, err = models.EmptyFromRegistry(modelName)
+		singleModel, err = models.SampleFromRegistry(modelName)
 		r.NoError(err)
 		r.NoError(db.Create(singleModel))
 		res = as.HTML(
