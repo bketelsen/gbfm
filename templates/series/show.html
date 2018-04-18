@@ -22,3 +22,10 @@
 <p>
   <strong>ThumbnailURL</strong>: <%= series.ThumbnailURL %>
 </p>
+
+<%= for (e) in series.Episodes { %>
+<p>
+    <strong>Episode</strong>: <%= e.ID %>: <%= e.Title %>
+</p>
+<% } %>
+
