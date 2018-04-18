@@ -62,7 +62,7 @@ func (as ActionSuite) TestModelDestroy() {
 			"/otherPath",
 		).Delete()
 		r.Equal(http.StatusFound, res.Code)
-		r.Equal("/other_path", res.Header().Get("location"))
+		r.Equal("/otherPath", res.Header().Get("location"))
 	}
 }
 
