@@ -17,14 +17,27 @@ type Snack struct {
 	Sponsored bool     `json:"sponsored" db:"sponsored"`
 	URL       string   `json:"url" db:"url"`
 	Summary   string   `json:"summary" db:"summary"`
-	Comment   string   `json:"comment" db:"summary"`
+	Comment   string   `json:"comment" db:"comment"`
+	EmbedCode string   `json:"embed_code" db:"embed_code"`
 	Topics    []Topic  `json:"topics" many_to_many:"topics_snacks"`
 	Authors   []Author `json:"authors" many_to_many:"authors_snacks"`
 }
 
 func init() {
-	registry["snack"] = func() (IDer, interface{}) {
-		return new(Snack), new([]Snack)
+	registry["snack"] = &registryFuncs{
+		list:  func() interface{} { return new([]Snack) },
+		empty: func() IDer { return new(Snack) },
+		sample: func() IDer {
+			return &Snack{
+				Slug:      namer.NameSep("-"),
+				Title:     namer.Name(),
+				Sponsored: true,
+				URL:       namer.NameSep("-"),
+				Summary:   namer.Name(),
+				Comment:   namer.Name(),
+				EmbedCode: namer.NameSep("-"),
+			}
+		},
 	}
 }
 

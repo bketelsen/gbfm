@@ -14,6 +14,7 @@ type Guide struct {
 	Slug         string    `json:"slug" db:"slug"`
 	Title        string    `json:"title" db:"title"`
 	Description  string    `json:"description" db:"description"`
+	Markdown     string    `json:"markdown" db:"markdown"`
 	ThumbnailURL string    `json:"thumbnail_url" db:"thumbnail_url"`
 	EmbedCode    string    `json:"embed_code" db:"embed_code"`
 	Body         string    `json:"body" db:"body"`
@@ -23,8 +24,21 @@ type Guide struct {
 }
 
 func init() {
-	registry["guide"] = func() (IDer, interface{}) {
-		return new(Guide), new([]Guide)
+	registry["guide"] = &registryFuncs{
+		empty: func() IDer { return new(Guide) },
+		sample: func() IDer {
+			return &Guide{
+				Slug:         namer.NameSep("-"),
+				Title:        namer.Name(),
+				Description:  namer.Name(),
+				Markdown:     namer.Name(),
+				ThumbnailURL: namer.Name(),
+				EmbedCode:    namer.Name(),
+				Body:         namer.Name(),
+				Pro:          true,
+			}
+		},
+		list: func() interface{} { return new([]Guide) },
 	}
 }
 

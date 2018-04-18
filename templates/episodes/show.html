@@ -11,7 +11,7 @@
                         <div class="card mb-4 wow fadeIn">
                             <!-- embed code is going here -->
 
-                            <%= raw(episode.Episode.EmbedCode) %>
+                            <%= raw(episode.EmbedCode) %>
 
                         </div>
                         <!--/.Featured Image-->
@@ -22,7 +22,7 @@
                             <!--Card content-->
                             <div class="card-body">
 
-                                <%= markdown(episode.Episode.Body)%>
+                                <%= markdown(episode.Body)%>
                             </div>
 
                         </div>
@@ -43,13 +43,13 @@
                             <div class="card-body text-white text-center">
 
                                 <h4 class="mb-4">
-                                    <strong><%= episode.Episode.Title %></strong>
+                                    <strong><%= episode.Title %></strong>
                                 </h4>
 
                             <div class="card-body text-white text-left">
-                                <%= markdown(episode.Episode.Description) %>
+                                <%= markdown(episode.Description) %>
                             </div>
-                                <a target="_blank" href="<%= episode.Episode.Repo %>" class="btn btn-outline-white btn-md">Download Source Code
+                                <a target="_blank" href="<%= episode.Repo %>" class="btn btn-outline-white btn-md">Download Source Code
                                     <i class="fa fa-github ml-2"></i>
                                 </a>
 

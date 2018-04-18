@@ -456,6 +456,12 @@
   version = "v1.2.1"
 
 [[projects]]
+  name = "github.com/technosophos/moniker"
+  packages = ["."]
+  revision = "4d1d2a7d4b69cee56dadb6a7634945f829154858"
+  version = "0.1.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/unrolled/secure"
   packages = ["."]
@@ -505,6 +511,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7efb1993730d2b997cd43cbb70959728b8396cbf90e58a2685fbd1735821fe17"
+  inputs-digest = "17d747ff8bb26b65a59310da96c0c0597810ff87f49e10924975f0b6ee514a7a"
   solver-name = "gps-cdcl"
   solver-version = 1

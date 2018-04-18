@@ -2,7 +2,7 @@
   <h1>Guides</h1>
 </div>
 <ul class="list-unstyled list-inline">
-  <li><a href="<%= newGuidesPath() %>" class="btn btn-primary">Create New Guide</a></li>
+  <li><a href="/admin/guides/new" class="btn btn-primary">Create New Guide</a></li>
 </ul>
 
 <table class="table table-striped">
@@ -17,14 +17,16 @@
     <%= for (guide) in guides { %>
       <tr>
       <td><%= guide.Slug %></td>
-        <td><%= guide.Name %></td>
+        <td><%= guide.Title %></td>
         <td><%= guide.Description %></td>
         <td><%= guide.Markdown %></td>
         <td>
           <div class="pull-right">
-            <a href="<%= guidePath({ guide_id: guide.ID }) %>" class="btn btn-info">View</a>
-            <a href="<%= editGuidePath({ guide_id: guide.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= guidePath({ guide_id: guide.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <% let viewDeletePath = "/admin/guides/" + guide.ID %>
+            <a href="<%= viewDeletePath %>" class="btn btn-info">View</a>
+            <% let editPath = "/admin/guides/" + guide.ID + "/edit" %>
+            <a href="<%= editPath %>" class="btn btn-warning">Edit</a>
+            <a href="<%= viewDeletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
           </div>
         </td>
       </tr>
