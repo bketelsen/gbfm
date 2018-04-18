@@ -11,7 +11,7 @@ import (
 func (as ActionSuite) TestModelList() {
 	r, db := as.Require(), as.DB
 	for modelName := range templateRegistry {
-		singleModel, err := models.EmptyFromRegistry(modelName)
+		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
 		r.NoError(db.Create(singleModel))
 		res := as.HTML("/admin/%s", modelName).Get()
@@ -23,7 +23,7 @@ func (as ActionSuite) TestModelShow() {
 	r, db := as.Require(), as.DB
 	r.NoError(as.login())
 	for modelName := range templateRegistry {
-		singleModel, err := models.EmptyFromRegistry(modelName)
+		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
 		r.NoError(db.Create(singleModel))
 		res := as.HTML("/admin/%s/%s", modelName, singleModel.GetID()).Get()
@@ -36,7 +36,7 @@ func (as ActionSuite) TestModelDestroy() {
 	r.NoError(as.login())
 	for modelName := range templateRegistry {
 		// create a new model
-		singleModel, err := models.EmptyFromRegistry(modelName)
+		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
 		r.NoError(db.Create(singleModel))
 
