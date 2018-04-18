@@ -20,10 +20,10 @@ var templateRegistry = map[string]*templateNames{
 		Index: "episodes/index.html",
 	},
 	"gifm": {
-		Show:  "gifm/show.html",
-		New:   "gifm/new.html",
-		Edit:  "gifm/edit.html",
-		Index: "gifm/index.html",
+		Show:  "gbfm/show.html",
+		New:   "gbfm/new.html",
+		Edit:  "gbfm/edit.html",
+		Index: "gbfm/index.html",
 	},
 	"guide": {
 		Show:  "guides/show.html",
