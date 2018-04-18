@@ -11,6 +11,7 @@ import (
 func (as ActionSuite) TestModelList() {
 	r, db := as.Require(), as.DB
 	for modelName := range templateRegistry {
+		r.NoError(as.login())
 		as.T().Logf("model %s", modelName)
 		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
