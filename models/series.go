@@ -22,7 +22,7 @@ type Series struct {
 
 func init() {
 	registry["series"] = &registryFuncs{
-		empty: func() IDer { return &Series{} },
+		empty: func() IDer { return new(Series) },
 		list:  func() interface{} { return new([]Series) },
 		sample: func() IDer {
 			return &Series{
