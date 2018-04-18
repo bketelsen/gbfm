@@ -13,7 +13,12 @@ type registryFuncs struct {
 	//
 	// useful for testing
 	sample func() IDer
-	// a function that returns a list of empty models
+	// a function that returns a list of empty models. this must return a pointer
+	// to a list.
+	//
+	// for example, the registry entry for an Episode must be this:
+	//
+	//	func() interface{} { return new([]Episode) }
 	list func() interface{}
 }
 

@@ -36,7 +36,7 @@ func init() {
 				Pro:          true,
 			}
 		},
-		list: func() interface{} { return []Guide{} },
+		list: func() interface{} { return new([]Guide) },
 	}
 }
 

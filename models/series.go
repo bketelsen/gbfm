@@ -23,7 +23,7 @@ type Series struct {
 func init() {
 	registry["series"] = &registryFuncs{
 		empty: func() IDer { return &Series{} },
-		list:  func() interface{} { return []Series{} },
+		list:  func() interface{} { return new([]Series) },
 		sample: func() IDer {
 			return &Series{
 				Slug:         namer.NameSep("-"),
