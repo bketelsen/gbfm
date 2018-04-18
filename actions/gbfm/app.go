@@ -49,8 +49,13 @@ func App() *buffalo.App {
 	// Setup and use translations:
 	app.Use(web.Translator.Middleware())
 	app.GET("/", homeHandler)
-	app.Resource("/series", SeriesResource{})
-	app.Resource("/guides", GuidesResource{})
+
+	app.GET("/authors", AuthorList)
+	app.GET("/authors/{name}", AuthorShow)
+	app.GET("/series", SeriesList)
+	app.GET("/series/{name}", SeriesShow)
+	app.GET("/guides", GuideList)
+	app.GET("/guides/{name}", GuideShow)
 	app.GET("/episodes", EpisodeList)
 	app.GET("/episodes/{name}", EpisodeShow)
 	app.ServeFiles("/", render.AssetsBox) // serve files from the public directory

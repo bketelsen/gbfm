@@ -21,6 +21,31 @@ var _ = grift.Namespace("db", func() {
 		}
 		return nil
 	})
+
+	grift.Add("listepisodes", func(c *grift.Context) error {
+		ee := []models.Episode{}
+		err := models.DB.All(&ee)
+		if err != nil {
+			fmt.Println(err)
+		}
+		for _, e := range ee {
+			fmt.Println(e)
+		}
+		return nil
+	})
+	grift.Add("episode", func(c *grift.Context) error {
+		e := models.Episode{}
+		e.Body = "Episode Body Text"
+		e.Pro = false
+		e.Repo = "https://github.com/gophersnacks/episode15"
+		e.Slug = "secret-episode"
+		e.Title = "Secret Episode"
+		err := models.DB.Create(&e)
+		if err != nil {
+			fmt.Println(err)
+		}
+		return nil
+	})
 	grift.Desc("seed", "Seeds a database")
 	grift.Add("seed", func(c *grift.Context) error {
 		// Add DB seeding stuff here
