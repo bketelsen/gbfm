@@ -43,7 +43,7 @@ func App() *buffalo.App {
 	))
 
 	// Wraps each request in a transaction.
-	//  c.Value("tx").(*pop.PopTransaction)
+	//  c.Value("tx").(*pop.Connection)
 	// Remove to disable this.
 	app.Use(middleware.PopTransaction(models.DB))
 

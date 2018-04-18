@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/pop"
 	"github.com/gophersnacks/gbfm/models"
 	"github.com/nilslice/jwt"
 )
@@ -28,6 +29,7 @@ func (l loginHandlers) showForm(c buffalo.Context) error {
 
 // POST /admin/login
 func (l loginHandlers) try(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	if IsValid(c) {
 		return c.Redirect(http.StatusFound, l.successRedir)
 	}
@@ -43,7 +45,7 @@ func (l loginHandlers) try(c buffalo.Context) error {
 	}
 	// check email & password
 	usr := new(models.User)
-	if err := models.DB.Where("email = ?", str.Email).First(usr); err != nil {
+	if err := tx.Where("email = ?", str.Email).First(usr); err != nil {
 		fmt.Println("error with sql statement", err)
 		c.Flash().Add("error", "email not found")
 		return c.Redirect(http.StatusFound, l.showFormPath)
