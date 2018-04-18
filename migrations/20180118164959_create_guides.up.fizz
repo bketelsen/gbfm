@@ -3,6 +3,7 @@ create_table("guides", func(t) {
 	t.Column("slug", "string", {})
 	t.Column("title", "string", {})
 	t.Column("description", "string", {})
+	t.Column("markdown", "string", {})
 	t.Column("thumbnail_url", "string", {})
 	t.Column("embed_code", "string", {})
 	t.Column("body", "string", {})

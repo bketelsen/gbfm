@@ -240,6 +240,7 @@ CREATE TABLE public.guides (
     slug character varying(255) NOT NULL,
     title character varying(255) NOT NULL,
     description character varying(255) NOT NULL,
+    markdown character varying(255) NOT NULL,
     thumbnail_url character varying(255) NOT NULL,
     embed_code character varying(255) NOT NULL,
     body character varying(255) NOT NULL,
