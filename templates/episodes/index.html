@@ -212,9 +212,11 @@
         <td><%= episode.Markdown %></td>
         <td>
           <div class="pull-right">
-            <a href="<%= episodePath({ episode_id: episode.ID }) %>" class="btn btn-info">View</a>
-            <a href="<%= editEpisodePath({ episode_id: episode.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= episodePath({ episode_id: episode.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+              <% let viewDeletePath = "/admin/episode/" + episode.ID %>
+            <a href="<%= viewDeletePath %>" class="btn btn-info">View</a>
+            <% let editPath = viewDeletePath + "/edit" %>
+            <a href="<%= editPath %>" class="btn btn-warning">Edit</a>
+            <a href="<%= viewDeletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
           </div>
         </td>
       </tr>
