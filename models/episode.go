@@ -29,7 +29,7 @@ type Episode struct {
 func init() {
 	registry["episode"] = &registryFuncs{
 		empty: func() IDer { return new(Episode) },
-		list:  func() interface{} { return new([]Episode) },
+		list:  func() Lister { return new(Episodes) },
 		sample: func() IDer {
 			return &Episode{
 				Slug:         namer.NameSep("-"),
@@ -63,4 +63,20 @@ func (a Episode) GetUpdatedAt() time.Time {
 // GetSlug implements Slugger
 func (a Episode) GetSlug() string {
 	return a.Slug
+}
+
+// Episodes is a list of Authors. It implements Lister
+type Episodes []*Episode
+
+// Len implements Lister
+func (e Episodes) Len() int {
+	return len(e)
+}
+
+// EltAt implements Lister
+func (e Episodes) EltAt(i int) IDer {
+	if i < len(e) {
+		return e[i]
+	}
+	return nil
 }

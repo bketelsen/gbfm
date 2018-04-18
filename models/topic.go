@@ -19,7 +19,7 @@ type Topic struct {
 func init() {
 	registry["topic"] = &registryFuncs{
 		empty: func() IDer { return new(Topic) },
-		list:  func() interface{} { return new([]Topic) },
+		list:  func() Lister { return new(Topics) },
 		sample: func() IDer {
 			return &Topic{
 				Slug: namer.NameSep("-"),
@@ -43,4 +43,20 @@ func (a Topic) GetUpdatedAt() time.Time {
 
 func (a Topic) GetSlug() string {
 	return a.Slug
+}
+
+// Topics is a list of Topic models. It implements Lister
+type Topics []*Topic
+
+// Len implements Lister
+func (t Topics) Len() int {
+	return len(t)
+}
+
+// EltAt implements Lister
+func (t Topics) EltAt(i int) IDer {
+	if i < len(t) {
+		return t[i]
+	}
+	return nil
 }

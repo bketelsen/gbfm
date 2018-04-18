@@ -38,7 +38,7 @@ func init() {
 				Pro:          true,
 			}
 		},
-		list: func() interface{} { return new([]Guide) },
+		list: func() Lister { return new(Guides) },
 	}
 }
 
@@ -56,4 +56,20 @@ func (a Guide) GetUpdatedAt() time.Time {
 
 func (a Guide) GetSlug() string {
 	return a.Slug
+}
+
+// Guides is a list of Guide models. It implements Lister
+type Guides []Guide
+
+// Len implements Lister
+func (g Guides) Len() int {
+	return len(g)
+}
+
+// EltAt implements Lister
+func (g Guides) EltAt(i int) IDer {
+	if i < len(g) {
+		return g[i]
+	}
+	return nil
 }

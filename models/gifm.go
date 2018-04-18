@@ -30,7 +30,7 @@ type GIFM struct {
 
 func init() {
 	registry["gifm"] = &registryFuncs{
-		list:  func() interface{} { return new([]GIFM) },
+		list:  func() Lister { return new(GIFMs) },
 		empty: func() IDer { return new(GIFM) },
 		sample: func() IDer {
 			return &GIFM{
@@ -66,4 +66,20 @@ func (a GIFM) GetUpdatedAt() time.Time {
 
 func (a GIFM) GetSlug() string {
 	return a.Slug
+}
+
+// GIFMs is a list of GIFM models. It implements Lister
+type GIFMs []*GIFM
+
+// Len implements Lister
+func (g GIFMs) Len() int {
+	return len(g)
+}
+
+// EltAt implements Lister
+func (g GIFMs) EltAt(i int) IDer {
+	if i < len(g) {
+		return g[i]
+	}
+	return nil
 }

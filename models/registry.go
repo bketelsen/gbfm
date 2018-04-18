@@ -20,7 +20,7 @@ type registryFuncs struct {
 	// for example, the registry entry for an Episode must be this:
 	//
 	//	func() interface{} { return new([]Episode) }
-	list func() interface{}
+	list func() Lister
 }
 
 // for each type name, provide a function that returns an empty type and an empty list of
@@ -68,7 +68,7 @@ func SampleFromRegistry(name string) (IDer, error) {
 //	if err != nil {
 //		panic(err)
 //	}
-func EmptyListFromRegistry(name string) (interface{}, error) {
+func EmptyListFromRegistry(name string) (Lister, error) {
 	funcs, ok := registry[name]
 	if !ok {
 		singular := inflection.Singular(name)

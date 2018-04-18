@@ -11,6 +11,13 @@ type IDer interface {
 	GetID() uuid.UUID
 }
 
+// Lister is a list of a given model that can report on its length
+type Lister interface {
+	Len() int
+	// EltAt returns the IDer at index i, or nil
+	EltAt(i int) IDer
+}
+
 // Core represents the core of a model
 type Core interface {
 	IDer

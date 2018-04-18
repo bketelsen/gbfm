@@ -78,6 +78,31 @@ func (as ActionSuite) TestModelDestroy() {
 	}
 }
 
+func (as ActionSuite) TestModelCreate() {
+	r, db := as.Require(), as.DB
+	for modelName := range templateRegistry {
+		as.T().Logf("model %s", modelName)
+		singleModel, err := models.SampleFromRegistry(modelName)
+		r.NoError(err)
+
+		// make sure the endpoint returned the redirect
+		res := as.HTML("/admin/%s", modelName).Post(singleModel)
+		r.Equal(http.StatusFound, res.Code)
+
+		// look for the new model in the DB
+		list, err := models.EmptyListFromRegistry(modelName)
+		r.NoError(err)
+		r.NoError(db.All(list))
+		r.Equal(1, list.Len())
+
+		// make sure the response redirected to the right place
+		r.Equal(
+			fmt.Sprintf("/admin/%s/%s", modelName, list.EltAt(0).GetID()),
+			res.Header().Get("Location"),
+		)
+	}
+}
+
 func (as ActionSuite) modelIsGone(modelName string, id uuid.UUID) error {
 	empty, err := models.EmptyFromRegistry(modelName)
 	if err != nil {

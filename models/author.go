@@ -33,7 +33,7 @@ func GetAuthor(tx *pop.Connection, id uuid.UUID) (*Author, error) {
 func init() {
 	registry["author"] = &registryFuncs{
 		empty: func() IDer { return new(Author) },
-		list:  func() interface{} { return new([]Author) },
+		list:  func() Lister { return new(Authors) },
 		sample: func() IDer {
 			return &Author{
 				Slug:        namer.Name(),
@@ -59,4 +59,20 @@ func (a Author) GetUpdatedAt() time.Time {
 
 func (a Author) GetSlug() string {
 	return a.Slug
+}
+
+// Authors is a list of Authors. It implements Lister
+type Authors []*Author
+
+// Len implements Lister
+func (a Authors) Len() int {
+	return len(a)
+}
+
+// EltAt implements Lister
+func (a Authors) EltAt(i int) IDer {
+	if i < len(a) {
+		return a[i]
+	}
+	return nil
 }

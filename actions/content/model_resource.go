@@ -91,6 +91,7 @@ func (m *modelResource) New(c buffalo.Context) error {
 
 // POST /admin/{model_name}
 func (m *modelResource) Create(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
@@ -101,6 +102,9 @@ func (m *modelResource) Create(c buffalo.Context) error {
 	}
 	if err := c.Bind(empty); err != nil {
 		return c.Error(http.StatusBadRequest, err)
+	}
+	if err := tx.Create(empty); err != nil {
+		return c.Error(http.StatusInternalServerError, err)
 	}
 
 	return c.Redirect(http.StatusFound, "/admin/%s/%s", modelName, empty.GetID())
