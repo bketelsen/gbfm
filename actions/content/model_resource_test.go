@@ -11,6 +11,7 @@ import (
 func (as ActionSuite) TestModelList() {
 	r, db := as.Require(), as.DB
 	for modelName := range templateRegistry {
+		as.T().Logf("model %s", modelName)
 		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
 		r.NoError(db.Create(singleModel))
@@ -23,6 +24,7 @@ func (as ActionSuite) TestModelShow() {
 	r, db := as.Require(), as.DB
 	r.NoError(as.login())
 	for modelName := range templateRegistry {
+		as.T().Logf("model %s", modelName)
 		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
 		r.NoError(db.Create(singleModel))
@@ -35,6 +37,7 @@ func (as ActionSuite) TestModelDestroy() {
 	r, db := as.Require(), as.DB
 	r.NoError(as.login())
 	for modelName := range templateRegistry {
+		as.T().Logf("model %s", modelName)
 		// create a new model
 		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
