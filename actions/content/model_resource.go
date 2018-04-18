@@ -1,10 +1,11 @@
 package content
 
 import (
-	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/pop"
 	"github.com/gophersnacks/gbfm/models"
 )
 
@@ -12,22 +13,29 @@ type modelResource struct{}
 
 // /admin/{model_name}
 func (m *modelResource) List(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
 	if err != nil {
+		c.Logger().Errorf("model name %s not found", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 	tpls, err := getTemplateNames(modelName)
 	if err != nil {
+		c.Logger().Errorf("template for model %s not found", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 	list, err := models.EmptyListFromRegistry(modelName)
 	if err != nil {
+		c.Logger().Errorf("model registry lookup for %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
-	if err := models.DB.All(&list); err != nil {
+	q := tx.Q().PaginateFromParams(c.Request().URL.Query())
+	if err := q.All(list); err != nil {
+		c.Logger().Errorf("fetching model list for %s", modelName)
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	c.Set("models", list)
+	c.Set("pagination", q.Paginator)
+	c.Set(modelName, list)
 	return c.Render(http.StatusOK, r.HTML(tpls.Index))
 }
 
@@ -37,7 +45,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	id, err := getModelID(c)
+	id, err := getModelID(c, modelName)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
@@ -54,7 +62,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	if err := models.DB.Where("id = ?", id).First(single); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	c.Set("model", single)
+	c.Set(modelName, single)
 	return c.Render(http.StatusOK, r.HTML(tpls.Show))
 }
 
@@ -97,7 +105,7 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	modelID, err := getModelID(c)
+	modelID, err := getModelID(c, modelName)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
@@ -124,7 +132,7 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	modelID, err := getModelID(c)
+	modelID, err := getModelID(c, modelName)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
@@ -146,17 +154,17 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 }
 
 func getModelName(c buffalo.Context) (string, error) {
-	modelName := c.Param("admin_model_name")
+	modelName := c.Param("model_name")
 	if modelName == "" {
-		return "", errors.New("model name not found")
+		return "", fmt.Errorf("model name %s not found", modelName)
 	}
 	return modelName, nil
 }
 
-func getModelID(c buffalo.Context) (string, error) {
-	modelID := c.Param("admin_model_id")
+func getModelID(c buffalo.Context, name string) (string, error) {
+	modelID := c.Param("model_id")
 	if modelID == "" {
-		return "", errors.New("model ID not found")
+		return "", fmt.Errorf("model ID not found for %s", name)
 	}
 	return modelID, nil
 }

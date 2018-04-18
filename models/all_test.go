@@ -10,7 +10,7 @@ type ModelSuite struct {
 	*suite.Model
 }
 
-func TestModels(t *testing.T) {
+func TestModelSuite(t *testing.T) {
 	ms := &ModelSuite{suite.NewModel()}
 	suite.Run(t, ms)
 }

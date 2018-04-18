@@ -6,7 +6,14 @@ import (
 	"github.com/gobuffalo/uuid"
 )
 
-// GIFM is a go in 5 minutes entry
+// GIFM is a go in 5 minutes entry.
+//
+// This does not match the migrations. It's called GIFM and the migration
+// creates a "gbfm" table. TODOs:
+//
+// - Rename this GBFM
+// - Change the TableName func to return "gbfm"
+//
 type GIFM struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
@@ -22,11 +29,29 @@ type GIFM struct {
 }
 
 func init() {
-	registry["gifm"] = func() (IDer, interface{}) {
-		return new(GIFM), new([]GIFM)
+	registry["gifm"] = &registryFuncs{
+		list:  func() interface{} { return new([]GIFM) },
+		empty: func() IDer { return new(GIFM) },
+		sample: func() IDer {
+			return &GIFM{
+				Slug:        namer.NameSep("-"),
+				Title:       namer.Name(),
+				EmdedCode:   namer.NameSep("-"),
+				GithubLink:  namer.NameSep("-"),
+				Sponsor:     namer.Name(),
+				Description: namer.Name(),
+			}
+		},
 	}
 }
 
+// TableName implements the pop TableNamer interface. This needs to be
+// implemented because pop will automatically infer the table name from
+// the struct name as "g_i_f_ms". This is because it separates capital
+// letters with underscores
+func (a GIFM) TableName() string {
+	return "gbfms"
+}
 func (a GIFM) GetID() uuid.UUID {
 	return a.ID
 }

@@ -2,7 +2,7 @@
   <h1>Series</h1>
 </div>
 <ul class="list-unstyled list-inline">
-  <li><a href="<%= newSeriesPath() %>" class="btn btn-primary">Create New Series</a></li>
+  <li><a href="/admin/series/new" class="btn btn-primary">Create New Series</a></li>
 </ul>
 
 <table class="table table-striped">
@@ -16,16 +16,18 @@
   <tbody>
     <%= for (series) in series { %>
       <tr>
-          <td><%= series.Name %></td>
+          <td><%= series.Title %></td>
 
       <td><%= series.Slug %></td>
         <td><%= series.Description %></td>
-        <td><%= series.IconUrl %></td>
+        <td><%= series.ThumbnailURL %></td>
         <td>
           <div class="pull-right">
-            <a href="<%= seriesPath({ series_id: series.ID }) %>" class="btn btn-info">View</a>
+            <% let viewDeletePath = "/admin/series/" + series.ID %>
+            <a href="<%= viewDeletePath %>" class="btn btn-info">View</a>
+            <% let editPath = viewDeletePath + "/edit" %>
             <a href="<%= editSeriesPath({ series_id: series.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= seriesPath({ series_id: series.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <a href="<%= viewDeletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
           </div>
         </td>
       </tr>

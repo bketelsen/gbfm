@@ -1,2 +1,0 @@
-change_column("episodes", "embed_code", "text", {})
-change_column("snacks", "embed_code", "text", {})

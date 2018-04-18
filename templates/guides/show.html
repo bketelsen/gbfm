@@ -3,16 +3,18 @@
 </div>
 
 <ul class="list-unstyled list-inline">
-  <li><a href="<%= guidesPath() %>" class="btn btn-info">Back to all Guides</a></li>
-  <li><a href="<%= editGuidePath({ guide_id: guide.ID })%>" class="btn btn-warning">Edit</a></li>
-  <li><a href="<%= guidePath({ guide_id: guide.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+  <li><a href="/admin/guides" class="btn btn-info">Back to all Guides</a></li>
+  <% let guideEditPath = "/admin/guides/" + guide.ID + "/edit" %>
+  <li><a href="<%= guideEditPath %>" class="btn btn-warning">Edit</a></li>
+  <% let guideDeletePath = "/admin/guides/" + guide.ID %>
+  <li><a href="<%= guideDeletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
 </ul>
 
 <p>
   <strong>Slug</strong>: <%= guide.Slug %>
 </p>
 <p>
-  <strong>Name</strong>: <%= guide.Name %>
+  <strong>Name</strong>: <%= guide.Title %>
 </p>
 <p>
   <strong>Description</strong>: <%= guide.Description %>

@@ -3,13 +3,15 @@
 </div>
 
 <ul class="list-unstyled list-inline">
-  <li><a href="/series" class="btn btn-info">Back to all Series</a></li>
-  <li><a href="<%= editSeriesPath({ series_id: series.ID })%>" class="btn btn-warning">Edit</a></li>
-  <li><a href="<%= seriesPath({ series_id: series.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+  <li><a href="/admin/series" class="btn btn-info">Back to all Series</a></li>
+  <% let editPath = "/admin/series/" + series.ID + "/edit" %>
+  <li><a href="<%= editPath %>" class="btn btn-warning">Edit</a></li>
+  <% let deletePath = "/admin/series/" + series.ID %>
+  <li><a href="<%= deletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
 </ul>
 
 <p>
-  <strong>Name</strong>: <%= series.Name %>
+  <strong>Title</strong>: <%= series.Title %>
 </p>
 <p>
   <strong>Slug</strong>: <%= series.Slug %>
@@ -18,7 +20,7 @@
   <strong>Description</strong>: <%= series.Description %>
 </p>
 <p>
-  <strong>IconURL</strong>: <%= series.IconURL %>
+  <strong>ThumbnailURL</strong>: <%= series.ThumbnailURL %>
 </p>
 
 <%= for (e) in episodes { %>
