@@ -5,7 +5,7 @@ import (
 )
 
 // New returns a new render engine
-func New(layout string) *render.Engine {
+func New(layout string, helpers render.Helpers) *render.Engine {
 	return render.New(render.Options{
 		// HTML layout to be used for all HTML requests:
 		HTMLLayout: layout,
@@ -15,10 +15,6 @@ func New(layout string) *render.Engine {
 		AssetsBox:    AssetsBox,
 
 		// Add template helpers here:
-		Helpers: render.Helpers{
-			// uncomment for non-Bootstrap form helpers:
-			// "form":     plush.FormHelper,
-			// "form_for": plush.FormForHelper,
-		},
+		Helpers: helpers,
 	})
 }
