@@ -8,16 +8,16 @@ import (
 
 var templateRegistry = map[string]*templateNames{
 	"author": {
-		Show:  "authors/show.html",
-		New:   "authors/new.html",
-		Edit:  "authors/edit.html",
-		Index: "authors/index.html",
+		Show:  "admin/authors/show.html",
+		New:   "admin/authors/new.html",
+		Edit:  "admin/authors/edit.html",
+		Index: "admin/authors/index.html",
 	},
 	"episode": {
-		Show:  "episodes/show.html",
-		New:   "episodes/new.html",
-		Edit:  "episodes/edit.html",
-		Index: "episodes/index.html",
+		Show:  "admin/episodes/show.html",
+		New:   "admin/episodes/new.html",
+		Edit:  "admin/episodes/edit.html",
+		Index: "admin/episodes/index.html",
 	},
 	"gbfm": {
 		Show:  "gbfm/show.html",
@@ -26,10 +26,10 @@ var templateRegistry = map[string]*templateNames{
 		Index: "gbfm/index.html",
 	},
 	"guide": {
-		Show:  "guides/show.html",
-		New:   "guides/new.html",
-		Edit:  "guides/edit.html",
-		Index: "guides/index.html",
+		Show:  "admin/guides/show.html",
+		New:   "admin/guides/new.html",
+		Edit:  "admin/guides/edit.html",
+		Index: "admin/guides/index.html",
 	},
 	"image": {
 		Show:  "admin/images/show.html",
@@ -38,22 +38,22 @@ var templateRegistry = map[string]*templateNames{
 		Index: "admin/images/index.html",
 	},
 	"series": {
-		Show:  "series/show.html",
-		New:   "series/new.html",
-		Edit:  "series/edit.html",
-		Index: "series/index.html",
+		Show:  "admin/series/show.html",
+		New:   "admin/series/new.html",
+		Edit:  "admin/series/edit.html",
+		Index: "admin/series/index.html",
 	},
 	"snack": {
-		Show:  "snacks/show.html",
-		New:   "snacks/new.html",
-		Edit:  "snacks/edit.html",
-		Index: "snacks/index.html",
+		Show:  "admin/snacks/show.html",
+		New:   "admin/snacks/new.html",
+		Edit:  "admin/snacks/edit.html",
+		Index: "admin/snacks/index.html",
 	},
 	"topic": {
-		Show:  "topics/show.html",
-		New:   "topics/new.html",
-		Edit:  "topics/edit.html",
-		Index: "topics/index.html",
+		Show:  "admin/topics/show.html",
+		New:   "admin/topics/new.html",
+		Edit:  "admin/topics/edit.html",
+		Index: "admin/topics/index.html",
 	},
 }
 

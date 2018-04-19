@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h1>Authors</h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+  <th>Slug</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Photo</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (author) in authors { %>
+      <tr>
+      <td><%= author.Slug %></td>
+        <td><%= author.Name %></td>
+        <td><%= markdown(author.Description) %></td>
+        <td><%= author.Photo %></td>
+        <td>
+          <div class="pull-right">
+              <a href="/authors/<%= author.Slug %>" class="btn btn-info">View</a>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
