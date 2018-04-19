@@ -77,12 +77,13 @@ func (m *modelResource) New(c buffalo.Context) error {
 	}
 	templateNames, err := getTemplateNames(modelName)
 	if err != nil {
-		// TODO: better error message
+		c.Logger().Errorf("getting template names for model %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 
 	empty, err := models.EmptyFromRegistry(modelName)
 	if err != nil {
+		c.Logger().Errorf("getting empty model %s", modelName)
 		return c.Error(http.StatusNotFound, err)
 	}
 	c.Set("model_name", modelName)
@@ -101,15 +102,19 @@ func (m *modelResource) Create(c buffalo.Context) error {
 	}
 	empty, err := models.EmptyFromRegistry(modelName)
 	if err != nil {
+		c.Logger().Errorf("getting empty model %s from registry", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 	if err := c.Bind(empty); err != nil {
+		c.Logger().Errorf("binding to model %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 	verrs, err := tx.Eager().ValidateAndCreate(empty)
 	if verrs.HasAny() {
+		c.Logger().Errorf("ValidateAndCreate on a new %s (%s)", modelName, verrs)
 		return c.Error(http.StatusBadRequest, verrs)
 	} else if err != nil {
+		c.Logger().Errorf("creating a new %s (%s)", modelName, err)
 		return c.Error(http.StatusInternalServerError, err)
 	}
 
