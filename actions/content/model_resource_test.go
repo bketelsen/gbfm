@@ -104,6 +104,15 @@ func (as ActionSuite) TestModelCreate() {
 			fmt.Sprintf("/admin/%s/%s", modelName, list.EltAt(0).GetID()),
 			res.Header().Get("Location"),
 		)
+
+		// join tables and relational objects might have been written to,
+		// so clean it all up before we start again.
+		//
+		// NOTE: normally this would be done after each ActionSuite test.
+		// see SetupTest in (github.com/gobuffalo/suite).Model for how that
+		// is done. We're doing it here so that we don't have to create a new
+		// test for each model. DRY FTW
+		r.NoError(db.TruncateAll())
 	}
 }
 
