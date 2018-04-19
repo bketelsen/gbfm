@@ -118,7 +118,8 @@ func (m *modelResource) Create(c buffalo.Context) error {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 
-	return c.Redirect(http.StatusFound, "/admin/%s/%s", modelName, empty.GetID())
+	singular := inflection.Singular(modelName)
+	return c.Redirect(http.StatusFound, "/admin/%s/%s", singular, empty.GetID())
 }
 
 // GET /admin/{model_name}/{admin_model_id}/edit
