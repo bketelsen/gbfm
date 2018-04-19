@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>Guide#Show</h1>
+</div>
+
+<ul class="list-unstyled list-inline">
+  <li><a href="/admin/guides" class="btn btn-info">Back to all Guides</a></li>
+  <% let guideEditPath = "/admin/guides/" + guide.ID + "/edit" %>
+  <li><a href="<%= guideEditPath %>" class="btn btn-warning">Edit</a></li>
+  <% let guideDeletePath = "/admin/guides/" + guide.ID %>
+  <li><a href="<%= guideDeletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</ul>
+
+<p>
+  <strong>Slug</strong>: <%= guide.Slug %>
+</p>
+<p>
+  <strong>Name</strong>: <%= guide.Title %>
+</p>
+<p>
+  <strong>Description</strong>: <%= guide.Description %>
+</p>
+<p>
+  <strong>Markdown</strong>: <%= guide.Markdown %>
+</p>

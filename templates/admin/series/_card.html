@@ -1,0 +1,16 @@
+<%= for (s) in series { %>
+<div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+       <img class="card-img-top mx-auto d-block fas <%= s.IconURL %> fa-4x p-1" alt="<%= s.Slug %>">
+      <div class="card-body">
+        <p class="card-text"><%= s.Description %></p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-primary"><a href="/series/<%=s.Slug%>">Watch</a></button>
+          </div>
+          <small class="text-muted"><%= epcount[s.ID.String()]   %> <%= pluralize_with_size("episode",  epcount[s.ID.String()] )%></small>
+        </div>
+      </div>
+  </div>
+</div>
+<% } %>

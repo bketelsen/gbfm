@@ -1,0 +1,41 @@
+<div class="page-header">
+  <h1>Episodes</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li><a href="/admin/episodes/new" class="btn btn-primary">Create New Episode</a></li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Slug</th>
+    <th>ThumbnailURL</th>
+    <th>EmbedCode</th>
+    <th>Markdown</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (author) in authors { %>
+    <tr>
+        <td><%= episode.Title %></td>
+        <td><%= episode.Description %></td>
+        <td><%= episode.Slug %></td>
+        <td><%= episode.ThumbnailURL %></td>
+        <td><%= episode.EmbedCode %></td>
+        <td><%= episode.Markdown %></td>
+        <td>
+          <div class="pull-right">
+            <a href="/admin/episodes/<%= episode.ID  %>" class="btn btn-info">View</a>
+            <a href="/admin/episodes/<%= episode.ID %>/edit" class="btn btn-warning">Edit</a>
+            <a href="/admin/episodes/<%= episode.ID %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>

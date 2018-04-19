@@ -72,7 +72,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML(tpls.Show))
 }
 
-// GET /admin/{model_name}/new
+// GET /admin/{model_name}s/new
 func (m *modelResource) New(c buffalo.Context) error {
 	modelName, err := getModelName(c)
 	if err != nil {
@@ -89,9 +89,10 @@ func (m *modelResource) New(c buffalo.Context) error {
 		c.Logger().Errorf("getting empty model %s", modelName)
 		return c.Error(http.StatusNotFound, err)
 	}
-	c.Set("model_name", modelName)
+
 	c.Set(modelName, empty)
-	// this allows plural names like /admin/episodes/new
+	// this allows URLs to have plural names (i.e. /admin/episodes/new)
+	// but the template can still use the singular name (i.e. episode)
 	c.Set(inflection.Singular(modelName), empty)
 	return c.Render(http.StatusOK, r.HTML(templateNames.New))
 }
@@ -152,11 +153,43 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 	}
 
 	c.Set("model_name", modelName)
+	c.Set("model_name_plural", inflection.Plural(modelName))
+	c.Set("model_id", modelID)
 	c.Set(modelName, empty)
 	return c.Render(http.StatusOK, r.HTML(templateNames.Edit))
 }
 
-func (m *modelResource) Update(buffalo.Context) error { return nil }
+func (m *modelResource) Update(c buffalo.Context) error { 
+	tx := c.Value("tx").(*pop.Connection)
+	modelName, err := getModelName(c)
+	if err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
+	modelID, err := getModelID(c, modelName)
+	if err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
+
+	empty, err := models.EmptyFromRegistry(modelName)
+	if err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
+
+	if err := tx.Find(empty, modelID); err != nil {
+		return c.Error(http.StatusNotFound, err)
+	}
+	if err := c.Bind(empty); err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
+	verrs, err := tx.ValidateAndUpdate(empty)
+	if verrs.HasAny() {
+		return c.Error(http.StatusInternalServerError, verrs)
+	} else if err != nil {
+		return c.Error(http.StatusInternalServerError, err)
+	}
+
+	return c.Redirect(http.StatusFound, "/admin/%s/%s", inflection.Plural(modelName), empty.GetID())
+}
 
 // DELETE /admin/{model_name}/{admin_model_id}
 func (m *modelResource) Destroy(c buffalo.Context) error {
@@ -183,6 +216,7 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 	if c.Param("redir_path") != "" {
 		redirPath = c.Param("redir_path")
 	}
+	c.Set("model_name", modelName)
 	return c.Redirect(http.StatusFound, redirPath)
 }
 
