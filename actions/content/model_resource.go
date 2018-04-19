@@ -7,6 +7,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
 	"github.com/gophersnacks/gbfm/models"
+	"github.com/jinzhu/inflection"
 )
 
 type modelResource struct {
@@ -86,6 +87,8 @@ func (m *modelResource) New(c buffalo.Context) error {
 	}
 	c.Set("model_name", modelName)
 	c.Set(modelName, empty)
+	// this allows plural names like /admin/episodes/new
+	c.Set(inflection.Singular(modelName), empty)
 	return c.Render(http.StatusOK, r.HTML(templateNames.New))
 }
 

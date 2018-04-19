@@ -29,6 +29,8 @@ func (as ActionSuite) TestModelNew() {
 		as.T().Logf("model %s", modelName)
 		res := as.HTML("/admin/%s/new", modelName).Get()
 		r.Equal(http.StatusOK, res.Code)
+		res = as.HTML("/admin/%s/new)", inflection.Plural(modelName)).Get()
+		r.Equal(http.StatusOK, res.Code)
 	}
 }
 
