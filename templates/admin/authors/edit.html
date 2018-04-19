@@ -2,7 +2,7 @@
   <h1>Edit Author</h1>
 </div>
 
-<%= form_for(author, {action: adminPath({ author_id: author.ID }), method: "PUT"}) { %>
+<%= form_for(author, {action: adminEdit("author", author), method: "PUT"}) { %>
   <%= partial("admin/authors/form.html") %>
-  <a href="<%= adminPath({ author_id: author.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
-<% } %>
+    <a href='<%= adminView("author", author) %>' class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+    <% } %>

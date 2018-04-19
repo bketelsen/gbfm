@@ -2,7 +2,7 @@
   <h1>Edit Series</h1>
 </div>
 
-<%= form_for(series, {action: seriesPath({ series_id: series.ID }), method: "PUT"}) { %>
-  <%= partial("series/form.html") %>
-  <a href="<%= seriesPath({ series_id: series.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
-<% } %>
+<%= form_for(series, {action: adminUpdate("series", series), method: "PUT"}) { %>
+  <%= partial("admin/series/form.html") %>
+    <% } %>
+      <a href='<%= adminView("series", series) %>' class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
