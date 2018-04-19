@@ -2,7 +2,9 @@
   <h1>Episodes</h1>
 </div>
 <ul class="list-unstyled list-inline">
-  <li><a href="/admin/episodes/new" class="btn btn-primary">Create New Episode</a></li>
+  <li>
+    <a href="/admin/episodes/new" class="btn btn-primary">Create New Episode</a>
+  </li>
 </ul>
 
 <table class="table table-striped">
@@ -16,14 +18,26 @@
     <th>&nbsp;</th>
   </thead>
   <tbody>
-    <%= for (author) in authors { %>
-    <tr>
-        <td><%= episode.Title %></td>
-        <td><%= episode.Description %></td>
-        <td><%= episode.Slug %></td>
-        <td><%= episode.ThumbnailURL %></td>
-        <td><%= episode.EmbedCode %></td>
-        <td><%= episode.Markdown %></td>
+    <%= for (episode) in episodes { %>
+      <tr>
+        <td>
+          <%= episode.Title %>
+        </td>
+        <td>
+          <%= episode.Description %>
+        </td>
+        <td>
+          <%= episode.Slug %>
+        </td>
+        <td>
+          <%= episode.ThumbnailURL %>
+        </td>
+        <td>
+          <%= episode.EmbedCode %>
+        </td>
+        <td>
+          <%= episode.Markdown %>
+        </td>
         <td>
           <div class="pull-right">
             <a href="/admin/episodes/<%= episode.ID  %>" class="btn btn-info">View</a>
@@ -32,7 +46,7 @@
           </div>
         </td>
       </tr>
-    <% } %>
+      <% } %>
   </tbody>
 </table>
 
