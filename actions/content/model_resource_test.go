@@ -25,11 +25,11 @@ func (as ActionSuite) TestModelList() {
 func (as ActionSuite) TestModelNew() {
 	r := as.Require()
 	for modelName := range templateRegistry {
-		r.NoError(as.login())
+		plural := inflection.Plural(modelName)
 		as.T().Logf("model %s", modelName)
-		res := as.HTML("/admin/%s/new", modelName).Get()
-		r.Equal(http.StatusOK, res.Code)
-		res = as.HTML("/admin/%s/new)", inflection.Plural(modelName)).Get()
+		r.NoError(as.login())
+
+		res := as.HTML("/admin/%s/new", plural).Get()
 		r.Equal(http.StatusOK, res.Code)
 	}
 }
@@ -83,12 +83,14 @@ func (as ActionSuite) TestModelDestroy() {
 func (as ActionSuite) TestModelCreate() {
 	r, db := as.Require(), as.DB
 	for modelName := range templateRegistry {
-		as.T().Logf("model %s", modelName)
+		r.NoError(as.login())
+		plural := inflection.Plural(modelName)
+		as.T().Logf("model %s", plural)
 		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
 
 		// make sure the endpoint returned the redirect
-		res := as.HTML("/admin/%s", modelName).Post(singleModel)
+		res := as.HTML("/admin/%s", plural).Post(singleModel)
 		r.Equal(http.StatusFound, res.Code)
 
 		// look for the new model in the DB
