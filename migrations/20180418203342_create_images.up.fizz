@@ -4,5 +4,4 @@ create_table("images", func(t) {
 	t.Column("title", "string", {})
 	t.Column("description", "string", {})
 	t.Column("alt_text", "string", {})
-	t.Column("file", "string", {})
 })

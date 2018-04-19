@@ -5,10 +5,7 @@ import (
 	"time"
 
 	"github.com/gobuffalo/buffalo/binding"
-	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
-	"github.com/gobuffalo/validate"
-	"github.com/gobuffalo/validate/validators"
 )
 
 type Image struct {
@@ -19,7 +16,7 @@ type Image struct {
 	Title       string       `json:"title" db:"title"`
 	Description string       `json:"description" db:"description"`
 	AltText     string       `json:"alt_text" db:"alt_text"`
-	File        binding.File `json:"file" db:"file"`
+	File        binding.File `json:"file" db:"-" form:"File"`
 }
 
 // String is not required by pop and may be deleted
@@ -31,37 +28,32 @@ func (i Image) String() string {
 // Images is not required by pop and may be deleted
 type Images []Image
 
+// ImageList is a list of Image models. It implements Lister
+type ImageList []*Image
+
+// Len implements Lister
+func (s ImageList) Len() int {
+	return len(s)
+}
+
+// EltAt implements Lister
+func (s ImageList) EltAt(i int) IDer {
+	if i < len(s) {
+		return s[i]
+	}
+	return nil
+}
+
 // String is not required by pop and may be deleted
 func (i Images) String() string {
 	ji, _ := json.Marshal(i)
 	return string(ji)
 }
 
-// Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
-// This method is not required and may be deleted.
-func (i *Image) Validate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.Validate(
-		&validators.StringIsPresent{Field: i.Title, Name: "Title"},
-		&validators.StringIsPresent{Field: i.Description, Name: "Description"},
-		&validators.StringIsPresent{Field: i.AltText, Name: "AltText"},
-	), nil
-}
-
-// ValidateCreate gets run every time you call "pop.ValidateAndCreate" method.
-// This method is not required and may be deleted.
-func (i *Image) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.NewErrors(), nil
-}
-
-// ValidateUpdate gets run every time you call "pop.ValidateAndUpdate" method.
-// This method is not required and may be deleted.
-func (i *Image) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.NewErrors(), nil
-}
 func init() {
 	registry["image"] = &registryFuncs{
 		empty: func() IDer { return new(Image) },
-		list:  func() interface{} { return new([]Image) },
+		list:  func() Lister { return new(ImageList) },
 		sample: func() IDer {
 			return &Image{
 				Slug:        namer.NameSep("-"),
