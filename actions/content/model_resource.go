@@ -7,6 +7,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
 	"github.com/gophersnacks/gbfm/models"
+	"github.com/jinzhu/inflection"
 )
 
 type modelResource struct {
@@ -76,34 +77,49 @@ func (m *modelResource) New(c buffalo.Context) error {
 	}
 	templateNames, err := getTemplateNames(modelName)
 	if err != nil {
-		// TODO: better error message
+		c.Logger().Errorf("getting template names for model %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 
 	empty, err := models.EmptyFromRegistry(modelName)
 	if err != nil {
+		c.Logger().Errorf("getting empty model %s", modelName)
 		return c.Error(http.StatusNotFound, err)
 	}
 	c.Set("model_name", modelName)
 	c.Set(modelName, empty)
+	// this allows plural names like /admin/episodes/new
+	c.Set(inflection.Singular(modelName), empty)
 	return c.Render(http.StatusOK, r.HTML(templateNames.New))
 }
 
 // POST /admin/{model_name}
 func (m *modelResource) Create(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
 	empty, err := models.EmptyFromRegistry(modelName)
 	if err != nil {
+		c.Logger().Errorf("getting empty model %s from registry", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
 	if err := c.Bind(empty); err != nil {
+		c.Logger().Errorf("binding to model %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
+	verrs, err := tx.Eager().ValidateAndCreate(empty)
+	if verrs.HasAny() {
+		c.Logger().Errorf("ValidateAndCreate on a new %s (%s)", modelName, verrs)
+		return c.Error(http.StatusBadRequest, verrs)
+	} else if err != nil {
+		c.Logger().Errorf("creating a new %s (%s)", modelName, err)
+		return c.Error(http.StatusInternalServerError, err)
+	}
 
-	return c.Redirect(http.StatusFound, "/admin/%s/%s", modelName, empty.GetID())
+	singular := inflection.Singular(modelName)
+	return c.Redirect(http.StatusFound, "/admin/%s/%s", singular, empty.GetID())
 }
 
 // GET /admin/{model_name}/{admin_model_id}/edit
