@@ -1,31 +1,44 @@
 <div class="page-header">
-  <h1>Series#Show</h1>
+  <h1>
+    Series
+    <%= series.Title %>
+  </h1>
 </div>
 
 <ul class="list-unstyled list-inline">
-  <li><a href="/admin/series" class="btn btn-info">Back to all Series</a></li>
+  <li>
+    <a href="/admin/series" class="btn btn-info">Back to all Series</a>
+  </li>
   <% let editPath = "/admin/series/" + series.ID + "/edit" %>
-  <li><a href="<%= editPath %>" class="btn btn-warning">Edit</a></li>
-  <% let deletePath = "/admin/series/" + series.ID %>
-  <li><a href="<%= deletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+    <li>
+      <a href="<%= editPath %>" class="btn btn-warning">Edit</a>
+    </li>
+    <% let deletePath = "/admin/series/" + series.ID %>
+      <li>
+        <a href="<%= deletePath %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
 </ul>
 
 <p>
-  <strong>Title</strong>: <%= series.Title %>
+  <strong>Title</strong>:
+  <%= series.Title %>
 </p>
 <p>
-  <strong>Slug</strong>: <%= series.Slug %>
+  <strong>Slug</strong>:
+  <%= series.Slug %>
 </p>
 <p>
-  <strong>Description</strong>: <%= series.Description %>
+  <strong>Description</strong>:
+  <%= series.Description %>
 </p>
 <p>
-  <strong>ThumbnailURL</strong>: <%= series.ThumbnailURL %>
+  <strong>ThumbnailURL</strong>:
+  <%= series.ThumbnailURL %>
 </p>
 
 <%= for (e) in series.Episodes { %>
-<p>
-    <strong>Episode</strong>: <%= e.ID %>: <%= e.Title %>
-</p>
-<% } %>
-
+  <p>
+    <strong>Episode</strong>:
+    <%= e.ID %>:
+      <%= e.Title %>
+  </p>
+  <% } %>
