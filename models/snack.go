@@ -25,7 +25,7 @@ type Snack struct {
 
 func init() {
 	registry["snack"] = &registryFuncs{
-		list:  func() interface{} { return new([]Snack) },
+		list:  func() Lister { return new(Snacks) },
 		empty: func() IDer { return new(Snack) },
 		sample: func() IDer {
 			return &Snack{
@@ -55,4 +55,20 @@ func (a Snack) GetUpdatedAt() time.Time {
 
 func (a Snack) GetSlug() string {
 	return a.Slug
+}
+
+// Snacks is a list of Snack models. It implements Lister
+type Snacks []*Snack
+
+// Len implements Lister
+func (s Snacks) Len() int {
+	return len(s)
+}
+
+// EltAt implements Lister
+func (s Snacks) EltAt(i int) IDer {
+	if i < len(s) {
+		return s[i]
+	}
+	return nil
 }

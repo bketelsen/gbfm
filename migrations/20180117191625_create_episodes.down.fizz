@@ -1,3 +1,4 @@
 drop_table("episodes")
 drop_table("episodes_authors")
 drop_table("episodes_authors")
+drop_table("episodes_series")

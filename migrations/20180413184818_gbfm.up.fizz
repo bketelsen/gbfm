@@ -9,12 +9,14 @@ create_table("gbfms", func(t) {
 })
 
 create_table("gifm_topics", func(t) {
+    t.Column("id", "uuid", {"primary": true})
 	t.Column("topic_id", "uuid", {})
 	t.Column("gifm_id", "uuid", {})
 })
 
 create_table("gifm_authors", func(t) {
-	t.Column("topic_id", "uuid", {})
+    t.Column("id", "uuid", {"primary": true})
+	t.Column("author_id", "uuid", {})
 	t.Column("gifm_id", "uuid", {})
 })
 

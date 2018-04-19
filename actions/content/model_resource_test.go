@@ -22,6 +22,18 @@ func (as ActionSuite) TestModelList() {
 	}
 }
 
+func (as ActionSuite) TestModelNew() {
+	r := as.Require()
+	for modelName := range templateRegistry {
+		plural := inflection.Plural(modelName)
+		as.T().Logf("model %s", modelName)
+		r.NoError(as.login())
+
+		res := as.HTML("/admin/%s/new", plural).Get()
+		r.Equal(http.StatusOK, res.Code)
+	}
+}
+
 func (as ActionSuite) TestModelShow() {
 	r, db := as.Require(), as.DB
 	r.NoError(as.login())
@@ -65,6 +77,42 @@ func (as ActionSuite) TestModelDestroy() {
 		).Delete()
 		r.Equal(http.StatusFound, res.Code)
 		r.Equal("/otherPath", res.Header().Get("location"))
+	}
+}
+
+func (as ActionSuite) TestModelCreate() {
+	r, db := as.Require(), as.DB
+	for modelName := range templateRegistry {
+		r.NoError(as.login())
+		plural := inflection.Plural(modelName)
+		as.T().Logf("model %s", plural)
+		singleModel, err := models.SampleFromRegistry(modelName)
+		r.NoError(err)
+
+		// make sure the endpoint returned the redirect
+		res := as.HTML("/admin/%s", plural).Post(singleModel)
+		r.Equal(http.StatusFound, res.Code)
+
+		// look for the new model in the DB
+		list, err := models.EmptyListFromRegistry(modelName)
+		r.NoError(err)
+		r.NoError(db.All(list))
+		r.Equal(1, list.Len())
+
+		// make sure the response redirected to the right place
+		r.Equal(
+			fmt.Sprintf("/admin/%s/%s", modelName, list.EltAt(0).GetID()),
+			res.Header().Get("Location"),
+		)
+
+		// join tables and relational objects might have been written to,
+		// so clean it all up before we start again.
+		//
+		// NOTE: normally this would be done after each ActionSuite test.
+		// see SetupTest in (github.com/gobuffalo/suite).Model for how that
+		// is done. We're doing it here so that we don't have to create a new
+		// test for each model. DRY FTW
+		r.NoError(db.TruncateAll())
 	}
 }
 

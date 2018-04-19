@@ -24,7 +24,7 @@ type Series struct {
 func init() {
 	registry["series"] = &registryFuncs{
 		empty: func() IDer { return new(Series) },
-		list:  func() interface{} { return new([]Series) },
+		list:  func() Lister { return new(SeriesList) },
 		sample: func() IDer {
 			return &Series{
 				Slug:         namer.NameSep("-"),
@@ -56,4 +56,20 @@ func (a Series) GetUpdatedAt() time.Time {
 // GetSlug implements Slugger
 func (a Series) GetSlug() string {
 	return a.Slug
+}
+
+// SeriesList is a list of Series models. It implements Lister
+type SeriesList []*Series
+
+// Len implements Lister
+func (s SeriesList) Len() int {
+	return len(s)
+}
+
+// EltAt implements Lister
+func (s SeriesList) EltAt(i int) IDer {
+	if i < len(s) {
+		return s[i]
+	}
+	return nil
 }
