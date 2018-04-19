@@ -92,10 +92,11 @@ func (m *modelResource) New(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
-	if err := templateInfo.fetchAdditionalModels(tx); err != nil {
+	listers, err := templateInfo.fetchAdditionalModels(tx)
+	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	templateInfo.populateAdditionalModels(c)
+	templateInfo.populateAdditionalModels(c, listers)
 
 	c.Set(modelName, empty)
 	// this allows URLs to have plural names (i.e. /admin/episodes/new)
@@ -159,10 +160,11 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
-	if err := templateInfo.fetchAdditionalModels(tx); err != nil {
+	listers, err := templateInfo.fetchAdditionalModels(tx)
+	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	templateInfo.populateAdditionalModels(c)
+	templateInfo.populateAdditionalModels(c, listers)
 
 	c.Set("model_name", modelName)
 	c.Set("model_name_plural", inflection.Plural(modelName))
