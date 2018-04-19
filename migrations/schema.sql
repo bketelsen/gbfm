@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.3 (Debian 10.3-1.pgdg90+1)
--- Dumped by pg_dump version 10.3
+-- Dumped from database version 10.3 (Ubuntu 10.3-1)
+-- Dumped by pg_dump version 10.3 (Ubuntu 10.3-1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -395,6 +395,43 @@ ALTER SEQUENCE public.series_authors_id_seq OWNED BY public.series_authors.id;
 
 
 --
+-- Name: series_episodes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.series_episodes (
+    id integer NOT NULL,
+    series_id uuid NOT NULL,
+    episode_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.series_episodes OWNER TO postgres;
+
+--
+-- Name: series_episodes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.series_episodes_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.series_episodes_id_seq OWNER TO postgres;
+
+--
+-- Name: series_episodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.series_episodes_id_seq OWNED BY public.series_episodes.id;
+
+
+--
 -- Name: series_topics; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -562,6 +599,13 @@ ALTER TABLE ONLY public.series_authors ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: series_episodes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.series_episodes ALTER COLUMN id SET DEFAULT nextval('public.series_episodes_id_seq'::regclass);
+
+
+--
 -- Name: series_topics id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -669,6 +713,14 @@ ALTER TABLE ONLY public.guides_topics
 
 ALTER TABLE ONLY public.series_authors
     ADD CONSTRAINT series_authors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: series_episodes series_episodes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.series_episodes
+    ADD CONSTRAINT series_episodes_pkey PRIMARY KEY (id);
 
 
 --
