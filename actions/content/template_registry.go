@@ -15,17 +15,17 @@ var templateRegistry = map[string]*templateInfo{
 		New:              "admin/authors/new.html",
 		Edit:             "admin/authors/edit.html",
 		Index:            "admin/authors/index.html",
-		AdditionalModels: map[string]models.Lister{},
+		AdditionalModels: map[string]func() models.Lister{},
 	},
 	"episode": {
 		Show:  "admin/episodes/show.html",
 		New:   "admin/episodes/new.html",
 		Edit:  "admin/episodes/edit.html",
 		Index: "admin/episodes/index.html",
-		AdditionalModels: map[string]models.Lister{
-			"topics":     &models.Topics{},
-			"authors":    &models.Authors{},
-			"seriesList": &models.SeriesList{},
+		AdditionalModels: map[string]func() models.Lister{
+			"topics":     newTopicsList,
+			"authors":    newAuthorsList,
+			"seriesList": newSeriesList,
 		},
 	},
 	"gbfm": {
@@ -33,9 +33,9 @@ var templateRegistry = map[string]*templateInfo{
 		New:   "admin/gbfm/new.html",
 		Edit:  "admin/gbfm/edit.html",
 		Index: "admin/gbfm/index.html",
-		AdditionalModels: map[string]models.Lister{
-			"topics":  &models.Topics{},
-			"authors": &models.Authors{},
+		AdditionalModels: map[string]func() models.Lister{
+			"topics":  newTopicsList,
+			"authors": newAuthorsList,
 		},
 	},
 	"guide": {
@@ -43,9 +43,9 @@ var templateRegistry = map[string]*templateInfo{
 		New:   "admin/guides/new.html",
 		Edit:  "admin/guides/edit.html",
 		Index: "admin/guides/index.html",
-		AdditionalModels: map[string]models.Lister{
-			"topics":  &models.Topics{},
-			"authors": &models.Authors{},
+		AdditionalModels: map[string]func() models.Lister{
+			"topics":  newTopicsList,
+			"authors": newAuthorsList,
 		},
 	},
 	"image": {
@@ -53,16 +53,16 @@ var templateRegistry = map[string]*templateInfo{
 		New:              "admin/images/new.html",
 		Edit:             "admin/images/edit.html",
 		Index:            "admin/images/index.html",
-		AdditionalModels: map[string]models.Lister{},
+		AdditionalModels: map[string]func() models.Lister{},
 	},
 	"series": {
 		Show:  "admin/series/show.html",
 		New:   "admin/series/new.html",
 		Edit:  "admin/series/edit.html",
 		Index: "admin/series/index.html",
-		AdditionalModels: map[string]models.Lister{
-			"topics":  &models.Topics{},
-			"authors": &models.Authors{},
+		AdditionalModels: map[string]func() models.Lister{
+			"topics":  newTopicsList,
+			"authors": newAuthorsList,
 		},
 	},
 	"snack": {
@@ -70,9 +70,9 @@ var templateRegistry = map[string]*templateInfo{
 		New:   "admin/snacks/new.html",
 		Edit:  "admin/snacks/edit.html",
 		Index: "admin/snacks/index.html",
-		AdditionalModels: map[string]models.Lister{
-			"topics":  &models.Topics{},
-			"authors": &models.Authors{},
+		AdditionalModels: map[string]func() models.Lister{
+			"topics":  newTopicsList,
+			"authors": newAuthorsList,
 		},
 	},
 	"topic": {
@@ -80,7 +80,7 @@ var templateRegistry = map[string]*templateInfo{
 		New:              "admin/topics/new.html",
 		Edit:             "admin/topics/edit.html",
 		Index:            "admin/topics/index.html",
-		AdditionalModels: map[string]models.Lister{},
+		AdditionalModels: map[string]func() models.Lister{},
 	},
 }
 
@@ -95,27 +95,29 @@ type templateInfo struct {
 	// the additional models that the handler must fetch and pass into the
 	// template. The keys of this map are the names that must be passed
 	// to the template
-	AdditionalModels map[string]models.Lister
+	AdditionalModels map[string]func() models.Lister
 }
 
 // fetchAdditionalModels uses tx to fetch every model.Lister in
-// t.AdditionalModels, and returns an error if any fetch failed.
-//
-// this method modifies t in place, even if an error was returned
-func (t *templateInfo) fetchAdditionalModels(tx *pop.Connection) error {
-	for name, lister := range t.AdditionalModels {
+// t.AdditionalModels. returns nil and an error if there was a failure fetching
+// any of them, the full map otherwise. Use the return value of this method to
+// pass into populateAdditionalModels
+func (t templateInfo) fetchAdditionalModels(tx *pop.Connection) (map[string]models.Lister, error) {
+	ret := map[string]models.Lister{}
+	for name, listerFn := range t.AdditionalModels {
+		lister := listerFn()
 		if err := tx.All(lister); err != nil {
-			return err
+			return nil, err
 		}
-		t.AdditionalModels[name] = lister
+		ret[name] = lister
 	}
-	return nil
+	return ret, nil
 }
 
 // populateAdditionalModels sets each model list in t.AdditionalModels
 // onto c. You should call t.fetchAdditionalModels before calling this.
-func (t templateInfo) populateAdditionalModels(c buffalo.Context) {
-	for name, lister := range t.AdditionalModels {
+func (t templateInfo) populateAdditionalModels(c buffalo.Context, m map[string]models.Lister) {
+	for name, lister := range m {
 		c.Set(name, lister)
 	}
 }
@@ -133,3 +135,7 @@ func getTemplateNames(s string) (*templateInfo, error) {
 	}
 	return tn, nil
 }
+
+func newTopicsList() models.Lister  { return &models.Topics{} }
+func newAuthorsList() models.Lister { return &models.Authors{} }
+func newSeriesList() models.Lister  { return &models.SeriesList{} }
