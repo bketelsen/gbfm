@@ -21,7 +21,7 @@ func (m *modelResource) List(c buffalo.Context) error {
 		c.Logger().Errorf("model name %s not found", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
-	tpls, err := getTemplateNames(modelName)
+	templateInfo, err := getTemplateNames(modelName)
 	if err != nil {
 		c.Logger().Errorf("template for model %s not found", modelName)
 		return c.Error(http.StatusBadRequest, err)
@@ -39,7 +39,7 @@ func (m *modelResource) List(c buffalo.Context) error {
 	c.Set("pagination", q.Paginator)
 	plural := inflection.Plural(modelName)
 	c.Set(plural, list)
-	return c.Render(http.StatusOK, r.HTML(tpls.Index))
+	return c.Render(http.StatusOK, r.HTML(templateInfo.Index))
 }
 
 // /admin/{model_name}/{admin_model_id}
@@ -54,7 +54,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 		return c.Error(http.StatusBadRequest, err)
 	}
 
-	tpls, err := getTemplateNames(modelName)
+	templateInfo, err := getTemplateNames(modelName)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
@@ -69,16 +69,18 @@ func (m *modelResource) Show(c buffalo.Context) error {
 
 	c.Set("model_name", modelName)
 	c.Set(modelName, single)
-	return c.Render(http.StatusOK, r.HTML(tpls.Show))
+	return c.Render(http.StatusOK, r.HTML(templateInfo.Show))
 }
 
 // GET /admin/{model_name}s/new
 func (m *modelResource) New(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
+
 	modelName, err := getModelName(c)
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	templateNames, err := getTemplateNames(modelName)
+	templateInfo, err := getTemplateNames(modelName)
 	if err != nil {
 		c.Logger().Errorf("getting template names for model %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
@@ -90,11 +92,16 @@ func (m *modelResource) New(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
+	if err := templateInfo.fetchAdditionalModels(tx); err != nil {
+		return c.Error(http.StatusInternalServerError, err)
+	}
+	templateInfo.populateAdditionalModels(c)
+
 	c.Set(modelName, empty)
 	// this allows URLs to have plural names (i.e. /admin/episodes/new)
 	// but the template can still use the singular name (i.e. episode)
 	c.Set(inflection.Singular(modelName), empty)
-	return c.Render(http.StatusOK, r.HTML(templateNames.New))
+	return c.Render(http.StatusOK, r.HTML(templateInfo.New))
 }
 
 // POST /admin/{model_name}
@@ -140,7 +147,7 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
-	templateNames, err := getTemplateNames(modelName)
+	templateInfo, err := getTemplateNames(modelName)
 	if err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
@@ -152,14 +159,20 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
+	if err := templateInfo.fetchAdditionalModels(tx); err != nil {
+		return c.Error(http.StatusInternalServerError, err)
+	}
+	templateInfo.populateAdditionalModels(c)
+
 	c.Set("model_name", modelName)
 	c.Set("model_name_plural", inflection.Plural(modelName))
 	c.Set("model_id", modelID)
 	c.Set(modelName, empty)
-	return c.Render(http.StatusOK, r.HTML(templateNames.Edit))
+	return c.Render(http.StatusOK, r.HTML(templateInfo.Edit))
 }
 
-func (m *modelResource) Update(c buffalo.Context) error { 
+// PUT /admin/{model_name}/{admin_model_id}
+func (m *modelResource) Update(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
 	if err != nil {

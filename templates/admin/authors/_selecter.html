@@ -1,0 +1,11 @@
+<div class="form-group">
+    <label class="active">Author</label>
+    <select class="topics-selecter form-control" name="topic">
+        <%= for (author) in authors { %>
+            <option value="<%= author.ID %>">
+                <%= author.Name %> (
+                    <%= author.Slug %>)
+            </option>
+            <% } %>
+    </select>
+</div>

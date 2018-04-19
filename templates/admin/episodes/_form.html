@@ -1,11 +1,11 @@
 <%= f.InputTag("Title") %>
-<%= f.InputTag("Description") %>
-<%= f.InputTag("Slug") %>
-<%= f.InputTag("ThumbnailURL") %>
-<%= f.InputTag("EmbedCode") %>
-<%= f.InputTag("DownloadURL") %>
-<%= f.CheckboxTag("Pro") %>
-<%= f.InputTag("DisplayOrder") %>
-<%= f.TextArea("Markdown",{rows: 10}) %>
-<%= f.SelectTag("Series",{options: episode.Series}) %>
-<button class="btn btn-success" role="submit">Save</button>
+    <%= f.InputTag("Description") %>
+        <%= f.InputTag("Slug") %>
+            <%= f.InputTag("ThumbnailURL") %>
+                <%= f.InputTag("EmbedCode") %>
+                    <%= f.InputTag("DownloadURL") %>
+                        <%= f.CheckboxTag("Pro") %>
+                            <%= f.InputTag("DisplayOrder") %>
+                                <%= f.TextArea("Markdown",{rows: 10}) %>
+                                    <%= partial("admin/series/selecter.html", {"seriesList": seriesList}) %>
+                                        <button class="btn btn-success" role="submit">Save</button>

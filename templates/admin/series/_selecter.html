@@ -1,0 +1,10 @@
+<div class="form-group">
+    <label class="active">Series</label>
+    <select class="topics-selecter form-control" name="topic">
+        <%= for (series) in seriesList { %>
+            <option id="<%= series.ID %>">
+                <%= series.Title %>
+            </option>
+            <% } %>
+    </select>
+</div>

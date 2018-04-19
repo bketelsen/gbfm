@@ -4,6 +4,6 @@
             <%= f.InputTag("GithubLink") %>
                 <%= f.InputTag("Sponsor") %>
                     <%= f.InputTag("Description") %>
-                        <%= partial("admin/topics/selecter.html", {"topics": gbfm.Topics})
-                            <%= f.SelectTag("Authors") %>
-                            <button class="btn btn-success" role="submit">Save</button>
+                        <%= partial("admin/topics/selecter.html" %>
+                            <%= partial("admin/authors/selecter.html" %>
+                                <button class="btn btn-success" role="submit">Save</button>

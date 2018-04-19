@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gobuffalo/uuid"
@@ -36,6 +37,10 @@ func init() {
 			}
 		},
 	}
+}
+
+func (a Series) String() string {
+	return fmt.Sprintf("[%s] %s (%s)", a.ID, a.Title, a.Slug)
 }
 
 // GetID implements IDer
