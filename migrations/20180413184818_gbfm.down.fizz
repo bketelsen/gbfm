@@ -1,3 +1,0 @@
-drop_table("gbfm")
-drop_table("gbfm_topics")
-drop_table("gbfm_authors")
