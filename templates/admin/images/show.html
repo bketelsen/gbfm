@@ -4,7 +4,7 @@
 
 <ul class="list-unstyled list-inline">
   <li><a href="/admin/images" class="btn btn-info">Back to all Images</a></li>
-  <li><a href="/admin/images/<%= image.ID %>/edit" class="btn btn-warning">Edit</a></li>
+  <li><a href="/admin/images/<%= image.ID %>" class="btn btn-warning">Edit</a></li>
   <li><a href="/admin/images/<%= image.ID %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
 </ul>
 
@@ -18,5 +18,5 @@
   <strong>AltText</strong>: <%= image.AltText %>
 </p>
 <p>
-  <strong>File</strong>: <%= image.File %>
+  <strong>File Name</strong>: <%= image.FileName %>
 </p>

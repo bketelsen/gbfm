@@ -242,7 +242,7 @@ CREATE TABLE public.images (
     title character varying(255) NOT NULL,
     description character varying(255) NOT NULL,
     alt_text character varying(255) NOT NULL,
-    file character varying(255) NOT NULL,
+    file_name character varying(255) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
