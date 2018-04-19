@@ -1,1 +1,8 @@
-TODO
+<div class="page-header">
+    <h1>New Topic</h1>
+</div>
+
+<%= form_for(topic, {action: "/admin/topics", method: "POST"}) { %>
+    <%= partial("admin/topics/form.html") %>
+        <a href="/admin/topics" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+        <% } %>

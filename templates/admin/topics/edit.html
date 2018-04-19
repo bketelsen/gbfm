@@ -1,1 +1,9 @@
-TODO
+<div class="page-header">
+    <h1>Edit Topics</h1>
+</div>
+
+<% let editPath = "/admin/"+model_name_plural+"/"+model_id %>
+    <%= form_for(topic, {action: editPath, method: "PUT"}) { %>
+        <%= partial("admin/topics/form.html") %>
+            <a href="<%= adminPath({ topic_id: topic.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+            <% } %>
