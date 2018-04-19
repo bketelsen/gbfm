@@ -1,3 +1,3 @@
-drop_table("gifm")
-drop_table("gifm_topics")
-drop_table("gifm_authors")
+drop_table("gbfm")
+drop_table("gbfm_topics")
+drop_table("gbfm_authors")
