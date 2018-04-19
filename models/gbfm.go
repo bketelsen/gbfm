@@ -6,15 +6,8 @@ import (
 	"github.com/gobuffalo/uuid"
 )
 
-// Gifm is a go in 5 minutes entry.
-//
-// This does not match the migrations. It's called Gifm and the migration
-// creates a "gbfm" table. TODOs:
-//
-// - Rename this GBFM
-// - Change the TableName func to return "gbfm"
-//
-type Gifm struct {
+// Gbfm is a go in 5 minutes entry.
+type Gbfm struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
@@ -24,16 +17,16 @@ type Gifm struct {
 	GithubLink  string    `json:"github_link" db:"github_link"`
 	Sponsor     string    `json:"sponsor" db:"sponsor"`
 	Description string    `json:"description" db:"description"`
-	Topics      []Topic   `json:"topics" many_to_many:"gifm_topics"`
-	Authors     []Author  `json:"authors" many_to_many:"gifm_authors"`
+	Topics      []Topic   `json:"topics" many_to_many:"gbfm_topics"`
+	Authors     []Author  `json:"authors" many_to_many:"gbfm_authors"`
 }
 
 func init() {
-	registry["gifm"] = &registryFuncs{
-		list:  func() Lister { return new(Gifms) },
-		empty: func() IDer { return new(Gifm) },
+	registry["gbfm"] = &registryFuncs{
+		list:  func() Lister { return new(Gbfms) },
+		empty: func() IDer { return new(Gbfm) },
 		sample: func() IDer {
-			return &Gifm{
+			return &Gbfm{
 				Slug:        namer.NameSep("-"),
 				Title:       namer.Name(),
 				EmdedCode:   namer.NameSep("-"),
@@ -49,35 +42,35 @@ func init() {
 // implemented because pop will automatically infer the table name from
 // the struct name as "g_i_f_ms". This is because it separates capital
 // letters with underscores
-func (a Gifm) TableName() string {
+func (a Gbfm) TableName() string {
 	return "gbfms"
 }
-func (a Gifm) GetID() uuid.UUID {
+func (a Gbfm) GetID() uuid.UUID {
 	return a.ID
 }
 
-func (a Gifm) GetCreatedAt() time.Time {
+func (a Gbfm) GetCreatedAt() time.Time {
 	return a.CreatedAt
 }
 
-func (a Gifm) GetUpdatedAt() time.Time {
+func (a Gbfm) GetUpdatedAt() time.Time {
 	return a.UpdatedAt
 }
 
-func (a Gifm) GetSlug() string {
+func (a Gbfm) GetSlug() string {
 	return a.Slug
 }
 
-// Gifms is a list of GIFM models. It implements Lister
-type Gifms []*Gifm
+// Gbfms is a list of GBFM models. It implements Lister
+type Gbfms []*Gbfm
 
 // Len implements Lister
-func (g Gifms) Len() int {
+func (g Gbfms) Len() int {
 	return len(g)
 }
 
 // EltAt implements Lister
-func (g Gifms) EltAt(i int) IDer {
+func (g Gbfms) EltAt(i int) IDer {
 	if i < len(g) {
 		return g[i]
 	}
