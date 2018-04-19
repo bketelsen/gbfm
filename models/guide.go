@@ -58,6 +58,11 @@ func (a Guide) GetSlug() string {
 	return a.Slug
 }
 
+// TableName implements pop.TableNameAble
+func (Guide) TableName() string {
+	return "guides"
+}
+
 // Guides is a list of Guide models. It implements Lister
 type Guides []Guide
 

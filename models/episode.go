@@ -65,6 +65,11 @@ func (a Episode) GetSlug() string {
 	return a.Slug
 }
 
+// TableName implements pop.TableNameAble
+func (Episode) TableName() string {
+	return "episodes"
+}
+
 // Episodes is a list of Authors. It implements Lister
 type Episodes []*Episode
 

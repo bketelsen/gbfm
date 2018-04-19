@@ -45,6 +45,11 @@ func (a Topic) GetSlug() string {
 	return a.Slug
 }
 
+// TableName implements pop.TableNameAble
+func (Topic) TableName() string {
+	return "topics"
+}
+
 // Topics is a list of Topic models. It implements Lister
 type Topics []*Topic
 

@@ -63,6 +63,11 @@ func (a Series) GetSlug() string {
 	return a.Slug
 }
 
+// TableName implements pop.TableNameAble
+func (Series) TableName() string {
+	return "series"
+}
+
 // SeriesList is a list of Series models. It implements Lister
 type SeriesList []*Series
 

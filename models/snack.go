@@ -57,6 +57,11 @@ func (a Snack) GetSlug() string {
 	return a.Slug
 }
 
+// TableName implements pop.TableNameAble
+func (Snack) TableName() string {
+	return "snacks"
+}
+
 // Snacks is a list of Snack models. It implements Lister
 type Snacks []*Snack
 
