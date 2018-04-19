@@ -5,6 +5,6 @@
                 <%= f.InputTag("Summary") %>
                     <%= f.InputTag("Comment") %>
                         <%= f.InputTag("EmbedCode") %>
-                            <%= f.SelectTag("Topics") %>
+                            <%= partial("admin/topics/selecter.html", {"topics": snack.Topics}) %>
                                 <%= f.SelectTag("Authors") %>
                                     <button class="btn btn-success" role="submit">Save</button>
