@@ -171,7 +171,7 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML(templateInfo.Edit))
 }
 
-// PUT /admin/{model_name}/{admin_model_id}
+// PUT /admin/{model_name}/{model_id}
 func (m *modelResource) Update(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 	modelName, err := getModelName(c)
