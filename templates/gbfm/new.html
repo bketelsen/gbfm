@@ -1,1 +1,8 @@
-TODO
+<div class="page-header">
+    <h1>New GBFM Episode</h1>
+</div>
+
+<%= form_for(gifm, {action: "/admin/gifms", method: "POST"}) { %>
+    <%= partial("gbfm/form.html") %>
+        <a href="/admin/gifms" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+        <% } %>

@@ -1,20 +1,28 @@
 <div class="page-header">
-  <h1>Author#Show</h1>
+  <h1>Author
+    <%= author.Name %>
+  </h1>
 </div>
 
 <ul class="list-unstyled list-inline">
-  <li><a href="/authors" class="btn btn-info">Back to all Authors</a></li>
+  <li>
+    <a href="/authors" class="btn btn-info">Back to all Authors</a>
+  </li>
 </ul>
 
 <p>
-  <strong>Slug</strong>: <%= author.Slug %>
+  <strong>Slug</strong>:
+  <%= author.Slug %>
 </p>
 <p>
-  <strong>Name</strong>: <%= author.Name %>
+  <strong>Name</strong>:
+  <%= author.Name %>
 </p>
 <p>
-  <strong>Description</strong>: <%= markdown(author.Description)  %>
+  <strong>Description</strong>:
+  <%= markdown(author.Description)  %>
 </p>
 <p>
-  <strong>Photo</strong>: <%= author.Photo %>
+  <strong>Photo</strong>:
+  <%= author.Photo %>
 </p>

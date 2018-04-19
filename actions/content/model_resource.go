@@ -72,7 +72,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML(tpls.Show))
 }
 
-// GET /admin/{model_name}/new
+// GET /admin/{model_name}s/new
 func (m *modelResource) New(c buffalo.Context) error {
 	modelName, err := getModelName(c)
 	if err != nil {
@@ -89,9 +89,10 @@ func (m *modelResource) New(c buffalo.Context) error {
 		c.Logger().Errorf("getting empty model %s", modelName)
 		return c.Error(http.StatusNotFound, err)
 	}
-	c.Set("model_name", modelName)
+
 	c.Set(modelName, empty)
-	// this allows plural names like /admin/episodes/new
+	// this allows URLs to have plural names (i.e. /admin/episodes/new)
+	// but the template can still use the singular name (i.e. episode)
 	c.Set(inflection.Singular(modelName), empty)
 	return c.Render(http.StatusOK, r.HTML(templateNames.New))
 }
