@@ -31,6 +31,12 @@ var templateRegistry = map[string]*templateNames{
 		Edit:  "guides/edit.html",
 		Index: "guides/index.html",
 	},
+	"image": {
+		Show:  "admin/images/show.html",
+		New:   "admin/images/new.html",
+		Edit:  "admin/images/edit.html",
+		Index: "admin/images/index.html",
+	},
 	"series": {
 		Show:  "series/show.html",
 		New:   "series/new.html",

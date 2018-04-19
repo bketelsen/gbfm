@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.3 (Debian 10.3-1.pgdg90+1)
--- Dumped by pg_dump version 10.3
+-- Dumped from database version 10.3 (Ubuntu 10.3-1)
+-- Dumped by pg_dump version 10.3 (Ubuntu 10.3-1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -231,6 +231,24 @@ CREATE TABLE public.guides_topics (
 
 
 ALTER TABLE public.guides_topics OWNER TO postgres;
+
+--
+-- Name: images; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.images (
+    id uuid NOT NULL,
+    slug character varying(255) NOT NULL,
+    title character varying(255) NOT NULL,
+    description character varying(255) NOT NULL,
+    alt_text character varying(255) NOT NULL,
+    file_name character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.images OWNER TO postgres;
 
 --
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: postgres
@@ -467,6 +485,14 @@ ALTER TABLE ONLY public.guides
 
 ALTER TABLE ONLY public.guides_topics
     ADD CONSTRAINT guides_topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT images_pkey PRIMARY KEY (id);
 
 
 --

@@ -1,0 +1,8 @@
+create_table("images", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("slug", "string", {})
+	t.Column("title", "string", {})
+	t.Column("description", "string", {})
+	t.Column("alt_text", "string", {})
+	t.Column("file_name", "string", {})
+})

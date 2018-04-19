@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>Edit Image</h1>
+</div>
+
+<%= form_for(image, {action: adminPath({ image_id: image.ID }), method: "PUT"}) { %>
+  <%= partial("admin/images/form.html") %>
+  <a href="/admin/images/<%= image.ID  %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<% } %>

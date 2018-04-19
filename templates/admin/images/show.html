@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h1>Image#Show</h1>
+</div>
+
+<ul class="list-unstyled list-inline">
+  <li><a href="/admin/images" class="btn btn-info">Back to all Images</a></li>
+  <li><a href="/admin/images/<%= image.ID %>" class="btn btn-warning">Edit</a></li>
+  <li><a href="/admin/images/<%= image.ID %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</ul>
+
+<p>
+  <strong>Title</strong>: <%= image.Title %>
+</p>
+<p>
+  <strong>Description</strong>: <%= image.Description %>
+</p>
+<p>
+  <strong>AltText</strong>: <%= image.AltText %>
+</p>
+<p>
+  <strong>File Name</strong>: <%= image.FileName %>
+</p>

@@ -37,7 +37,8 @@ func (m *modelResource) List(c buffalo.Context) error {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 	c.Set("pagination", q.Paginator)
-	c.Set(modelName, list)
+	plural := inflection.Plural(modelName)
+	c.Set(plural, list)
 	return c.Render(http.StatusOK, r.HTML(tpls.Index))
 }
 
@@ -65,6 +66,8 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	if err := tx.Where("id = ?", id).First(single); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
+
+	c.Set("model_name", modelName)
 	c.Set(modelName, single)
 	return c.Render(http.StatusOK, r.HTML(tpls.Show))
 }
@@ -100,6 +103,7 @@ func (m *modelResource) Create(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusBadRequest, err)
 	}
+
 	empty, err := models.EmptyFromRegistry(modelName)
 	if err != nil {
 		c.Logger().Errorf("getting empty model %s from registry", modelName)
@@ -119,6 +123,8 @@ func (m *modelResource) Create(c buffalo.Context) error {
 	}
 
 	singular := inflection.Singular(modelName)
+	c.Set("model_name", modelName)
+	c.Set(modelName, singular)
 	return c.Redirect(http.StatusFound, "/admin/%s/%s", singular, empty.GetID())
 }
 
@@ -144,7 +150,9 @@ func (m *modelResource) Edit(c buffalo.Context) error {
 	if err := tx.Find(empty, modelID); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
-	c.Set("model", empty)
+
+	c.Set("model_name", modelName)
+	c.Set(modelName, empty)
 	return c.Render(http.StatusOK, r.HTML(templateNames.Edit))
 }
 
@@ -183,6 +191,8 @@ func getModelName(c buffalo.Context) (string, error) {
 	if modelName == "" {
 		return "", fmt.Errorf("model name %s not found", modelName)
 	}
+
+	modelName = inflection.Singular(modelName)
 	return modelName, nil
 }
 
