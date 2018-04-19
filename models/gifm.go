@@ -6,15 +6,15 @@ import (
 	"github.com/gobuffalo/uuid"
 )
 
-// GIFM is a go in 5 minutes entry.
+// Gifm is a go in 5 minutes entry.
 //
-// This does not match the migrations. It's called GIFM and the migration
+// This does not match the migrations. It's called Gifm and the migration
 // creates a "gbfm" table. TODOs:
 //
 // - Rename this GBFM
 // - Change the TableName func to return "gbfm"
 //
-type GIFM struct {
+type Gifm struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
@@ -30,10 +30,10 @@ type GIFM struct {
 
 func init() {
 	registry["gifm"] = &registryFuncs{
-		list:  func() Lister { return new(GIFMs) },
-		empty: func() IDer { return new(GIFM) },
+		list:  func() Lister { return new(Gifms) },
+		empty: func() IDer { return new(Gifm) },
 		sample: func() IDer {
-			return &GIFM{
+			return &Gifm{
 				Slug:        namer.NameSep("-"),
 				Title:       namer.Name(),
 				EmdedCode:   namer.NameSep("-"),
@@ -49,35 +49,35 @@ func init() {
 // implemented because pop will automatically infer the table name from
 // the struct name as "g_i_f_ms". This is because it separates capital
 // letters with underscores
-func (a GIFM) TableName() string {
+func (a Gifm) TableName() string {
 	return "gbfms"
 }
-func (a GIFM) GetID() uuid.UUID {
+func (a Gifm) GetID() uuid.UUID {
 	return a.ID
 }
 
-func (a GIFM) GetCreatedAt() time.Time {
+func (a Gifm) GetCreatedAt() time.Time {
 	return a.CreatedAt
 }
 
-func (a GIFM) GetUpdatedAt() time.Time {
+func (a Gifm) GetUpdatedAt() time.Time {
 	return a.UpdatedAt
 }
 
-func (a GIFM) GetSlug() string {
+func (a Gifm) GetSlug() string {
 	return a.Slug
 }
 
-// GIFMs is a list of GIFM models. It implements Lister
-type GIFMs []*GIFM
+// Gifms is a list of GIFM models. It implements Lister
+type Gifms []*Gifm
 
 // Len implements Lister
-func (g GIFMs) Len() int {
+func (g Gifms) Len() int {
 	return len(g)
 }
 
 // EltAt implements Lister
-func (g GIFMs) EltAt(i int) IDer {
+func (g Gifms) EltAt(i int) IDer {
 	if i < len(g) {
 		return g[i]
 	}
