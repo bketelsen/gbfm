@@ -157,7 +157,7 @@ ALTER TABLE public.gbfms OWNER TO postgres;
 
 CREATE TABLE public.gifm_authors (
     id uuid NOT NULL,
-    topic_id uuid NOT NULL,
+    author_id uuid NOT NULL,
     gifm_id uuid NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
