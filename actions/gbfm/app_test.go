@@ -4,7 +4,10 @@ import (
 	"testing"
 
 	"github.com/gobuffalo/suite"
+	"github.com/technosophos/moniker"
 )
+
+var namer = moniker.New()
 
 type ActionSuite struct {
 	*suite.Action
