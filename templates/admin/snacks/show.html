@@ -1,1 +1,39 @@
-TODO
+<div class="page-header">
+    <h1>
+        Snack
+        <%= snack.Title %>
+    </h1>
+</div>
+
+<ul class="list-unstyled list-inline">
+    <li>
+        <a href="/admin/snacks" class="btn btn-info">Back to all Snacks</a>
+    </li>
+    <li>
+        <a href="/admin/snacks/<%= snack.ID %>" class="btn btn-warning">Edit</a>
+    </li>
+    <li>
+        <a href="/admin/snacks/<%= snack.ID %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+    </li>
+</ul>
+
+<p>
+    <strong>Title</strong>:
+    <%= snack.Title %>
+</p>
+<p>
+    <strong>Summary</strong>
+    <%= snack.Summary %>
+</p>
+<p>
+    <strong>Comment</strong>
+    <%= snack.Comment %>
+</p>
+<p>
+    <strong>Embed Code</strong>:
+    <%= snack.EmbedCode %>
+</p>
+<p>
+    <strong>Slug</strong>:
+    <%= snack.Slug %>
+</p>

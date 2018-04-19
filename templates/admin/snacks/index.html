@@ -1,35 +1,43 @@
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        TODO: subscribe form goes here HI BRIAN!!!
-    </div>
+<div class="page-header">
+    <h1>Snacks</h1>
 </div>
-<hr>
-<div class="container-fluid">
-    <%= for (snack) in snacks { %>
-        <div class="row">
-            <div class="offset-sm-2">
-                <strong>
-                    <a href="/snack/<%= snack.Slug %>" target="_blank">
-                        <%= snack.Title %>
-                    </a>
-                </strong>
-                <p>
-                    <%= snack.Summary %>
-                        <small>
-                            <i>
-                                <a href="/snack/<%= snack.Slug %>">read more</a>
-                            </i>
-                        </small>
-                </p>
-                <div>
-                    <%= for (topic) in snack.Topics { %>
-                        <small>
-                            <%= topic %>
-                        </small>
-                        <% } %>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <% } %>
+<ul class="list-unstyled list-inline">
+    <li>
+        <a href="/admin/snacks/new" class="btn btn-primary">Create New Snack</a>
+    </li>
+</ul>
+
+<table class="table table-striped">
+    <thead>
+        <th>Title</th>
+        <th>Sponsored</th>
+        <th>Slug</th>
+        <th>&nbsp;</th>
+    </thead>
+    <tbody>
+        <%= for (snack) in snacks { %>
+            <tr>
+                <td>
+                    <%= snack.Title %>
+                </td>
+                <td>
+                    <%= snack.Sponsored %>
+                </td>
+                <td>
+                    <%= snack.Slug %>
+                </td>
+                <td>
+                    <div class="pull-right">
+                        <a href="/admin/snack/<%= snack.ID  %>" class="btn btn-info">View</a>
+                        <a href="/admin/snack/<%= snack.ID %>/edit" class="btn btn-warning">Edit</a>
+                        <a href="/admin/snack/<%= snack.ID %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+                    </div>
+                </td>
+            </tr>
+            <% } %>
+    </tbody>
+</table>
+
+<div class="text-center">
+    <%= paginator(pagination) %>
 </div>
