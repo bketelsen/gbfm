@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
 )
 
@@ -35,6 +36,10 @@ type Core interface {
 	IDer
 	GetCreatedAt() time.Time
 	GetUpdatedAt() time.Time
+}
+type Topicer interface {
+	GetTopics() []uuid.UUID
+	AddTopics([]uuid.UUID, *pop.Connection) error
 }
 
 // implementation of Core

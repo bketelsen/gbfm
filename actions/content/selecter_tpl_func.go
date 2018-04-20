@@ -31,7 +31,7 @@ func selecterTplFunc(namer models.ModelNamer, list models.Lister, field string) 
 	str := fmt.Sprintf(`
 		<div class="form-group">
 			<label class="active">%s</label>
-			<select class="form-control" name="%s" id="%s-%s">
+			<select class="form-control" name="%s[0].ID" id="%s-%s">
 				%s
 			</select>
 		</div>

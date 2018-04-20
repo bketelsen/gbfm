@@ -66,7 +66,7 @@ func (m *modelResource) Show(c buffalo.Context) error {
 	if err := tx.Where("id = ?", id).First(single); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-
+	fmt.Printf("%#v", single)
 	c.Set("model_name", modelName)
 	c.Set(modelName, single)
 	return c.Render(http.StatusOK, r.HTML(templateInfo.Show))
@@ -122,7 +122,9 @@ func (m *modelResource) Create(c buffalo.Context) error {
 		c.Logger().Errorf("binding to model %s", modelName)
 		return c.Error(http.StatusBadRequest, err)
 	}
-	verrs, err := tx.Eager().ValidateAndCreate(empty)
+	fmt.Println(empty)
+
+	verrs, err := tx.ValidateAndCreate(empty)
 	if verrs.HasAny() {
 		c.Logger().Errorf("ValidateAndCreate on a new %s (%s)", modelName, verrs)
 		return c.Error(http.StatusBadRequest, verrs)
@@ -131,6 +133,20 @@ func (m *modelResource) Create(c buffalo.Context) error {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 
+	sn, ok := empty.(models.Topicer)
+	if ok {
+		topics := sn.GetTopics()
+		if len(topics) > 0 {
+			fmt.Println("----------------- adding topics")
+			err := sn.AddTopics(topics, tx)
+			if err != nil {
+				fmt.Println("error adding topics", err)
+			}
+
+			fmt.Println("----------------- done adding topics")
+		}
+
+	}
 	singular := inflection.Singular(modelName)
 	c.Set("model_name", modelName)
 	c.Set(modelName, singular)

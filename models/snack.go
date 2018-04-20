@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
 )
 
@@ -80,4 +81,25 @@ func (s Snacks) EltAt(i int) StringIDer {
 		return s[i]
 	}
 	return nil
+}
+
+func (s *Snack) GetTopics() []uuid.UUID {
+	var ids = make([]uuid.UUID, len(s.Topics))
+	for x, t := range s.Topics {
+		ids[x] = t.ID
+	}
+	return ids
+}
+
+func (s *Snack) AddTopics(ids []uuid.UUID, tx *pop.Connection) error {
+
+	for _, id := range ids {
+		topic := new(Topic)
+		err := tx.Find(topic, id)
+		if err != nil {
+			return err
+		}
+		s.Topics = append(s.Topics, *topic)
+	}
+	return tx.Save(s)
 }
