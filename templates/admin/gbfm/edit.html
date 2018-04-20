@@ -2,7 +2,7 @@
     <h1>Edit GBFM</h1>
 </div>
 
-<%= form_for(gbfm, {action: adminPath({ gbfm_id: gbfm.ID }), method: "PUT"}) { %>
+<%= form_for(gbfm, {action: adminUpdate("gbfm", gbfm), method: "PUT"}) { %>
     <%= partial("admin/gbfm/form.html") %>
         <a href="<%= adminPath({ gbfm_id: gbfm.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
         <% } %>
