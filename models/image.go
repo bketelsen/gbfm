@@ -89,6 +89,8 @@ func init() {
 				Title:       namer.Name(),
 				Description: namer.Name(),
 				AltText:     namer.Name(),
+				FileName:    namer.NameSep("-"),
+				File:        binding.File{},
 			}
 		},
 	}
