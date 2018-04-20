@@ -60,7 +60,8 @@ func (as ActionSuite) TestModelDestroy() {
 		// send the DELETE to the destroy endpoint
 		res := as.HTML("/admin/%s/%s", modelName, singleModel.GetID()).Delete()
 		r.Equal(http.StatusFound, res.Code)
-		r.Equal("/admin", res.Header().Get("location"))
+		expectedRedir := fmt.Sprintf("/admin/%s", inflection.Plural(modelName))
+		r.Equal(expectedRedir, res.Header().Get("Location"))
 
 		// make sure the model is gone from the DB
 		r.NoError(as.modelIsGone(modelName, singleModel.GetID()))
