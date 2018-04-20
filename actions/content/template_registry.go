@@ -28,16 +28,6 @@ var templateRegistry = map[string]*templateInfo{
 			"seriesList": newSeriesList,
 		},
 	},
-	"gbfm": {
-		Show:  "admin/gbfm/show.html",
-		New:   "admin/gbfm/new.html",
-		Edit:  "admin/gbfm/edit.html",
-		Index: "admin/gbfm/index.html",
-		AdditionalModels: map[string]func() models.Lister{
-			"topics":  newTopicsList,
-			"authors": newAuthorsList,
-		},
-	},
 	"guide": {
 		Show:  "admin/guides/show.html",
 		New:   "admin/guides/new.html",
