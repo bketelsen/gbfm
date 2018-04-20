@@ -10,13 +10,11 @@ create_table("snacks", func(t) {
 })
 
 create_table("topics_snacks", func(t) {
-	t.Column("id", "uuid", {"primary": true})
 	t.Column("snack_id", "uuid", {})
 	t.Column("topic_id", "uuid", {})
 })
 
 create_table("authors_snacks", func(t) {
-	t.Column("id", "uuid", {"primary": true})
 	t.Column("snack_id", "uuid", {})
 	t.Column("author_id", "uuid", {})
 })
