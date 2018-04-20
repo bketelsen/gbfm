@@ -14,9 +14,11 @@ import (
 )
 
 var r = render.New("common_layout.html", map[string]interface{}{
+	// constructs a URL to render the Edit method
 	"adminEdit": func(modelName string, model models.IDer) string {
 		return fmt.Sprintf("/admin/%s/%s/edit", modelName, model.GetID())
 	},
+	// constructs a URL to render the Show method
 	"adminView": func(modelName string, model models.IDer) string {
 		return fmt.Sprintf("/admin/%s/%s", modelName, model.GetID())
 	},
