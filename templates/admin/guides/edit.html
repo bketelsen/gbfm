@@ -3,6 +3,6 @@
 </div>
 
 <%= form_for(guide, {action: guidePath({ guide_id: guide.ID }), method: "PUT"}) { %>
-  <%= partial("guides/form.html") %>
+  <%= partial("admin/guides/form.html") %>
   <a href="<%= guidePath({ guide_id: guide.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>
