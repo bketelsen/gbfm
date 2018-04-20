@@ -5,5 +5,5 @@
 <% let putPath = "/admin/snack/"+snack.ID %>
 <%= form_for(snack, {action: putPath, method: "PUT"}) { %>
 <%= partial("admin/snacks/form.html") %>
-<a href='<%= adminView("snack", snack) %>' class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<a href="<%= adminPath({ snack_id: snack.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>
