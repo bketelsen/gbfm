@@ -45,6 +45,12 @@ func init() {
 func (a Gbfm) TableName() string {
 	return "gbfms"
 }
+
+// ModelName implements ModelNamer
+func (Gbfm) ModelName() string {
+	return "Gbfm"
+}
+
 func (a Gbfm) GetID() uuid.UUID {
 	return a.ID
 }

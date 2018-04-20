@@ -59,9 +59,9 @@ func (i *Image) AfterCreate(tx *pop.Connection) error {
 	return err
 }
 
-// TableName implements pop.TableNameAble
-func (Image) TableName() string {
-	return "images"
+// ModelName implements ModelNamer
+func (Image) ModelName() string {
+	return "Image"
 }
 
 // ImageList is a list of Image models. It implements Lister

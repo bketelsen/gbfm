@@ -43,9 +43,9 @@ func (u *User) Create(tx *pop.Connection) (*validate.Errors, error) {
 	return tx.ValidateAndCreate(u)
 }
 
-// TableName implements pop.TableNameAble
-func (User) TableName() string {
-	return "users"
+// ModelName implements ModelNamer
+func (User) ModelName() string {
+	return "User"
 }
 
 // Users is not required by pop and may be deleted

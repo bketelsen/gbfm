@@ -61,9 +61,8 @@ func (a Author) GetSlug() string {
 	return a.Slug
 }
 
-// TableName implements pop.TableNameAble
-func (Author) TableName() string {
-	return "authors"
+func (Author) ModelName() string {
+	return "author"
 }
 
 // Authors is a list of Authors. It implements Lister
