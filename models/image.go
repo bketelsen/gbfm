@@ -2,7 +2,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -93,7 +92,6 @@ func init() {
 			}
 		},
 	}
-	fmt.Println(registry)
 }
 
 // GetID implements IDer
