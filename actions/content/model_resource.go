@@ -227,7 +227,7 @@ func (m *modelResource) Destroy(c buffalo.Context) error {
 	if err := tx.Destroy(empty); err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	redirPath := "/admin"
+	redirPath := fmt.Sprintf("/admin/%s", inflection.Plural(modelName))
 	if c.Param("redir_path") != "" {
 		redirPath = c.Param("redir_path")
 	}
