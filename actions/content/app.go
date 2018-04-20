@@ -25,6 +25,11 @@ var r = render.New("common_layout.html", map[string]interface{}{
 	"adminUpdate": func(modelName string, model models.IDer) string {
 		return fmt.Sprintf("/admin/%s/%s", modelName, model.GetID())
 	},
+	// used to build <select> form elements for a model that has a list
+	// of sub-models (i.e. and many_to_many relationship).
+	//
+	// see more documentation on selecterTplFunc
+	"selecter": selecterTplFunc,
 })
 
 // App is where all routes and middleware for the admin interface are defined.
