@@ -20,7 +20,8 @@ func selecterTplFunc(namer models.ModelNamer, list models.Lister, field string) 
 	for i := 0; i < list.Len(); i++ {
 		elt := list.EltAt(i)
 		optionsList[i] = fmt.Sprintf(
-			`<option id="%s">%s</option>`,
+			`<option id="%s" value="%s">%s</option>`,
+			elt.GetID().String(),
 			elt.GetID().String(),
 			elt.String(),
 		)
