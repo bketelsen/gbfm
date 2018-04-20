@@ -96,7 +96,10 @@ func (as ActionSuite) TestModelCreate() {
 		// make sure the endpoint returned the redirect.
 		//
 		// we need to special case for Image models because they need to do
-		// a multipart file upload
+		// a multipart file upload. image upload tests courtesy of
+		// https://gobuffalo.io/en/docs/file-uploads#testing-file-uploads
+		//
+		// Mr. Bates and the buffalo crew are mega-rad
 		var res *willie.Response
 		if modelName == "image" {
 			// image := singleModel.(*models.Image)
