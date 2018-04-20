@@ -58,6 +58,11 @@ func (a Guide) GetSlug() string {
 	return a.Slug
 }
 
+// ModelName implements ModelNamer
+func (Guide) ModelName() string {
+	return "Guide"
+}
+
 // Guides is a list of Guide models. It implements Lister
 type Guides []Guide
 

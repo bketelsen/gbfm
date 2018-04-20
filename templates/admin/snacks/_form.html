@@ -5,6 +5,6 @@
                 <%= f.InputTag("Summary") %>
                     <%= f.InputTag("Comment") %>
                         <%= f.InputTag("EmbedCode") %>
-                            <%= f.SelectTag("Topics") %>
-                                <%= f.SelectTag("Authors") %>
+                            <%= selecter(snack, topics, "Topics") %>
+                                <%= selecter(snack, authors, "Authors") %>
                                     <button class="btn btn-success" role="submit">Save</button>

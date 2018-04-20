@@ -11,6 +11,12 @@ type IDer interface {
 	GetID() uuid.UUID
 }
 
+// ModelNamer is a model that returns its name, without reflection.
+// It's used in the formID template helper in actions/content/app.go
+type ModelNamer interface {
+	ModelName() string
+}
+
 // Lister is a list of a given model that can report on its length
 type Lister interface {
 	Len() int

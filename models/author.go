@@ -61,6 +61,10 @@ func (a Author) GetSlug() string {
 	return a.Slug
 }
 
+func (Author) ModelName() string {
+	return "author"
+}
+
 // Authors is a list of Authors. It implements Lister
 type Authors []*Author
 

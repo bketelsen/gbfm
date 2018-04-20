@@ -45,6 +45,11 @@ func (a Topic) GetSlug() string {
 	return a.Slug
 }
 
+// ModelName implements ModelNamer
+func (Topic) ModelName() string {
+	return "Topic"
+}
+
 // Topics is a list of Topic models. It implements Lister
 type Topics []*Topic
 

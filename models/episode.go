@@ -65,6 +65,11 @@ func (a Episode) GetSlug() string {
 	return a.Slug
 }
 
+// ModelName implements ModelNamer
+func (Episode) ModelName() string {
+	return "Episode"
+}
+
 // Episodes is a list of Authors. It implements Lister
 type Episodes []*Episode
 

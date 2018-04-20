@@ -59,6 +59,11 @@ func (i *Image) AfterCreate(tx *pop.Connection) error {
 	return err
 }
 
+// ModelName implements ModelNamer
+func (Image) ModelName() string {
+	return "Image"
+}
+
 // ImageList is a list of Image models. It implements Lister
 type ImageList []*Image
 

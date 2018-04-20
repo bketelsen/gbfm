@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gobuffalo/uuid"
@@ -38,6 +39,10 @@ func init() {
 	}
 }
 
+func (a Series) String() string {
+	return fmt.Sprintf("[%s] %s (%s)", a.ID, a.Title, a.Slug)
+}
+
 // GetID implements IDer
 func (a Series) GetID() uuid.UUID {
 	return a.ID
@@ -56,6 +61,11 @@ func (a Series) GetUpdatedAt() time.Time {
 // GetSlug implements Slugger
 func (a Series) GetSlug() string {
 	return a.Slug
+}
+
+// ModelName implements ModelNamer
+func (Series) ModelName() string {
+	return "Series"
 }
 
 // SeriesList is a list of Series models. It implements Lister

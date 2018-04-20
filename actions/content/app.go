@@ -1,6 +1,8 @@
 package content
 
 import (
+	"fmt"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/middleware"
 	"github.com/gobuffalo/buffalo/middleware/csrf"
@@ -11,7 +13,24 @@ import (
 	"github.com/unrolled/secure"
 )
 
-var r = render.New("common_layout.html")
+var r = render.New("common_layout.html", map[string]interface{}{
+	// constructs a URL to render the Edit method
+	"adminEdit": func(modelName string, model models.IDer) string {
+		return fmt.Sprintf("/admin/%s/%s/edit", modelName, model.GetID())
+	},
+	// constructs a URL to render the Show method
+	"adminView": func(modelName string, model models.IDer) string {
+		return fmt.Sprintf("/admin/%s/%s", modelName, model.GetID())
+	},
+	"adminUpdate": func(modelName string, model models.IDer) string {
+		return fmt.Sprintf("/admin/%s/%s", modelName, model.GetID())
+	},
+	// used to build <select> form elements for a model that has a list
+	// of sub-models (i.e. and many_to_many relationship).
+	//
+	// see more documentation on selecterTplFunc
+	"selecter": selecterTplFunc,
+})
 
 // App is where all routes and middleware for the admin interface are defined.
 //

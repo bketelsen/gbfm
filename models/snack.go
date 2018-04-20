@@ -57,6 +57,11 @@ func (a Snack) GetSlug() string {
 	return a.Slug
 }
 
+// ModelName implements ModelNamer
+func (Snack) ModelName() string {
+	return "Snack"
+}
+
 // Snacks is a list of Snack models. It implements Lister
 type Snacks []*Snack
 
