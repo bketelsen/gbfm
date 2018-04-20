@@ -2,7 +2,8 @@
     <h1>Edit Snack</h1>
 </div>
 
-<%= form_for(snack, {action: adminUpdate("snack", snack), method: "PUT"}) { %>
+<% let putPath = "/admin/snack/"+snack.ID %>
+<%= form_for(snack, {action: putPath, method: "PUT"}) { %>
 <%= partial("admin/snacks/form.html") %>
 <a href='<%= adminView("snack", snack) %>' class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>
