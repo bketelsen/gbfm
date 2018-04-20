@@ -15,3 +15,4 @@ ponzu
 ponzu-server
 system.db
 analytics.db
+*.test
