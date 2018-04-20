@@ -22,7 +22,7 @@ func selecterTplFunc(namer models.ModelNamer, list models.Lister, field string) 
 		optionsList[i] = fmt.Sprintf(
 			`<option id="%s">%s</option>`,
 			elt.GetID().String(),
-			elt.GetID().String(),
+			elt.String(),
 		)
 	}
 	options := strings.Join(optionsList, "\n")

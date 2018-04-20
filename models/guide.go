@@ -42,6 +42,10 @@ func init() {
 	}
 }
 
+func (a Guide) String() string {
+	return a.Title
+}
+
 func (a Guide) GetID() uuid.UUID {
 	return a.ID
 }
@@ -72,7 +76,7 @@ func (g Guides) Len() int {
 }
 
 // EltAt implements Lister
-func (g Guides) EltAt(i int) IDer {
+func (g Guides) EltAt(i int) StringIDer {
 	if i < len(g) {
 		return g[i]
 	}

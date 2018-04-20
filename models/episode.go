@@ -45,6 +45,10 @@ func init() {
 	}
 }
 
+func (e *Episode) String() string {
+	return e.Title
+}
+
 // GetID implements IDer
 func (a Episode) GetID() uuid.UUID {
 	return a.ID
@@ -79,7 +83,7 @@ func (e Episodes) Len() int {
 }
 
 // EltAt implements Lister
-func (e Episodes) EltAt(i int) IDer {
+func (e Episodes) EltAt(i int) StringIDer {
 	if i < len(e) {
 		return e[i]
 	}

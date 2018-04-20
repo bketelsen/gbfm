@@ -30,6 +30,10 @@ func GetAuthor(tx *pop.Connection, id uuid.UUID) (*Author, error) {
 	return a, nil
 }
 
+func (a *Author) String() string {
+	return a.Name
+}
+
 func init() {
 	registry["author"] = &registryFuncs{
 		empty: func() IDer { return new(Author) },
@@ -74,7 +78,7 @@ func (a Authors) Len() int {
 }
 
 // EltAt implements Lister
-func (a Authors) EltAt(i int) IDer {
+func (a Authors) EltAt(i int) StringIDer {
 	if i < len(a) {
 		return a[i]
 	}

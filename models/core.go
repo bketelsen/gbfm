@@ -11,6 +11,12 @@ type IDer interface {
 	GetID() uuid.UUID
 }
 
+// StringIDer is a model that exposes its ID and a string representation
+type StringIDer interface {
+	GetID() uuid.UUID
+	String() string
+}
+
 // ModelNamer is a model that returns its name, without reflection.
 // It's used in the formID template helper in actions/content/app.go
 type ModelNamer interface {
@@ -21,7 +27,7 @@ type ModelNamer interface {
 type Lister interface {
 	Len() int
 	// EltAt returns the IDer at index i, or nil
-	EltAt(i int) IDer
+	EltAt(i int) StringIDer
 }
 
 // Core represents the core of a model

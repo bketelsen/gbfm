@@ -1,5 +1,31 @@
+<%= f.InputTag("Name", {"onfocusout":"doslug(this.value)"}) %>
 <%= f.InputTag("Slug") %>
-<%= f.InputTag("Name") %>
 <%= f.InputTag("Description") %>
-<%= f.InputTag("Markdown") %>
+<%= f.TextAreaTag("Markdown") %>
 <button class="btn btn-success" role="submit">Save</button>
+
+                                    <script> 
+
+function string_to_slug(str) {
+    str = str.replace(/^\s+|\s+$/g, ''); // trim
+    str = str.toLowerCase();
+    
+    // remove accents, swap ñ for n, etc
+    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+    var to   = "aaaaeeeeiiiioooouuuunc------";
+    for (var i=0, l=from.length ; i<l ; i++) {
+      str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+  
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+      .replace(/\s+/g, '-') // collapse whitespace and replace by -
+      .replace(/-+/g, '-'); // collapse dashes
+  
+    return str;
+  }
+                                    function doslug(event) {
+                                       slugtxt = string_to_slug(event);
+                                        var slug= document.getElementById ("guide-Slug");
+                                        slug.value = slugtxt;
+                                    }
+                                    </script>

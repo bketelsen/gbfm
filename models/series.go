@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/gobuffalo/uuid"
@@ -39,8 +38,8 @@ func init() {
 	}
 }
 
-func (a Series) String() string {
-	return fmt.Sprintf("[%s] %s (%s)", a.ID, a.Title, a.Slug)
+func (s *Series) String() string {
+	return s.Title
 }
 
 // GetID implements IDer
@@ -77,7 +76,7 @@ func (s SeriesList) Len() int {
 }
 
 // EltAt implements Lister
-func (s SeriesList) EltAt(i int) IDer {
+func (s SeriesList) EltAt(i int) StringIDer {
 	if i < len(s) {
 		return s[i]
 	}

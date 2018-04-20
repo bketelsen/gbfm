@@ -41,6 +41,10 @@ func init() {
 	}
 }
 
+func (s *Snack) String() string {
+	return s.Title
+}
+
 func (a Snack) GetID() uuid.UUID {
 	return a.ID
 }
@@ -71,7 +75,7 @@ func (s Snacks) Len() int {
 }
 
 // EltAt implements Lister
-func (s Snacks) EltAt(i int) IDer {
+func (s Snacks) EltAt(i int) StringIDer {
 	if i < len(s) {
 		return s[i]
 	}

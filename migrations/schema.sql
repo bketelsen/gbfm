@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.3 (Debian 10.3-1.pgdg90+1)
--- Dumped by pg_dump version 10.3
+-- Dumped from database version 10.3 (Ubuntu 10.3-1)
+-- Dumped by pg_dump version 10.3 (Ubuntu 10.3-1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -131,55 +131,6 @@ CREATE TABLE public.episodes_topics (
 
 
 ALTER TABLE public.episodes_topics OWNER TO postgres;
-
---
--- Name: gbfm_authors; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.gbfm_authors (
-    id uuid NOT NULL,
-    author_id uuid NOT NULL,
-    gbfm_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.gbfm_authors OWNER TO postgres;
-
---
--- Name: gbfm_topics; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.gbfm_topics (
-    id uuid NOT NULL,
-    topic_id uuid NOT NULL,
-    gbfm_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.gbfm_topics OWNER TO postgres;
-
---
--- Name: gbfms; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.gbfms (
-    id uuid NOT NULL,
-    slug character varying(255) NOT NULL,
-    title character varying(255) NOT NULL,
-    embed_code character varying(255) NOT NULL,
-    github_link character varying(255) NOT NULL,
-    sponsor character varying(255) NOT NULL,
-    description character varying(255) NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.gbfms OWNER TO postgres;
 
 --
 -- Name: guides; Type: TABLE; Schema: public; Owner: postgres
@@ -437,30 +388,6 @@ ALTER TABLE ONLY public.episodes_series
 
 ALTER TABLE ONLY public.episodes_topics
     ADD CONSTRAINT episodes_topics_pkey PRIMARY KEY (id);
-
-
---
--- Name: gbfm_authors gbfm_authors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.gbfm_authors
-    ADD CONSTRAINT gbfm_authors_pkey PRIMARY KEY (id);
-
-
---
--- Name: gbfm_topics gbfm_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.gbfm_topics
-    ADD CONSTRAINT gbfm_topics_pkey PRIMARY KEY (id);
-
-
---
--- Name: gbfms gbfms_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.gbfms
-    ADD CONSTRAINT gbfms_pkey PRIMARY KEY (id);
 
 
 --

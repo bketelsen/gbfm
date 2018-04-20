@@ -1,7 +1,6 @@
 package models
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -26,10 +25,8 @@ type Image struct {
 	FileName    string       `json:"file_name" db:"file_name"`
 }
 
-// String is not required by pop and may be deleted
-func (i Image) String() string {
-	ji, _ := json.Marshal(i)
-	return string(ji)
+func (i *Image) String() string {
+	return i.Title
 }
 
 // BeforeCreate sets the image's filename field
@@ -73,7 +70,7 @@ func (s ImageList) Len() int {
 }
 
 // EltAt implements Lister
-func (s ImageList) EltAt(i int) IDer {
+func (s ImageList) EltAt(i int) StringIDer {
 	if i < len(s) {
 		return s[i]
 	}

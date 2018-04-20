@@ -28,7 +28,9 @@ func init() {
 		},
 	}
 }
-
+func (a *Topic) String() string {
+	return a.Name
+}
 func (a Topic) GetID() uuid.UUID {
 	return a.ID
 }
@@ -59,7 +61,7 @@ func (t Topics) Len() int {
 }
 
 // EltAt implements Lister
-func (t Topics) EltAt(i int) IDer {
+func (t Topics) EltAt(i int) StringIDer {
 	if i < len(t) {
 		return t[i]
 	}
