@@ -2,7 +2,7 @@
   <h1>Edit Episode</h1>
 </div>
 
-<%= form_for(episode, {action: adminPath({ episode_id: episode.ID }), method: "PUT"}) { %>
+<%= form_for(episode, {action: adminUpdate("episode", episode), method: "PUT"}) { %>
   <%= partial("admin/episodes/form.html") %>
-  <a href="<%= adminPath({ episode_id: episode.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
-<% } %>
+    <a href="<%= adminPath({ episode_id: episode.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+    <% } %>
