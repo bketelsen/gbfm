@@ -1,8 +1,0 @@
-<div class="page-header">
-  <h1>Edit Author</h1>
-</div>
-
-<%= form_for(author, {action: authorPath({ author_id: author.ID }), method: "PUT"}) { %>
-  <%= partial("authors/form.html") %>
-  <a href="<%= authorPath({ author_id: author.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
-<% } %>
