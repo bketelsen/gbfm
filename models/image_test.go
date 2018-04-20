@@ -1,7 +1,11 @@
 package models
 
-import "testing"
-
-func Test_Image(t *testing.T) {
-	t.Fatal("This test needs to be implemented!")
+func (ms ModelSuite) Test_Image() {
+	r, db := ms.Require(), ms.DB
+	_, err := EmptyFromRegistry("image")
+	r.NoError(err)
+	sample, err := SampleFromRegistry("image")
+	r.NoError(err)
+	r.NoError(db.Create(sample))
+	r.NotEmpty(sample.GetID())
 }

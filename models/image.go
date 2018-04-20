@@ -2,7 +2,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -90,10 +89,11 @@ func init() {
 				Title:       namer.Name(),
 				Description: namer.Name(),
 				AltText:     namer.Name(),
+				FileName:    namer.NameSep("-"),
+				File:        binding.File{},
 			}
 		},
 	}
-	fmt.Println(registry)
 }
 
 // GetID implements IDer

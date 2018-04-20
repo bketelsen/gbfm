@@ -3,10 +3,13 @@ package content
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 
 	"github.com/gobuffalo/uuid"
 	"github.com/gophersnacks/gbfm/models"
 	"github.com/jinzhu/inflection"
+	"github.com/markbates/willie"
+	"os"
 )
 
 func (as ActionSuite) TestModelList() {
@@ -60,7 +63,8 @@ func (as ActionSuite) TestModelDestroy() {
 		// send the DELETE to the destroy endpoint
 		res := as.HTML("/admin/%s/%s", modelName, singleModel.GetID()).Delete()
 		r.Equal(http.StatusFound, res.Code)
-		r.Equal("/admin", res.Header().Get("location"))
+		expectedRedir := fmt.Sprintf("/admin/%s", inflection.Plural(modelName))
+		r.Equal(expectedRedir, res.Header().Get("Location"))
 
 		// make sure the model is gone from the DB
 		r.NoError(as.modelIsGone(modelName, singleModel.GetID()))
@@ -89,9 +93,35 @@ func (as ActionSuite) TestModelCreate() {
 		singleModel, err := models.SampleFromRegistry(modelName)
 		r.NoError(err)
 
-		// make sure the endpoint returned the redirect
-		res := as.HTML("/admin/%s", plural).Post(singleModel)
-		r.Equal(http.StatusFound, res.Code)
+		// make sure the endpoint returned the redirect.
+		//
+		// we need to special case for Image models because they need to do
+		// a multipart file upload. image upload tests courtesy of
+		// https://gobuffalo.io/en/docs/file-uploads#testing-file-uploads
+		//
+		// Mr. Bates and the buffalo crew are mega-rad
+		var res *willie.Response
+		if modelName == "image" {
+			// image := singleModel.(*models.Image)
+			r.NoError(os.RemoveAll(filepath.Join(".", "uploads")))
+			gopherFile, err := os.Open(filepath.Join("..", "..", "testdata/gophers.png"))
+			r.NoError(err)
+			willieFile := willie.File{
+				ParamName: "File",
+				FileName:  "gophers.png",
+				Reader:    gopherFile,
+			}
+			// image.File =
+			res, err = as.HTML("/admin/%s", plural).MultiPartPost(singleModel, willieFile)
+			r.NoError(err)
+			r.Equal(http.StatusFound, res.Code)
+			_, err = os.Open(filepath.Join(".", "uploads", "gophers.png"))
+			r.NoError(err)
+
+		} else {
+			res = as.HTML("/admin/%s", plural).Post(singleModel)
+			r.Equal(http.StatusFound, res.Code)
+		}
 
 		// look for the new model in the DB
 		list, err := models.EmptyListFromRegistry(modelName)
