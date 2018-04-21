@@ -1,17 +1,11 @@
 package models
 
-import (
-	"time"
-
-	"github.com/gobuffalo/uuid"
-)
+import "github.com/jinzhu/gorm"
 
 // Episode represents an episode
 type Episode struct {
-	ID        uuid.UUID `json:"id" db:"id"`
-	CreatedAt time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
-	Slug      string    `json:"slug" db:"slug"`
+	gorm.Model
+	Slug string `json:"slug" db:"slug"`
 
 	Title        string   `json:"title" db:"title"`
 	Description  string   `json:"description" db:"description"`
@@ -21,11 +15,12 @@ type Episode struct {
 	Body         string   `json:"body" db:"body"`
 	Pro          bool     `json:"pro" db:"pro"`
 	Repo         string   `json:"repo" db:"repo"`
-	Topics       []Topic  `json:"topics" many_to_many:"episodes_topics"`
-	Authors      []Author `json:"authors" many_to_many:"episodes_authors"`
-	Series       []Series `json:"series_ids" many_to_many:"episodes_series"`
+	Topics       []Topic  `gorm:"many2many:topics_episodes;"`
+	Authors      []Author `gorm:"many2many:authors_episodes;"`
+	Series       []Series `gorm:"many2many:episodes_series;"`
 }
 
+/*
 func init() {
 	registry["episode"] = &registryFuncs{
 		empty: func() IDer { return new(Episode) },
@@ -85,3 +80,4 @@ func (e Episodes) EltAt(i int) IDer {
 	}
 	return nil
 }
+*/

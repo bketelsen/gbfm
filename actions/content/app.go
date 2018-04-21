@@ -64,28 +64,28 @@ func App() *buffalo.App {
 	// Wraps each request in a transaction.
 	//  c.Value("tx").(*pop.Connection)
 	// Remove to disable this.
-	app.Use(middleware.PopTransaction(models.DB))
+	//app.Use(middleware.PopTransaction(models.DB))
 
 	// Setup and use translations:
 	app.Use(web.Translator.Middleware())
 
-	app.Use(Auth)
+	//	app.Use(Auth)
 
 	app.GET("/", homeHandler)
-	app.GET("/admin", homeHandler)
-	mResource := &modelResource{}
+	//	app.GET("/admin", homeHandler)
+	//	mResource := &modelResource{}
 
-	login := &loginHandlers{
-		successRedir: "/admin",
-		showFormPath: "/admin/login",
-	}
-	app.GET("/admin/login", login.showForm)
-	app.POST("/admin/login", login.try)
-	app.Middleware.Skip(Auth, login.showForm, login.try)
+	/*	login := &loginHandlers{
+			successRedir: "/admin",
+			showFormPath: "/admin/login",
+		}
+		app.GET("/admin/login", login.showForm)
+		app.POST("/admin/login", login.try)
+		app.Middleware.Skip(Auth, login.showForm, login.try)
 
-	app.Resource("/admin/{model_name}", mResource)
+		app.Resource("/admin/{model_name}", mResource)
 
-	app.ServeFiles("/", render.AssetsBox) // serve files from the public directory
-
+		app.ServeFiles("/", render.AssetsBox) // serve files from the public directory
+	*/
 	return app
 }

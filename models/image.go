@@ -1,23 +1,12 @@
 package models
 
 import (
-	"encoding/json"
-	"fmt"
-	"io"
-	"os"
-	"path/filepath"
-	"time"
-
 	"github.com/gobuffalo/buffalo/binding"
-	"github.com/gobuffalo/pop"
-	"github.com/gobuffalo/uuid"
-	"github.com/pkg/errors"
+	"github.com/jinzhu/gorm"
 )
 
 type Image struct {
-	ID          uuid.UUID    `json:"id" db:"id"`
-	CreatedAt   time.Time    `json:"created_at" db:"created_at"`
-	UpdatedAt   time.Time    `json:"updated_at" db:"updated_at"`
+	gorm.Model
 	Slug        string       `json:"slug" db:"slug"`
 	Title       string       `json:"title" db:"title"`
 	Description string       `json:"description" db:"description"`
@@ -26,6 +15,7 @@ type Image struct {
 	FileName    string       `json:"file_name" db:"file_name"`
 }
 
+/*
 // String is not required by pop and may be deleted
 func (i Image) String() string {
 	ji, _ := json.Marshal(i)
@@ -115,3 +105,4 @@ func (i Image) GetUpdatedAt() time.Time {
 func (i Image) GetSlug() string {
 	return i.Slug
 }
+*/

@@ -1,17 +1,11 @@
 package models
 
-import (
-	"time"
-
-	"github.com/gobuffalo/uuid"
-)
+import "github.com/jinzhu/gorm"
 
 // Snack is a snack - a small piece of news
 type Snack struct {
-	ID        uuid.UUID `json:"id" db:"id"`
-	CreatedAt time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
-	Slug      string    `json:"slug" db:"slug"`
+	gorm.Model
+	Slug string `json:"slug" db:"slug"`
 
 	Title     string   `json:"title" db:"title"`
 	Sponsored bool     `json:"sponsored" db:"sponsored"`
@@ -19,10 +13,11 @@ type Snack struct {
 	Summary   string   `json:"summary" db:"summary"`
 	Comment   string   `json:"comment" db:"comment"`
 	EmbedCode string   `json:"embed_code" db:"embed_code"`
-	Topics    []Topic  `json:"topics" many_to_many:"topics_snacks"`
-	Authors   []Author `json:"authors" many_to_many:"authors_snacks"`
+	Topics    []Topic  `gorm:"many2many:topics_snacks;"`
+	Authors   []Author `gorm:"many2many:authors_snacks;"`
 }
 
+/*
 func init() {
 	registry["snack"] = &registryFuncs{
 		list:  func() Lister { return new(Snacks) },
@@ -77,3 +72,4 @@ func (s Snacks) EltAt(i int) IDer {
 	}
 	return nil
 }
+*/

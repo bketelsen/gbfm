@@ -1,18 +1,13 @@
 package models
 
 import (
-	"time"
-
-	"github.com/gobuffalo/pop"
-	"github.com/gobuffalo/uuid"
+	"github.com/jinzhu/gorm"
 )
 
 // Author is an author
 type Author struct {
-	ID        uuid.UUID `json:"id" db:"id"`
-	CreatedAt time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
-	Slug      string    `json:"slug" db:"slug"`
+	gorm.Model
+	Slug string `json:"slug" db:"slug"`
 
 	Name        string `json:"name" db:"name"`
 	Description string `json:"description" db:"description"`
@@ -21,6 +16,7 @@ type Author struct {
 	// TODO: associate with a user
 }
 
+/*
 // GetAuthor returns an author by the given ID
 func GetAuthor(tx *pop.Connection, id uuid.UUID) (*Author, error) {
 	a := new(Author)
@@ -29,7 +25,6 @@ func GetAuthor(tx *pop.Connection, id uuid.UUID) (*Author, error) {
 	}
 	return a, nil
 }
-
 func init() {
 	registry["author"] = &registryFuncs{
 		empty: func() IDer { return new(Author) },
@@ -80,3 +75,4 @@ func (a Authors) EltAt(i int) IDer {
 	}
 	return nil
 }
+*/

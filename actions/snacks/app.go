@@ -8,7 +8,6 @@ import (
 	"github.com/unrolled/secure"
 
 	"github.com/gobuffalo/buffalo/middleware/csrf"
-	"github.com/gophersnacks/gbfm/models"
 	"github.com/gophersnacks/gbfm/pkg/web"
 )
 
@@ -44,7 +43,7 @@ func App() *buffalo.App {
 	// Wraps each request in a transaction.
 	//  c.Value("tx").(*pop.Connection)
 	// Remove to disable this.
-	app.Use(middleware.PopTransaction(models.DB))
+	//app.Use(middleware.PopTransaction(models.DB))
 
 	app.Use(web.Translator.Middleware())
 
