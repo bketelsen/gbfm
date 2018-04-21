@@ -7,11 +7,13 @@ node_modules/
 .sass-cache/
 *-packr.go
 public/assets/
+public/system/
 .vscode/
 .grifter/
 .env
 uploads/
 ponzu
+gbfm
 ponzu-server
 system.db
 analytics.db

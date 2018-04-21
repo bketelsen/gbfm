@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/pop"
 	"github.com/gophersnacks/gbfm/models"
 	"github.com/pkg/errors"
 )
@@ -12,27 +11,33 @@ import (
 // EpisodeList gets all Episodes. This function is mapped to the path
 // GET /episodes
 func EpisodeList(c buffalo.Context) error {
-	tx := c.Value("tx").(*pop.Connection)
-	epList := new([]models.Episode)
-	if err := tx.Eager().All(epList); err != nil {
+	var episodes []models.Episode
+	err := models.DB.Preload("Authors").Preload("Topics").Find(&episodes).Error
+	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
+
 	}
-	c.Set("episodes", epList)
+	c.Set("episodes", episodes)
 	return c.Render(200, r.HTML("episodes/album.html"))
 }
 
 // EpisodeShow gets the data for one Episode. This function is mapped to
 // the path GET /authors/{name} where name is the slug
 func EpisodeShow(c buffalo.Context) error {
-	tx := c.Value("tx").(*pop.Connection)
-	slug := c.Param("name")
-	if slug == "" {
-		return c.Error(404, errors.New("Not Found"))
+	name := c.Param("name")
+	if name == "" {
+		return c.Error(http.StatusBadRequest, errors.New("no epside slug found"))
 	}
-	episode := new(models.Episode)
-	if err := tx.Eager().Where("slug = ?", slug).First(episode); err != nil {
+	id, err := idFromSlug(name)
+	if err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
+	var episode models.Episode
+	err = models.DB.Preload("Topics").Preload("Authors").Where(id).First(&episode).Error
+	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
+
 	c.Set("episode", episode)
 	return c.Render(200, r.HTML("episodes/show.html"))
 }

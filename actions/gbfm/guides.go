@@ -4,32 +4,36 @@ import (
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/pop"
 	"github.com/gophersnacks/gbfm/models"
 	"github.com/pkg/errors"
 )
 
 func GuideList(c buffalo.Context) error {
-	tx := c.Value("tx").(*pop.Connection)
-	gList := new([]models.Guide)
-	if err := tx.Eager().All(gList); err != nil {
+	var guides []models.Guide
+	err := models.DB.Preload("Authors").Preload("Topics").Find(&guides).Error
+	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
+
 	}
-	c.Set("guides", gList)
+	c.Set("guides", guides)
 	return c.Render(200, r.HTML("guides/album.html"))
 }
 
-// SeriesShow gets the data for one Series.
 func GuideShow(c buffalo.Context) error {
-	tx := c.Value("tx").(*pop.Connection)
-	slug := c.Param("name")
-	if slug == "" {
-		return c.Error(404, errors.New("Not Found"))
+	name := c.Param("name")
+	if name == "" {
+		return c.Error(http.StatusBadRequest, errors.New("no epside slug found"))
 	}
-	g := new(models.Guide)
-	if err := tx.Eager().Where("slug = ?", slug).First(g); err != nil {
+	id, err := idFromSlug(name)
+	if err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
+	var guide models.Guide
+	err = models.DB.Preload("Topics").Preload("Authors").Where(id).First(&guide).Error
+	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	c.Set("guides", g)
+
+	c.Set("guide", guide)
 	return c.Render(200, r.HTML("guides/show.html"))
 }

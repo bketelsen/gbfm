@@ -7,8 +7,8 @@
                     <div class="col-lg-5 col-xl-4 mb-4">
                         <!--Featured image-->
                         <div class="view overlay rounded z-depth-1">
-                            <img src="<%= imageTag(author.Photo) %>" class="img-fluid" alt="<%= author.Slug %>">
-                            <a href="/authors/<%= author.Slug %>">
+                            <img src='<%= author.Avatar.URL("big") %>' class="img-fluid" alt="<%= author.Slug %>">
+                            <a href="/authors/<%= author.ID %>-<%= author.Slug %>">
                                 <div class="mask"></div>
                             </a>
                         </div>
@@ -18,10 +18,10 @@
                     <!--Grid column-->
                     <div class="col-lg-7 col-xl-7 ml-xl-4 mb-4">
                         <h3 class="mb-3 font-weight-bold dark-grey-text">
-                            <strong><%= author.Name%></strong>
+                            <strong><%= author.Name %></strong>
                         </h3>
                         <%= markdown(author.Description ) %>
-                        <a href="/authors/<%= author.Slug %>" class="btn btn-primary btn-md">Learn Now!
+                        <a href="/authors/<%= author.ID %>-<%= author.Slug %>" class="btn btn-primary btn-md">Learn More
                             <i class="fa fa-play ml-2"></i>
                         </a>
                     </div>
