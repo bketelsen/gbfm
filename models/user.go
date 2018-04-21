@@ -1,20 +1,37 @@
 package models
 
 import (
+	"time"
+
 	"github.com/jinzhu/gorm"
 )
 
-// User is a user in the system
 type User struct {
 	gorm.Model
-	Email                string `json:"email" db:"email"`
-	PasswordHash         string `json:"-" db:"password_hash"`
-	Password             string `json:"-" db:"-"`
-	PasswordConfirmation string `json:"-" db:"-"`
-	Admin                bool   `json:"admin" db:"admin"`
+	Email    string `form:"email"`
+	Password string
+	Name     string `form:"name"`
+	Role     string
+	Avatar   AvatarImageStorage `media_library:"url:/system/{{class}}/{{primary_key}}/{{column}}.{{extension}};path:./public"`
+
+	// Confirm
+	ConfirmToken string
+	Confirmed    bool
+
+	// Recover
+	RecoverToken       string
+	RecoverTokenExpiry *time.Time
+
+	// Accepts
+	AcceptPrivate bool `form:"accept-private"`
+	AcceptLicense bool `form:"accept-license"`
+	AcceptNews    bool `form:"accept-news"`
 }
 
-func (u *User) DisplayName() string {
+func (user User) DisplayName() string {
+	return user.Email
+}
 
-	return "Some User"
+func (user User) AvailableLocales() []string {
+	return []string{"en-US"}
 }

@@ -3,7 +3,6 @@ package models
 import (
 	"log"
 
-	"github.com/gophersnacks/gbfm/models/users"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -15,6 +14,7 @@ var DB *gorm.DB //*pop.Connection
 func init() {
 	var err error
 	//env := envy.Get("GO_ENV", "development")
+	// TODO(BJK) - fix for environments
 	DB, err = gorm.Open("postgres", "host=127.0.0.1 port=5432 user=postgres dbname=gbfm_development password=postgres")
 	if err != nil {
 		log.Fatal(err)
@@ -26,8 +26,9 @@ func init() {
 		&Episode{},
 		&Guide{},
 		&Series{},
-		&users.User{},
-		&users.AuthIdentity{},
-		&users.Address{},
+		&User{},
+		&AuthIdentity{},
+		&Address{},
+		&Author{},
 	)
 }

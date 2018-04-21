@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gophersnacks/gbfm/models"
-	"github.com/gophersnacks/gbfm/models/users"
 	"github.com/qor/admin"
 	"github.com/qor/auth"
 	"github.com/qor/media"
@@ -19,7 +18,7 @@ import (
 var Auth = auth.New(&auth.Config{
 	DB: models.DB,
 	// User model needs to implement qor.CurrentUser interface (https://godoc.org/github.com/qor/qor#CurrentUser) to use it in QOR Admin
-	UserModel: users.User{},
+	UserModel: models.User{},
 })
 
 type AdminAuth struct{}
@@ -48,7 +47,7 @@ func Admin() {
 
 	models.DB.AutoMigrate(&auth_identity.AuthIdentity{})
 
-	models.DB.AutoMigrate(&users.User{})
+	models.DB.AutoMigrate(&models.User{})
 	media.RegisterCallbacks(models.DB)
 	// Register Auth providers
 	// Allow use username/password
@@ -61,15 +60,15 @@ func Admin() {
 	})
 
 	// Allow to use Admin to manage User, Product
-	Admin.AddResource(&models.Snack{})
+
 	Admin.AddResource(&models.Topic{})
-	Admin.AddResource(&models.Author{})
-	Admin.AddResource(&models.Guide{})
-	Admin.AddResource(&users.User{})
+	Admin.AddResource(&models.Snack{})
+	Admin.AddResource(&models.Series{})
 	episode := Admin.AddResource(&models.Episode{})
 	episode.Meta(&admin.Meta{Name: "Body", Type: "text"})
-
-	Admin.AddResource(&models.Series{})
+	Admin.AddResource(&models.Guide{})
+	Admin.AddResource(&models.User{})
+	Admin.AddResource(&models.Author{})
 
 	// initalize an HTTP request multiplexer
 	mux := http.NewServeMux()
