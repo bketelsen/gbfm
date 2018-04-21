@@ -15,3 +15,10 @@ type Series struct {
 	Authors  []Author  `gorm:"many2many:authors_series;"`
 	Episodes []Episode `gorm:"many2many:episodes_series;"`
 }
+
+// BeforeSave is called before record saves.
+// Sets the Slug from the Series's Title
+func (s *Series) BeforeSave(scope *gorm.Scope) (err error) {
+	scope.SetColumn("Slug", sluggify(s.Title))
+	return nil
+}

@@ -12,3 +12,10 @@ type Topic struct {
 	Episodes []Episode   `gorm:"many2many:topics_episodes;"`
 	Guides   []Guide     `gorm:"many2many:topics_guides;"`
 }
+
+// BeforeSave is called before record saves.
+// Sets the Slug from the Topic's Name
+func (t *Topic) BeforeSave(scope *gorm.Scope) (err error) {
+	scope.SetColumn("Slug", sluggify(t.Name))
+	return nil
+}

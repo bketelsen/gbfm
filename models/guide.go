@@ -16,3 +16,10 @@ type Guide struct {
 	Topics      []Topic             `gorm:"many2many:topics_guides;"`
 	Authors     []Author            `gorm:"many2many:authors_guides;"`
 }
+
+// BeforeSave is called before record saves.
+// Sets the Slug from the Guide's Title
+func (guide *Guide) BeforeSave(scope *gorm.Scope) (err error) {
+	scope.SetColumn("Slug", sluggify(guide.Title))
+	return nil
+}

@@ -3,6 +3,7 @@ package models
 import (
 	"log"
 
+	"github.com/gosimple/slug"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -31,4 +32,8 @@ func init() {
 		&Address{},
 		&Author{},
 	)
+}
+
+func sluggify(s string) string {
+	return slug.Make(s)
 }

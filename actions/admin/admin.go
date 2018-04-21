@@ -59,16 +59,26 @@ func Admin() {
 		Auth: &AdminAuth{},
 	})
 
-	// Allow to use Admin to manage User, Product
+	topic := Admin.AddResource(&models.Topic{})
+	topic.NewAttrs("-Slug")
 
-	Admin.AddResource(&models.Topic{})
-	Admin.AddResource(&models.Snack{})
-	Admin.AddResource(&models.Series{})
+	snack := Admin.AddResource(&models.Snack{})
+	snack.NewAttrs("-Slug")
+
+	series := Admin.AddResource(&models.Series{})
+	series.NewAttrs("-Slug")
+
 	episode := Admin.AddResource(&models.Episode{})
 	episode.Meta(&admin.Meta{Name: "Body", Type: "text"})
-	Admin.AddResource(&models.Guide{})
-	Admin.AddResource(&models.User{})
-	Admin.AddResource(&models.Author{})
+
+	guide := Admin.AddResource(&models.Guide{})
+	guide.NewAttrs("-Slug")
+
+	u := Admin.AddResource(&models.User{})
+	u.NewAttrs("-Slug")
+
+	author := Admin.AddResource(&models.Author{})
+	author.NewAttrs("-Slug")
 
 	// initalize an HTTP request multiplexer
 	mux := http.NewServeMux()

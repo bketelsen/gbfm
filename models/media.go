@@ -9,8 +9,8 @@ type ContentImageStorage struct{ oss.OSS }
 
 func (ContentImageStorage) GetSizes() map[string]*media.Size {
 	return map[string]*media.Size{
-		"small":  {Width: 50, Height: 50},
-		"middle": {Width: 120, Height: 120},
-		"big":    {Width: 320, Height: 320},
+		"small":  {Width: 200, Height: 105},
+		"middle": {Width: 600, Height: 315},
+		"big":    {Width: 1200, Height: 630},
 	}
 }

@@ -18,3 +18,10 @@ type Author struct {
 	// TODO: has_many's for the content models
 
 }
+
+// BeforeSave is called before record saves.
+// Sets the Slug from the Author's Name
+func (author *Author) BeforeSave(scope *gorm.Scope) (err error) {
+	scope.SetColumn("Slug", sluggify(author.Name))
+	return nil
+}
