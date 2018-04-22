@@ -11,18 +11,38 @@
                         <!--Featured Image-->
                         <div class="card mb-4 wow fadeIn">
                             <!-- embed code is going here -->
-
+                            <img src='<%= snack.Picture.URL("big") %>' class="img-fluid">
 
                         </div>
                         <!--/.Featured Image-->
 
                         <!--Card-->
                         <div class="card mb-4 wow fadeIn">
-
+                            <div class="card-header font-weight-bold">
+                                <span><%= snack.Title %></span>
+                                <span class="pull-right">
+                                    <a href="">
+                                        <i class="fa fa-facebook mr-2"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-twitter mr-2"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-instagram mr-2"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-linkedin mr-2"></i>
+                                    </a>
+                                </span>
+                            </div>
                             <!--Card content-->
                             <div class="card-body">
 
                                 <%= snack.Summary %>
+
+        <a href="<%= snack.URL %>" target="_blank" class="btn btn-primary btn-md">Read Now
+            <i class="fa fa-play ml-2"></i>
+        </a>
                             </div>
 
                         </div>
@@ -44,44 +64,14 @@
                                 <h4 class="mb-4">
                                     <strong><%= snack.Title %></strong>
                                 </h4>
-
+                                <p>Submitted by <%= snack.DisplayAuthors() %></p>
+                                <p>via <%= snack.Source %></p>
 
                             </div>
                             <!-- Content -->
                         </div>
                         <!--Card: Jumbotron-->
-
-                        <!--Card : Dynamic content wrapper-->
-                        <div class="card mb-4 text-center wow fadeIn">
-
-                            <div class="card-header">Do you want to get informed about new articles?</div>
-
-                            <!--Card content-->
-                            <div class="card-body">
-
-                                <!-- Default form login -->
-                                <form>
-
-                                    <!-- Default input email -->
-                                    <label for="defaultFormEmailEx" class="grey-text">Your email</label>
-                                    <input type="email" id="defaultFormLoginEmailEx" class="form-control">
-
-                                    <br>
-
-                                    <!-- Default input password -->
-                                    <label for="defaultFormNameEx" class="grey-text">Your name</label>
-                                    <input type="text" id="defaultFormNameEx" class="form-control">
-
-                                    <div class="text-center mt-4">
-                                        <button class="btn btn-info btn-md" type="submit">Sign up</button>
-                                    </div>
-                                </form>
-                                <!-- Default form login -->
-
-                            </div>
-
-                        </div>
-                        <!--/.Card : Dynamic content wrapper-->
+                        <%= partial("snacks/partials/subscribe.html") %>
 
                         <!--Card-->
                         <div class="card mb-4 wow fadeIn">

@@ -1,6 +1,11 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import (
+	"fmt"
+	"strings"
+
+	"github.com/jinzhu/gorm"
+)
 
 // Snack is a snack - a small piece of news
 type Snack struct {
@@ -18,6 +23,19 @@ type Snack struct {
 	EmbedCode string              `json:"embed_code" db:"embed_code"`
 	Topics    []Topic             `gorm:"many2many:topics_snacks;"`
 	Authors   []Author            `gorm:"many2many:authors_snacks;"`
+}
+
+func (s Snack) DisplayAuthors() string {
+	fmt.Println("DisplayAuthors")
+	var authors []string
+	if len(s.Authors) > 0 {
+		for _, a := range s.Authors {
+			authors = append(authors, a.Name)
+		}
+		fmt.Println("authors", authors)
+		return strings.Join(authors, ", ")
+	}
+	return "GopherSnacks Staff"
 }
 
 // BeforeSave is called before record saves.
