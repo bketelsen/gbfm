@@ -6,30 +6,44 @@
 <hr>
 <div class="container-fluid">
     <%= for (snack) in snacks { %>
-        <div class="row">
-            <div class="offset-sm-2">
-                <strong>
-                    <a href="/snack/<%= snack.Slug %>" target="_blank">
-                        <%= snack.Title %>
-                    </a>
-                </strong>
-                <p>
-                    <%= snack.Summary %>
-                        <small>
-                            <i>
-                                <a href="/snack/<%= snack.Slug %>">read more</a>
-                            </i>
-                        </small>
-                </p>
-                <div>
-                    <%= for (topic) in snack.Topics { %>
-                        <small>
-                            <%= topic %>
-                        </small>
-                        <% } %>
-                </div>
-            </div>
+
+<div class="row mt-3 wow fadeIn">
+
+    <!--Grid column-->
+    <div class="col-lg-5 col-xl-4 mb-4">
+        <!--Featured image-->
+        <div class="view overlay rounded z-depth-1">
+            <img src="<%= snack.Picture.URL() %>" class="img-fluid" alt="">
+            <a href="https://mdbootstrap.com/automated-app-start/" target="_blank">
+                <div class="mask"></div>
+            </a>
         </div>
-        <hr>
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-lg-7 col-xl-7 ml-xl-4 mb-4">
+        <h3 class="mb-3 font-weight-bold dark-grey-text">
+            <strong>                    
+                <a href="/snack/<%= snack.ID %>-<%= snack.Slug %>" >
+                    <%= snack.Title %>
+                </a>
+            </strong>
+        </h3>
+        <p><%= snack.Summary %></p>
+        <p>
+           <%= for (topic) in snack.Topics { %>
+            <span class="badge badge-info">
+                <a href="/topics/<%= topic.ID %>-<%= topic.Slug %>"><%= topic.Name %></a> 
+            </span>
+            <% } %>
+        </p>
+        <a href="<%= snack.URL %>" target="_blank" class="btn btn-primary btn-md">Read Now
+            <i class="fa fa-play ml-2"></i>
+        </a>
+    </div>
+    <!--Grid column-->
+
+</div>
         <% } %>
 </div>
