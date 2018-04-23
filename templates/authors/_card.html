@@ -7,7 +7,7 @@
                     <div class="col-lg-5 col-xl-4 mb-4">
                         <!--Featured image-->
                         <div class="view overlay rounded z-depth-1">
-                            <img src="<%= imageTag(author.Photo) %>" class="img-fluid" alt="<%= author.Slug %>">
+                            <img src="<%= author.Avatar.URL("big")) %>" class="img-fluid" alt="<%= author.Slug %>">
                             <a href="/authors/<%= author.Slug %>">
                                 <div class="mask"></div>
                             </a>

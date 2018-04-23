@@ -7,8 +7,8 @@
                     <div class="col-lg-5 col-xl-4 mb-4">
                         <!--Featured image-->
                         <div class="view overlay rounded z-depth-1">
-                            <img src="<%= episode.ThumbnailURL %>" class="img-fluid" alt="<%= episode.Slug %>">
-                            <a href="/episodes/<%= episode.Slug %>">
+                            <img src="<%= episode.Picture.URL("big")%>" class="img-fluid" alt="<%= episode.Slug %>">
+                            <a href="/episodes/<%= episode.ID %>-<%= episode.Slug %>">
                                 <div class="mask"></div>
                             </a>
                         </div>
@@ -21,7 +21,7 @@
                             <strong><%= episode.Title %></strong>
                         </h3>
                         <%= markdown(episode.Description ) %>
-                        <a href="/episodes/<%= episode.Slug %>" class="btn btn-primary btn-md">Learn Now!
+                        <a href="/episodes/<%= episode.ID %>-<%= episode.Slug %>" class="btn btn-primary btn-md">Learn Now!
                             <i class="fa fa-play ml-2"></i>
                         </a>
                     </div>
