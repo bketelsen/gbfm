@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/pop"
 	"github.com/gophersnacks/gbfm/models"
 	"github.com/pkg/errors"
 )
@@ -12,26 +11,32 @@ import (
 // AuthorList gets all Episodes.
 // GET /author
 func AuthorList(c buffalo.Context) error {
-	tx := c.Value("tx").(*pop.Connection)
-	aList := new([]models.Author)
-	if err := tx.Eager().All(aList); err != nil {
+	var authors []models.Author
+	err := models.DB.Find(&authors).Error
+	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
+
 	}
-	c.Set("authors", aList)
+	c.Set("authors", authors)
 	return c.Render(200, r.HTML("authors/album.html"))
 }
 
 // AuthorShow gets the data for one Author.
 func AuthorShow(c buffalo.Context) error {
-	tx := c.Value("tx").(*pop.Connection)
-	slug := c.Param("name")
-	if slug == "" {
-		return c.Error(404, errors.New("Not Found"))
+	name := c.Param("name")
+	if name == "" {
+		return c.Error(http.StatusBadRequest, errors.New("no epside slug found"))
 	}
-	a := new(models.Author)
-	if err := tx.Eager().Where("slug = ?", slug).First(a); err != nil {
+	id, err := idFromSlug(name)
+	if err != nil {
+		return c.Error(http.StatusBadRequest, err)
+	}
+	var author models.Author
+	err = models.DB.Where(id).First(&author).Error
+	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-	c.Set("author", a)
+
+	c.Set("author", author)
 	return c.Render(200, r.HTML("authors/show.html"))
 }
