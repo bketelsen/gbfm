@@ -24,8 +24,10 @@ func snackHandler(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
-
+	related := snack.Related(4)
+	c.Set("related", related)
 	c.Set("snack", snack)
+
 	return c.Render(http.StatusOK, r.HTML("snacks/snack.html"))
 }
 

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"log"
+	"strconv"
 	"strings"
 
 	"github.com/jinzhu/gorm"
@@ -24,6 +26,19 @@ type Snack struct {
 	Authors   []Author            `gorm:"many2many:authors_snacks;"`
 }
 
+func (s Snack) ShortSummary() string {
+	if len(s.Summary) > 25 {
+		// todo word break here
+		return s.Summary[0:25] + "(...)"
+	}
+	return s.Summary + "(...)"
+
+}
+
+func (s Snack) Link() string {
+	return "/snack/" + strconv.Itoa(int(s.ID)) + "-" + s.Slug
+}
+
 func (s Snack) DisplayAuthors() string {
 	var authors []string
 	if len(s.Authors) > 0 {
@@ -33,6 +48,19 @@ func (s Snack) DisplayAuthors() string {
 		return strings.Join(authors, ", ")
 	}
 	return "GopherSnacks Staff"
+}
+
+func (s Snack) Related(count int) []Snack {
+	snacks := []Snack{}
+	// make sure we have a topic
+	if len(s.Topics) > 0 {
+		topic := s.Topics[0]
+		err := DB.Model(&topic).Not("id", s.ID).Limit(4).Related(&snacks, "Snacks")
+		if err != nil {
+			log.Println("Error related:", err)
+		}
+	}
+	return snacks
 }
 
 // BeforeSave is called before record saves.
