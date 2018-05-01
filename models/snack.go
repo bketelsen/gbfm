@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/jinzhu/gorm"
@@ -26,13 +25,11 @@ type Snack struct {
 }
 
 func (s Snack) DisplayAuthors() string {
-	fmt.Println("DisplayAuthors")
 	var authors []string
 	if len(s.Authors) > 0 {
 		for _, a := range s.Authors {
 			authors = append(authors, a.Name)
 		}
-		fmt.Println("authors", authors)
 		return strings.Join(authors, ", ")
 	}
 	return "GopherSnacks Staff"
