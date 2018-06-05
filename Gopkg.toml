@@ -76,6 +76,22 @@
   revision = "36e9d2ebbde5e3f13ab2e25625fd453271d6522e"
   name = "github.com/satori/go.uuid"
 
+[[override]]
+  revision = "138548ee992b3b70c9e75e81f9aaa1744d49adfe"
+  name = "github.com/qor/admin"
+
+[[override]]
+  revision = "f171bc73933e0fbcad81997e9c169f4e7d36f6ba"
+  name = "github.com/qor/qor"
+
+[[override]]
+  revision = "0555e49f99acf5467a77747fc855d7e005d902c1"
+  name = "github.com/qor/mailer"
+
+[[override]]
+  revision = "63566e46f01b134ae9882a59a06518e82a903231"
+  name = "github.com/qor/render"
+
 [prune]
   go-tests = true
   unused-packages = true
