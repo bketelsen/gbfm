@@ -38,6 +38,12 @@
   version = "v3.2.0"
 
 [[projects]]
+  name = "github.com/disintegration/imaging"
+  packages = ["."]
+  revision = "bbcee2f5c9d5e94ca42c8b50ec847fec64a6c134"
+  version = "v1.4.2"
+
+[[projects]]
   branch = "master"
   name = "github.com/dustin/go-humanize"
   packages = ["."]
@@ -190,10 +196,43 @@
   version = "v1.2.0"
 
 [[projects]]
+  name = "github.com/gosimple/slug"
+  packages = ["."]
+  revision = "e9f42fa127660e552d0ad2b589868d403a9be7c6"
+  version = "v1.1.1"
+
+[[projects]]
+  name = "github.com/guregu/null"
+  packages = ["."]
+  revision = "e81d6d8d57747b34d7c5fe0d20ebf57692f04ea9"
+  version = "v3.3.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/jinzhu/copier"
+  packages = ["."]
+  revision = "7e38e58719c33e0d44d585c4ab477a30f8cb82dd"
+
+[[projects]]
+  name = "github.com/jinzhu/gorm"
+  packages = [
+    ".",
+    "dialects/postgres"
+  ]
+  revision = "6ed508ec6a4ecb3531899a69cbc746ccf65a4166"
+  version = "v1.9.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/jinzhu/inflection"
   packages = ["."]
   revision = "04140366298a54a039076d798123ffa108fff46c"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/jinzhu/now"
+  packages = ["."]
+  revision = "ed742868f2aebdb1c0c437bf4f7257f88834b66f"
 
 [[projects]]
   branch = "master"
@@ -211,10 +250,23 @@
   version = "v1.2.0"
 
 [[projects]]
+  name = "github.com/kr/pretty"
+  packages = ["."]
+  revision = "73f6ac0b30a98e433b289500d779f50c1a6f0712"
+  version = "v0.1.0"
+
+[[projects]]
+  name = "github.com/kr/text"
+  packages = ["."]
+  revision = "e2ffdb16a802fe2bb95e2e35ff34f0e53aeef34f"
+  version = "v0.1.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/lib/pq"
   packages = [
     ".",
+    "hstore",
     "oid"
   ]
   revision = "d34b9ff171c21ad295489235aec8b6626023cd04"
@@ -357,10 +409,125 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/qor/admin"
+  packages = ["."]
+  revision = "138548ee992b3b70c9e75e81f9aaa1744d49adfe"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/qor/assetfs"
+  packages = ["."]
+  revision = "ff57fdc13a148d39c3e930cb27c7eaf82e376891"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/qor/auth"
+  packages = [
+    ".",
+    "auth_identity",
+    "claims",
+    "providers/password",
+    "providers/password/encryptor",
+    "providers/password/encryptor/bcrypt_encryptor"
+  ]
+  revision = "d0a475c04fd9ead5301ed7de9cc65776f58a4c87"
+
+[[projects]]
+  name = "github.com/qor/mailer"
+  packages = [
+    ".",
+    "logger"
+  ]
+  revision = "0555e49f99acf5467a77747fc855d7e005d902c1"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/qor/media"
+  packages = [
+    ".",
+    "oss"
+  ]
+  revision = "03c15fd0c7b032d48bdb8cc28760d421b517dc82"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/qor/middlewares"
+  packages = ["."]
+  revision = "781378b69454a545d08058d8154aca40d079e7ab"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/qor/oss"
+  packages = [
+    ".",
+    "filesystem"
+  ]
+  revision = "1f3aedac18be515a3743e64245cc0623d7d509e4"
+
+[[projects]]
+  name = "github.com/qor/qor"
+  packages = [
+    ".",
+    "resource",
+    "utils"
+  ]
+  revision = "f171bc73933e0fbcad81997e9c169f4e7d36f6ba"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/qor/redirect_back"
+  packages = ["."]
+  revision = "b4161ed6f84819fb3a2d13d5c9e6872ef76d8128"
+
+[[projects]]
+  name = "github.com/qor/render"
+  packages = ["."]
+  revision = "63566e46f01b134ae9882a59a06518e82a903231"
+
+[[projects]]
+  name = "github.com/qor/responder"
+  packages = ["."]
+  revision = "ecae0be66c1a6a441001b0b5eeef51f8bc27d42a"
+  version = "v1.0"
+
+[[projects]]
+  name = "github.com/qor/roles"
+  packages = ["."]
+  revision = "d6375609fe3e5da46ad3a574fae244fb633e79c1"
+
+[[projects]]
+  name = "github.com/qor/serializable_meta"
+  packages = ["."]
+  revision = "eea3296fff71c33e725e92a40e0badb65c3876eb"
+  version = "v1.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/qor/session"
+  packages = [
+    ".",
+    "gorilla",
+    "manager"
+  ]
+  revision = "8206b0adab706a6ef3ee6fabba2584d34429a26a"
+
+[[projects]]
+  name = "github.com/qor/validations"
+  packages = ["."]
+  revision = "87c1296c75e72a8f3247beab65c48c50b7b66a7a"
+  version = "v1.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/rainycape/unidecode"
+  packages = ["."]
+  revision = "cb7f23ec59bec0d61b19c56cd88cee3d0cc1870c"
+
+[[projects]]
+  branch = "master"
   name = "github.com/russross/blackfriday"
   packages = ["."]
-  revision = "55d61fa8aa702f59229e6cff85793c22e580eaf5"
-  version = "v1.5.1"
+  revision = "11635eb403ff09dbc3a6b5a007ab5ab09151c229"
 
 [[projects]]
   branch = "master"
@@ -456,10 +623,16 @@
   version = "v1.2.1"
 
 [[projects]]
-  name = "github.com/technosophos/moniker"
+  branch = "master"
+  name = "github.com/theplant/cldr"
   packages = ["."]
-  revision = "4d1d2a7d4b69cee56dadb6a7634945f829154858"
-  version = "0.1.0"
+  revision = "b97a4c2a76cf8ba21d1cb8ed2f4c8ee103371e2d"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/ulule/paging"
+  packages = ["."]
+  revision = "79ba41b6433e6bb39ef714b2c0a96f9762cabc47"
 
 [[projects]]
   branch = "master"
@@ -476,6 +649,16 @@
     "ssh/terminal"
   ]
   revision = "b2aa35443fbc700ab74c586ae79b81c171851023"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/image"
+  packages = [
+    "bmp",
+    "tiff",
+    "tiff/lzw"
+  ]
+  revision = "af66defab954cb421ca110193eed9477c8541e2a"
 
 [[projects]]
   branch = "master"
@@ -503,6 +686,15 @@
   revision = "3b87a42e500a6dc65dae1a55d0b641295971163e"
 
 [[projects]]
+  name = "golang.org/x/text"
+  packages = [
+    "internal/gen",
+    "unicode/cldr"
+  ]
+  revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
+  version = "v0.3.0"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
@@ -511,6 +703,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "17d747ff8bb26b65a59310da96c0c0597810ff87f49e10924975f0b6ee514a7a"
+  inputs-digest = "4429530ed8c263c3a769cc66257d695051a602eced83ebca08c3b3b0a60c2b82"
   solver-name = "gps-cdcl"
   solver-version = 1
