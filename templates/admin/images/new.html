@@ -3,6 +3,6 @@
 </div>
 
 <%= form_for(image, {action: "/admin/images", method: "POST"}) { %>
-  <%= partial("images/form.html") %>
+  <%= partial("admin/images/form.html") %>
   <a href="/admin/images" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>

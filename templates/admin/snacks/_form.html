@@ -1,10 +1,10 @@
 <%= f.InputTag("Slug") %>
-    <%= f.InputTag("Title") %>
-        <%= f.CheckboxTag("Sponsored", {unchecked: true}) %>
-            <%= f.InputTag("URL") %>
-                <%= f.InputTag("Summary") %>
-                    <%= f.InputTag("Comment") %>
-                        <%= f.InputTag("EmbedCode") %>
-                            <%= selecter(snack, topics, "Topics") %>
-                                <%= selecter(snack, authors, "Authors") %>
-                                    <button class="btn btn-success" role="submit">Save</button>
+<%= f.InputTag("Title") %>
+<%= f.CheckboxTag("Sponsored", {unchecked: true}) %>
+<%= f.InputTag("URL") %>
+<%= f.InputTag("Summary") %>
+<%= f.InputTag("Comment") %>
+<%= f.InputTag("EmbedCode") %>
+<%= selecter(snack, topics, "Topics") %>
+<%= selecter(snack, authors, "Authors") %>
+<button class="btn btn-success" role="submit">Save</button>

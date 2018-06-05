@@ -3,7 +3,7 @@
 </div>
 
 <% let putPath = "/admin/snack/"+snack.ID %>
-    <%= form_for(snack, {action: putPath, method: "PUT"}) { %>
-        <%= partial("admin/snacks/form.html") %>
-            <a href="<%= adminPath({ snack_id: snack.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
-            <% } %>
+<%= form_for(snack, {action: putPath, method: "PUT"}) { %>
+<%= partial("admin/snacks/form.html") %>
+<a href="<%= adminPath({ snack_id: snack.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<% } %>

@@ -2,8 +2,8 @@
 
 <%= partial("flash.html") %>
 
-  <%= form_for(user, {action: "/admin/login"}) { %>
-    <%= f.InputTag("Email") %>
-      <%= f.InputTag("Password", {type: "password"}) %>
-        <button class="btn btn-success">Sign In!</button>
-        <% } %>
+<%= form_for(user, {action: "/admin/login"}) { %>
+<%= f.InputTag("Email") %>
+<%= f.InputTag("Password", {type: "password"}) %>
+<button class="btn btn-success">Sign In!</button>
+<% } %>
