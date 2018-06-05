@@ -16,7 +16,7 @@ func init() {
 	var err error
 	//env := envy.Get("GO_ENV", "development")
 	// TODO(BJK) - fix for environments
-	DB, err = gorm.Open("postgres", "host=127.0.0.1 port=5432 user=postgres dbname=gbfm_development password=postgres")
+	DB, err = gorm.Open("postgres", "host=127.0.0.1 port=5432 user=postgres sslmode=disable dbname=gbfm_development password=postgres")
 	if err != nil {
 		log.Fatal(err)
 	}
