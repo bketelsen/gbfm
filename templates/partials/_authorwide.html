@@ -1,4 +1,4 @@
-                                   <%= for (author) in episode.Authors{ %>
+                                   <%= for (author) in episode.Authors { %>
            <!--Card-->
                         <div class="card mb-4 wow fadeIn">
 
@@ -24,7 +24,7 @@
                             <div class="card-body">
 
                                 <div class="media d-block d-md-flex mt-3">
-                                    <img class="d-flex mb-3 mx-auto z-depth-1" src="<%= imageTag(author.Photo) %>" alt="<%= author.Name %>"
+                                    <img class="d-flex mb-3 mx-auto z-depth-1" src="<%= author.Avatar.URL("big") %>" alt="<%= author.Name %>"
                                         style="width: 100px;">
                                     <div class="media-body text-center text-md-left ml-md-3 ml-0">
                                         <h5 class="mt-0 font-weight-bold"><%= author.Name %>

@@ -1,28 +1,72 @@
-<div class="page-header">
-  <h1>Author
-    <%= author.Name %>
-  </h1>
-</div>
+   <!--Section: Post-->
+            <section class="mt-4">
 
-<ul class="list-unstyled list-inline">
-  <li>
-    <a href="/authors" class="btn btn-info">Back to all Authors</a>
-  </li>
-</ul>
+                <!--Grid row-->
+                <div class="row">
 
-<p>
-  <strong>Slug</strong>:
-  <%= author.Slug %>
-</p>
-<p>
-  <strong>Name</strong>:
-  <%= author.Name %>
-</p>
-<p>
-  <strong>Description</strong>:
-  <%= markdown(author.Description)  %>
-</p>
-<p>
-  <strong>Photo</strong>:
-  <%= author.Photo %>
-</p>
+                    <!--Grid column-->
+                    <div class="col-md-8 mb-4">
+
+                        <!--Featured Image-->
+                        <div class="card mb-4 wow fadeIn">
+                            <!-- embed code is going here -->
+
+                            <img src='<%= author.Avatar.URL("big") %>'>
+
+                        </div>
+                        <!--/.Featured Image-->
+
+                        <!--Card-->
+                        <div class="card mb-4 wow fadeIn">
+
+                            <!--Card content-->
+                            <div class="card-body">
+                                <%= author.Description %>
+
+                            </div>
+
+                        </div>
+                        <!--/.Card-->
+
+
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-md-4 mb-4">
+
+                        <!--Card: Jumbotron-->
+                        <div class="card gradient-custom mb-4 wow fadeIn">
+
+                            <!-- Content -->
+                            <div class="card-body text-white text-center">
+
+                                <h4 class="mb-4">
+                                    <strong><%= author.Name %></strong>
+                                </h4>
+
+                            <div class="card-body text-white text-left">
+                                <%= markdown(author.Description) %>
+                            </div>
+
+                            </div>
+                            <!-- Content -->
+                        </div>
+                        <!--Card: Jumbotron-->
+
+                        <!--Card : Dynamic content wrapper-->
+                        
+                        <%= partial("partials/subscribe.html") %>
+
+
+                        
+
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+            </section>
+            <!--Section: Post-->
+
