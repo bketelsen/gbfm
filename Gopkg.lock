@@ -493,8 +493,7 @@
 [[projects]]
   name = "github.com/qor/roles"
   packages = ["."]
-  revision = "f1e05694734518c0ce2dc21151e0ecfccf4db8f4"
-  version = "v1.0"
+  revision = "d6375609fe3e5da46ad3a574fae244fb633e79c1"
 
 [[projects]]
   name = "github.com/qor/serializable_meta"
@@ -704,6 +703,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c6fdde6c91949e1b7810f5a140e15d99752ac47dc3de494faaa5708c50331676"
+  inputs-digest = "4429530ed8c263c3a769cc66257d695051a602eced83ebca08c3b3b0a60c2b82"
   solver-name = "gps-cdcl"
   solver-version = 1

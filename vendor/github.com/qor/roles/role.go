@@ -10,7 +10,8 @@ const (
 	Anyone = "*"
 )
 
-var role = &Role{}
+// Checker check current request match this role or not
+type Checker func(req *http.Request, user interface{}) bool
 
 // New initialize a new `Role`
 func New() *Role {
@@ -19,65 +20,62 @@ func New() *Role {
 
 // Role is a struct contains all roles definitions
 type Role struct {
-	definitions map[string]func(request *http.Request, user interface{}) bool
+	definitions map[string]Checker
 }
 
 // Register register role with conditions
-func Register(name string, fc func(request *http.Request, user interface{}) bool) {
-	role.Register(name, fc)
-}
-
-// Register register role with conditions
-func (role *Role) Register(name string, fc func(req *http.Request, currentUser interface{}) bool) {
+func (role *Role) Register(name string, fc Checker) {
 	if role.definitions == nil {
-		role.definitions = map[string]func(req *http.Request, currentUser interface{}) bool{}
+		role.definitions = map[string]Checker{}
 	}
 
 	definition := role.definitions[name]
 	if definition != nil {
-		fmt.Printf("%v already defined, overwrited it!\n", name)
+		fmt.Printf("Role `%v` already defined, overwrited it!\n", name)
 	}
 	role.definitions[name] = fc
 }
 
-func (role *Role) newPermission() *Permission {
+// NewPermission initialize permission
+func (role *Role) NewPermission() *Permission {
 	return &Permission{
-		Role:       role,
-		allowRoles: map[PermissionMode][]string{},
-		denyRoles:  map[PermissionMode][]string{},
+		Role:         role,
+		AllowedRoles: map[PermissionMode][]string{},
+		DeniedRoles:  map[PermissionMode][]string{},
 	}
 }
 
 // Allow allows permission mode for roles
-func Allow(mode PermissionMode, roles ...string) *Permission {
-	return role.Allow(mode, roles...)
-}
-
-// Allow allows permission mode for roles
 func (role *Role) Allow(mode PermissionMode, roles ...string) *Permission {
-	return role.newPermission().Allow(mode, roles...)
-}
-
-// Deny deny permission mode for roles
-func Deny(mode PermissionMode, roles ...string) *Permission {
-	return role.Deny(mode, roles...)
+	return role.NewPermission().Allow(mode, roles...)
 }
 
 // Deny deny permission mode for roles
 func (role *Role) Deny(mode PermissionMode, roles ...string) *Permission {
-	return role.newPermission().Deny(mode, roles...)
+	return role.NewPermission().Deny(mode, roles...)
+}
+
+// Get role defination
+func (role *Role) Get(name string) (Checker, bool) {
+	fc, ok := role.definitions[name]
+	return fc, ok
+}
+
+// Remove role definition
+func (role *Role) Remove(name string) {
+	delete(role.definitions, name)
+}
+
+// Reset role definitions
+func (role *Role) Reset() {
+	role.definitions = map[string]Checker{}
 }
 
 // MatchedRoles return defined roles from user
-func MatchedRoles(req *http.Request, user interface{}) []string {
-	return role.MatchedRoles(req, user)
-}
-
-// MatchedRoles return defined roles from user
-func (role *Role) MatchedRoles(req *http.Request, currentUser interface{}) (roles []string) {
+func (role *Role) MatchedRoles(req *http.Request, user interface{}) (roles []string) {
 	if definitions := role.definitions; definitions != nil {
 		for name, definition := range definitions {
-			if definition(req, currentUser) {
+			if definition(req, user) {
 				roles = append(roles, name)
 			}
 		}
@@ -85,8 +83,16 @@ func (role *Role) MatchedRoles(req *http.Request, currentUser interface{}) (role
 	return
 }
 
-// Get role defination
-func (role *Role) Get(name string) (func(req *http.Request, currentUser interface{}) bool, bool) {
-	fc, ok := role.definitions[name]
-	return fc, ok
+// HasRole check if current user has role
+func (role *Role) HasRole(req *http.Request, user interface{}, roles ...string) bool {
+	if definitions := role.definitions; definitions != nil {
+		for _, name := range roles {
+			if definition, ok := definitions[name]; ok {
+				if definition(req, user) {
+					return true
+				}
+			}
+		}
+	}
+	return false
 }

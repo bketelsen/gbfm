@@ -92,6 +92,10 @@
   revision = "63566e46f01b134ae9882a59a06518e82a903231"
   name = "github.com/qor/render"
 
+[[override]]
+  revision = "d6375609fe3e5da46ad3a574fae244fb633e79c1"
+  name = "github.com/qor/roles"
+
 [prune]
   go-tests = true
   unused-packages = true
