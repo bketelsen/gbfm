@@ -85,14 +85,20 @@
     "render",
     "worker"
   ]
-  revision = "932f95b2b4b7821a1b8369bd64845225ab1117b3"
-  version = "v0.11.0"
+  revision = "354657dfd81584bb82b8b6dff9bb9f6ab22712a8"
+  version = "v0.11.1"
 
 [[projects]]
   name = "github.com/gobuffalo/envy"
   packages = ["."]
   revision = "ef60bfc50c8f92d1ee64674d8ce7a48f1f67625e"
   version = "v1.6.2"
+
+[[projects]]
+  name = "github.com/gobuffalo/makr"
+  packages = ["."]
+  revision = "2f752af1831478b8c496635cb46b947811097061"
+  version = "v1.1.0"
 
 [[projects]]
   name = "github.com/gobuffalo/packr"
@@ -109,8 +115,8 @@
     "parser",
     "token"
   ]
-  revision = "2c66199a1b24507c54f4b9b478ead39890e86ff6"
-  version = "v3.7.1"
+  revision = "6cd5bf0d0c9b3623f2a89a2832387c584fb5e274"
+  version = "v3.7.5"
 
 [[projects]]
   name = "github.com/gobuffalo/pop"
@@ -122,8 +128,8 @@
     "fizz/translators",
     "nulls"
   ]
-  revision = "f3c6f37f77403f0a59d6666ca8529d9dd1b4281b"
-  version = "v4.5.0"
+  revision = "9985012f32f5e36b1a10e9191ee460daac4a9bc7"
+  version = "v4.5.9"
 
 [[projects]]
   name = "github.com/gobuffalo/suite"
@@ -131,8 +137,8 @@
     ".",
     "fix"
   ]
-  revision = "f8d299e126c7b834e0b1841c421de6c0ec6b3491"
-  version = "v2.1.0"
+  revision = "e2e0134eb87394466461f262c7cb7027b9e332e0"
+  version = "v2.1.1"
 
 [[projects]]
   name = "github.com/gobuffalo/tags"
@@ -297,7 +303,7 @@
   branch = "master"
   name = "github.com/markbates/inflect"
   packages = ["."]
-  revision = "fbc6b23ce49e2578f572d2e72bb72fa03c7145de"
+  revision = "dd7de90c06bca70f18136e59dec2270c19a401e7"
 
 [[projects]]
   name = "github.com/markbates/refresh"
@@ -383,12 +389,6 @@
   ]
   revision = "0dc1626d56435e9d605a29875701721c54bc9bbd"
   version = "v1.10.0"
-
-[[projects]]
-  name = "github.com/nilslice/jwt"
-  packages = ["."]
-  revision = "2481f5ad3dd561843c154c0d57d1d81d76276aae"
-  version = "1.0"
 
 [[projects]]
   name = "github.com/pelletier/go-toml"
@@ -703,6 +703,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "4429530ed8c263c3a769cc66257d695051a602eced83ebca08c3b3b0a60c2b82"
+  inputs-digest = "fce6d7830c4831125baacf51f46cb8c4a103b24601b084f4321a6addf0a0c757"
   solver-name = "gps-cdcl"
   solver-version = 1

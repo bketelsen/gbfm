@@ -1,18 +1,15 @@
 package pop
 
 import (
-	"bytes"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"os/exec"
-	"strconv"
 	"strings"
 	"sync"
 
 	"github.com/jmoiron/sqlx"
-	// Load PostgreSQL Go driver
-	_ "github.com/lib/pq"
 
 	"github.com/gobuffalo/pop/columns"
 	"github.com/gobuffalo/pop/fizz"
@@ -153,20 +150,8 @@ func (p *postgresql) TranslateSQL(sql string) string {
 	if csql, ok := p.translateCache[sql]; ok {
 		return csql
 	}
-	curr := 1
-	out := make([]byte, 0, len(sql))
-	for i := 0; i < len(sql); i++ {
-		if sql[i] == '?' {
-			str := "$" + strconv.Itoa(curr)
-			for _, char := range str {
-				out = append(out, byte(char))
-			}
-			curr++
-		} else {
-			out = append(out, sql[i])
-		}
-	}
-	csql := string(out)
+	csql := sqlx.Rebind(sqlx.DOLLAR, sql)
+
 	p.translateCache[sql] = csql
 	return csql
 }
@@ -195,32 +180,32 @@ func (p *postgresql) DumpSchema(w io.Writer) error {
 }
 
 func (p *postgresql) LoadSchema(r io.Reader) error {
-	cmd := exec.Command("psql", p.URL())
-	in, err := cmd.StdinPipe()
+	// Open DB connection on the target DB
+	deets := p.ConnectionDetails
+	db, err := sqlx.Open(deets.Dialect, p.MigrationURL())
+	if err != nil {
+		return errors.WithMessage(err, fmt.Sprintf("unable to load schema for %s", deets.Database))
+	}
+	defer db.Close()
+
+	// Get reader contents
+	contents, err := ioutil.ReadAll(r)
 	if err != nil {
 		return err
 	}
-	go func() {
-		defer in.Close()
-		io.Copy(in, r)
-	}()
-	Log(strings.Join(cmd.Args, " "))
 
-	bb := &bytes.Buffer{}
-	cmd.Stdout = bb
-	cmd.Stderr = bb
-
-	err = cmd.Start()
-	if err != nil {
-		return errors.WithMessage(err, bb.String())
+	if len(contents) == 0 {
+		fmt.Printf("schema is empty for %s, skipping\n", deets.Database)
+		return nil
 	}
 
-	err = cmd.Wait()
+	// From the sqlx package docs, this works with pq driver
+	_, err = db.Exec(string(contents))
 	if err != nil {
-		return errors.WithMessage(err, bb.String())
+		return errors.WithMessage(err, fmt.Sprintf("unable to load schema for %s", deets.Database))
 	}
 
-	fmt.Printf("loaded schema for %s\n", p.Details().Database)
+	fmt.Printf("loaded schema for %s\n", deets.Database)
 	return nil
 }
 

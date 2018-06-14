@@ -1,12 +1,16 @@
 package pop
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // Query is the main value that is used to build up a query
 // to be executed against the `Connection`.
 type Query struct {
 	RawSQL                  *clause
 	limitResults            int
+	addColumns              []string
 	eager                   bool
 	eagerFields             []string
 	whereClauses            clauses
@@ -70,9 +74,28 @@ func (q *Query) RawQuery(stmt string, args ...interface{}) *Query {
 // 	c.Eager().Find(model, 1) // will load all associations for model.
 // 	c.Eager("Books").Find(model, 1) // will load only Book association for model.
 func (c *Connection) Eager(fields ...string) *Connection {
-	c.eager = true
-	c.eagerFields = append(c.eagerFields, fields...)
-	return c
+	con := c.copy()
+	con.eager = true
+	con.eagerFields = append(c.eagerFields, fields...)
+	return con
+}
+
+// Eager will enable load associations of the model.
+// by defaults loads all the associations on the model,
+// but can take a variadic list of associations to load.
+//
+// 	q.Eager().Find(model, 1) // will load all associations for model.
+// 	q.Eager("Books").Find(model, 1) // will load only Book association for model.
+func (q *Query) Eager(fields ...string) *Query {
+	q.eager = true
+	q.eagerFields = append(q.eagerFields, fields...)
+	return q
+}
+
+// disableEager disables eager mode for current query and Connection.
+func (q *Query) disableEager() {
+	q.Connection.eager, q.eager = false, false
+	q.Connection.eagerFields, q.eagerFields = []string{}, []string{}
 }
 
 // Where will append a where clause to the query. You may use `?` in place of
@@ -94,6 +117,14 @@ func (q *Query) Where(stmt string, args ...interface{}) *Query {
 	if q.RawSQL.Fragment != "" {
 		fmt.Println("Warning: Query is setup to use raw SQL")
 		return q
+	}
+	if inRegex.MatchString(stmt) {
+		var inq []string
+		for i := 0; i < len(args); i++ {
+			inq = append(inq, "?")
+		}
+		qs := fmt.Sprintf("(%s)", strings.Join(inq, ","))
+		stmt = strings.Replace(stmt, "(?)", qs, 1)
 	}
 	q.whereClauses = append(q.whereClauses, clause{stmt, args})
 	return q
@@ -149,5 +180,8 @@ func (q Query) ToSQL(model *Model, addColumns ...string) (string, []interface{})
 // ToSQLBuilder returns a new `SQLBuilder` that can be used to generate SQL,
 // get arguments, and more.
 func (q Query) toSQLBuilder(model *Model, addColumns ...string) *sqlBuilder {
+	if len(q.addColumns) != 0 {
+		addColumns = q.addColumns
+	}
 	return newSQLBuilder(q, model, addColumns...)
 }
