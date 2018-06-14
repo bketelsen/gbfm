@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-var mrx = regexp.MustCompile(`(\d+)_([^\.]+)(\.[a-z]+)?\.(up|down)\.(sql|fizz)`)
+var mrx = regexp.MustCompile(`(\d+)_([^\.]+)(\.[a-z0-9]+)?\.(up|down)\.(sql|fizz)`)
 
 // NewMigrator returns a new "blank" migrator. It is recommended
 // to use something like MigrationBox or FileMigrator. A "blank"
@@ -104,7 +104,7 @@ func (m Migrator) Down(step int) error {
 				if err != nil {
 					return err
 				}
-				err = tx.RawQuery("delete from %s where version = ?", mtn, mi.Version).Exec()
+				err = tx.RawQuery(fmt.Sprintf("delete from %s where version = ?", mtn), mi.Version).Exec()
 				return errors.Wrapf(err, "problem deleting migration version %s", mi.Version)
 			})
 			if err != nil {
