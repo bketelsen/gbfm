@@ -10,8 +10,6 @@ import (
 	"github.com/qor/media"
 
 	"github.com/qor/auth/auth_identity"
-	"github.com/qor/auth/providers/password"
-	"github.com/qor/qor"
 	"github.com/qor/session/manager"
 )
 
@@ -20,28 +18,6 @@ var Auth = auth.New(&auth.Config{
 	// User model needs to implement qor.CurrentUser interface (https://godoc.org/github.com/qor/qor#CurrentUser) to use it in QOR Admin
 	UserModel: models.User{},
 })
-
-type AdminAuth struct{}
-
-func (AdminAuth) LoginURL(c *admin.Context) string {
-	return "/auth/login"
-}
-
-func (AdminAuth) LogoutURL(c *admin.Context) string {
-	return "/auth/logout"
-}
-
-func (AdminAuth) GetCurrentUser(c *admin.Context) qor.CurrentUser {
-	currentUser := Auth.GetCurrentUser(c.Request)
-	if currentUser != nil {
-		qorCurrentUser, ok := currentUser.(qor.CurrentUser)
-		if !ok {
-			fmt.Printf("User %#v haven't implement qor.CurrentUser interface\n", currentUser)
-		}
-		return qorCurrentUser
-	}
-	return nil
-}
 
 func Admin() {
 
@@ -59,7 +35,7 @@ func Admin() {
 	// Initalize
 	Admin := admin.New(&admin.AdminConfig{
 		DB:   models.DB,
-		Auth: &AdminAuth{},
+		Auth: provider,
 	})
 
 	topic := Admin.AddResource(&models.Topic{})
