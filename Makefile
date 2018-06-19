@@ -33,5 +33,5 @@ db-down:
 	docker-compose -p dev down
 
 dev:
-	CMS_URL=http://localhost:8080 $(BUFFALO) dev
+	CMS_URL=http://localhost:8080 SESSION_SECRET=devonly $(BUFFALO) dev
 
