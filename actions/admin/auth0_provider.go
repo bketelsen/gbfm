@@ -2,9 +2,9 @@ package admin
 
 import (
 	"fmt"
-	// "net/http"
+	"net/http"
 
-	// "github.com/gorilla/mux"
+	"github.com/gorilla/mux"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
 	"github.com/markbates/goth/providers/github"
@@ -87,36 +87,40 @@ func (ap auth0Provider) Callback(c *auth.Context) {
 	return
 }
 
-func (ap auth0Provider) ServeHTTP(c *auth.Context) {
-	// router := mux.NewRouter()
-	// router.HandleFunc("/admin/auth/{provider}/callback", func(w http.ResponseWriter, r *http.Request) {
-	// 	_, err := gothic.CompleteUserAuth(w, r)
-	// 	if err != nil {
-	// 		fmt.Fprintln(w, r)
-	// 		return
-	// 	}
-	// 	// t, _ := template.New("foo").Parse(userTemplate)
-	// 	// t.Execute(res, user)
-	// }).Methods("GET")
+func (ap auth0Provider) addAuthRoutes(httpMux *http.ServeMux) {
+	router := mux.NewRouter()
 
-	// router.HandleFunc("/logout/{provider}", func(w http.ResponseWriter, r *http.Request) {
-	// 	gothic.Logout(w, r)
-	// 	w.Header().Set("Location", "/")
-	// 	w.WriteHeader(http.StatusTemporaryRedirect)
-	// }).Methods("GET")
+	// GH callback
+	router.HandleFunc("/auth/{provider}/callback", func(w http.ResponseWriter, r *http.Request) {
+		_, err := gothic.CompleteUserAuth(w, r)
+		if err != nil {
+			fmt.Fprintln(w, r)
+			return
+		}
+		// t, _ := template.New("foo").Parse(userTemplate)
+		// t.Execute(res, user)
+	}).Methods("GET")
 
-	// router.HandleFunc("/admin/auth/{provider}", func(w http.ResponseWriter, r *http.Request) {
-	// 	if _, err := gothic.CompleteUserAuth(w, r); err == nil {
-	// 		// t, _ := template.New("foo").Parse(userTemplate)
-	// 		// t.Execute(res, gothUser)
-	// 	} else {
-	// 		gothic.BeginAuthHandler(w, r)
-	// 	}
+	// logout
+	router.HandleFunc("/logout/{provider}", func(w http.ResponseWriter, r *http.Request) {
+		gothic.Logout(w, r)
+		w.Header().Set("Location", "/")
+		w.WriteHeader(http.StatusTemporaryRedirect)
+	}).Methods("GET")
 
-	// })
-
-	// router.ServeHTTP(c.Writer, c.Request)
+	// login start
+	router.HandleFunc("/auth/{provider}", func(w http.ResponseWriter, r *http.Request) {
+		if _, err := gothic.CompleteUserAuth(w, r); err == nil {
+			// t, _ := template.New("foo").Parse(userTemplate)
+			// t.Execute(res, gothUser)
+		} else {
+			gothic.BeginAuthHandler(w, r)
+		}
+	})
+	httpMux.Handle("/auth", router)
 }
+
+func (ap auth0Provider) ServeHTTP(c *auth.Context) {}
 
 func (ap auth0Provider) LoginURL(c *admin.Context) string {
 	return "/auth/github"

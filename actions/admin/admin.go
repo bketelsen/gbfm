@@ -61,7 +61,8 @@ func Admin() {
 
 	// initalize an HTTP request multiplexer
 	mux := http.NewServeMux()
-	mux.Handle("/auth/", Auth.NewServeMux())
+	// mux.Handle("/auth/", Auth.NewServeMux())
+	provider.addAuthRoutes(mux)
 
 	// Mount admin interface to mux
 	Admin.MountTo("/admin", mux)
