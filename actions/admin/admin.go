@@ -27,9 +27,8 @@ func Admin() {
 	media.RegisterCallbacks(models.DB)
 
 	// Register auth0 auth provider
-	provider := auth0Provider{
-		// TODO: GH key, etc...
-	}
+	// TODO: GH key, etc...
+	provider := newAuth0Provider("", "", "")
 	Auth.RegisterProvider(provider)
 
 	// Initalize
@@ -59,12 +58,9 @@ func Admin() {
 	author := Admin.AddResource(&models.Author{})
 	author.NewAttrs("-Slug")
 
-	// initalize an HTTP request multiplexer
+	// mount the a mux to auth
 	mux := http.NewServeMux()
-	// mux.Handle("/auth/", Auth.NewServeMux())
-	provider.addAuthRoutes(mux)
-
-	// Mount admin interface to mux
+	mux.Handle("/auth/", Auth.NewServeMux())
 	Admin.MountTo("/admin", mux)
 
 	fmt.Println("Listening on: 9000")

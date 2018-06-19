@@ -3,6 +3,7 @@ package admin
 import (
 	"fmt"
 	"net/http"
+	// "time"
 
 	"github.com/gorilla/mux"
 	"github.com/markbates/goth"
@@ -14,18 +15,32 @@ import (
 	"github.com/qor/qor"
 )
 
+const (
+	loginPath    = "/admin/auth/login?provider=github"
+	logoutPath   = "/admin/auth/logout?provider=github"
+	callbackPath = "/admin/auth/callback?provider=github"
+	userIDKey    = "user_id"
+)
+
+type providerAuther interface {
+	auth.Provider
+	admin.Auth
+}
+
 // auth0Provider is a Provider implementation that uses Auth0
-// it also implements admin.Auth
+// it also implements admin.Auth.
+//
+// don't create this directly, use newAuth0Provider instead. it needs
+// to set up global state
 type auth0Provider struct {
 	provider goth.Provider
 }
 
-func newAuth0Provider(ghKey, ghSecret, host string) auth.Provider {
-	ghProvider := github.New(ghKey, ghSecret, fmt.Sprintf("%s/auth/github/callback", host))
+// TODO: rename this to GH provider
+func newAuth0Provider(ghKey, ghSecret, host string) providerAuther {
+	ghProvider := github.New(ghKey, ghSecret, fmt.Sprintf("%s%s", host, callbackPath))
 	goth.UseProviders(ghProvider)
-	return &auth0Provider{
-		provider: github.New(ghKey, ghSecret, fmt.Sprintf("%s/auth/github/callback", host)),
-	}
+	return &auth0Provider{provider: ghProvider}
 }
 
 func (ap auth0Provider) GetName() string {
@@ -33,19 +48,29 @@ func (ap auth0Provider) GetName() string {
 }
 
 func (ap auth0Provider) ConfigAuth(a *auth.Auth) {
-	// TODO I think
+	a.Config.LoginHandler = func(c *auth.Context, fn func(*auth.Context) (*claims.Claims, error)) {
+
+	}
+	a.Config.LogoutHandler = ap.Logout
 }
 
 // /login/github
 func (ap auth0Provider) Login(c *auth.Context) {
-	fmt.Fprintln(c.Writer, "auth0 login")
 	// fmt.Println("auth0 login")
-	// gothic.BeginAuthHandler(c.Writer, c.Request)
+	// now := time.Now()
+	// c.Auth.Login(c.Writer, c.Request, &claims.Claims{
+	// 	Provider:    ap.GetName(),
+	// 	UserID:      "aaron",
+	// 	LastLoginAt: &now,
+	// })
+	// fmt.Fprint(c.Writer, "logged in!")
+	fmt.Println("login!")
+	gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 
 // /logout/github
 func (ap auth0Provider) Logout(c *auth.Context) {
-	fmt.Fprintln(c.Writer, "auth0 logout")
+	fmt.Println("logout!")
 	// w, r := c.Writer, c.Request
 	// gothic.Logout(w, r)
 	// w.Header().Set("Location", "/")
@@ -53,7 +78,7 @@ func (ap auth0Provider) Logout(c *auth.Context) {
 }
 
 func (ap auth0Provider) Register(c *auth.Context) {
-	fmt.Fprintln(c.Writer, "auth0 register")
+	fmt.Println("register!")
 	w, r := c.Writer, c.Request
 
 	// try to see if the person is logged in already
@@ -73,7 +98,7 @@ func (ap auth0Provider) Register(c *auth.Context) {
 }
 
 func (ap auth0Provider) Callback(c *auth.Context) {
-	fmt.Fprintln(c.Writer, "auth0 callback")
+	fmt.Println("callback!")
 	w, r := c.Writer, c.Request
 	gothUser, err := gothic.CompleteUserAuth(w, r)
 	if err != nil {
@@ -87,11 +112,23 @@ func (ap auth0Provider) Callback(c *auth.Context) {
 	return
 }
 
-func (ap auth0Provider) addAuthRoutes(httpMux *http.ServeMux) {
+func (ap auth0Provider) ServeHTTP(c *auth.Context) {
+	fmt.Println("serve http!")
 	router := mux.NewRouter()
 
+	// login start
+	router.HandleFunc(loginPath, func(w http.ResponseWriter, r *http.Request) {
+		// if _, err := gothic.CompleteUserAuth(w, r); err == nil {
+		// 	// t, _ := template.New("foo").Parse(userTemplate)
+		// 	// t.Execute(res, gothUser)
+		// } else {
+		r.URL.Query().Set("provider", "github")
+		gothic.BeginAuthHandler(w, r)
+		// }
+	})
+
 	// GH callback
-	router.HandleFunc("/auth/{provider}/callback", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc(callbackPath, func(w http.ResponseWriter, r *http.Request) {
 		_, err := gothic.CompleteUserAuth(w, r)
 		if err != nil {
 			fmt.Fprintln(w, r)
@@ -102,46 +139,44 @@ func (ap auth0Provider) addAuthRoutes(httpMux *http.ServeMux) {
 	}).Methods("GET")
 
 	// logout
-	router.HandleFunc("/logout/{provider}", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc(logoutPath, func(w http.ResponseWriter, r *http.Request) {
 		gothic.Logout(w, r)
 		w.Header().Set("Location", "/")
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	}).Methods("GET")
 
-	// login start
-	router.HandleFunc("/auth/{provider}", func(w http.ResponseWriter, r *http.Request) {
-		if _, err := gothic.CompleteUserAuth(w, r); err == nil {
-			// t, _ := template.New("foo").Parse(userTemplate)
-			// t.Execute(res, gothUser)
-		} else {
-			gothic.BeginAuthHandler(w, r)
-		}
-	})
-	httpMux.Handle("/auth", router)
+	router.ServeHTTP(c.Writer, c.Request)
 }
 
-func (ap auth0Provider) ServeHTTP(c *auth.Context) {}
-
 func (ap auth0Provider) LoginURL(c *admin.Context) string {
-	return "/auth/github"
+	fmt.Println("login url!")
+	return "/admin/auth/login?provider=github"
 }
 
 func (ap auth0Provider) LogoutURL(c *admin.Context) string {
-	return "/logout/github"
+	fmt.Println("logout url!")
+	return "/admin/auth/logout?provider=github"
 }
 
 func (ap auth0Provider) GetCurrentUser(c *admin.Context) qor.CurrentUser {
-	gothUser, err := gothic.CompleteUserAuth(c.Writer, c.Request)
+	fmt.Println("get current user!")
+	gothUser, err := gothic.GetFromSession(userIDKey, c.Request)
 	if err != nil {
+		gothic.BeginAuthHandler(c.Writer, c.Request)
 		return nil
 	}
+	return qorCurrentUser{displayName: gothUser}
+	// gothUser, err := gothic.CompleteUserAuth(c.Writer, c.Request)
+	// if err != nil {
+	// 	return nil
+	// }
 
-	displayName := gothUser.Email
-	if displayName == "" {
-		displayName = gothUser.Name
-	}
-	if displayName == "" {
-		displayName = gothUser.UserID
-	}
-	return qorCurrentUser{displayName: displayName}
+	// displayName := gothUser.Email
+	// if displayName == "" {
+	// 	displayName = gothUser.Name
+	// }
+	// if displayName == "" {
+	// 	displayName = gothUser.UserID
+	// }
+	// return qorCurrentUser{displayName: displayName}
 }

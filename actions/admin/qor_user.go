@@ -1,5 +1,9 @@
 package admin
 
+import (
+	"github.com/markbates/goth"
+)
+
 // qorCurrentUser implements qor.CurentUser
 //
 // I didn't see anything in the qor suite of packages that actually implements this.
@@ -10,4 +14,15 @@ type qorCurrentUser struct {
 
 func (qu qorCurrentUser) DisplayName() string {
 	return qu.displayName
+}
+
+func qorCurrentUserFromGothUser(usr goth.User) qorCurrentUser {
+	displayName := usr.Email
+	if displayName == "" {
+		displayName = usr.Name
+	}
+	if displayName == "" {
+		displayName = usr.UserID
+	}
+	return qorCurrentUser{displayName: displayName}
 }
