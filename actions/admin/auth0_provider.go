@@ -10,6 +10,7 @@ import (
 	"github.com/markbates/goth/providers/github"
 	"github.com/qor/admin"
 	"github.com/qor/auth"
+	"github.com/qor/auth/claims"
 	"github.com/qor/qor"
 )
 
@@ -35,14 +36,14 @@ func (ap auth0Provider) ConfigAuth(a *auth.Auth) {
 	// TODO I think
 }
 
-// /admin/auth/github
+// /login/github
 func (ap auth0Provider) Login(c *auth.Context) {
 	fmt.Fprintln(c.Writer, "auth0 login")
 	// fmt.Println("auth0 login")
 	// gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 
-// /admin/logout/github
+// /logout/github
 func (ap auth0Provider) Logout(c *auth.Context) {
 	fmt.Fprintln(c.Writer, "auth0 logout")
 	// w, r := c.Writer, c.Request
@@ -53,23 +54,37 @@ func (ap auth0Provider) Logout(c *auth.Context) {
 
 func (ap auth0Provider) Register(c *auth.Context) {
 	fmt.Fprintln(c.Writer, "auth0 register")
-	// w, r := c.Writer, c.Request
-	// // try to see if the person is logged in already
-	// // otherwise start auth
-	// if _, err := gothic.CompleteUserAuth(w, r); err == nil {
-	// } else {
-	// 	gothic.BeginAuthHandler(w, r)
-	// }
+	w, r := c.Writer, c.Request
+
+	// try to see if the person is logged in already
+	gothUser, err := gothic.CompleteUserAuth(w, r)
+	if err == nil {
+		c.SessionStorerInterface.Update(w, r, &claims.Claims{
+			Provider: ap.GetName(),
+			UserID:   gothUser.UserID,
+		})
+		return
+	}
+
+	// otherwise start auth
+	gothic.BeginAuthHandler(w, r)
+	return
+
 }
 
 func (ap auth0Provider) Callback(c *auth.Context) {
 	fmt.Fprintln(c.Writer, "auth0 callback")
-	// w, r := c.Writer, c.Request
-	// _, err := gothic.CompleteUserAuth(w, r)
-	// if err != nil {
-	// 	fmt.Fprintln(w, r)
-	// 	return
-	// }
+	w, r := c.Writer, c.Request
+	gothUser, err := gothic.CompleteUserAuth(w, r)
+	if err != nil {
+		fmt.Fprintln(w, "auth failed!")
+		return
+	}
+	c.SessionStorer.Update(w, r, &claims.Claims{
+		Provider: ap.GetName(),
+		UserID:   gothUser.UserID,
+	})
+	return
 }
 
 func (ap auth0Provider) ServeHTTP(c *auth.Context) {
@@ -104,7 +119,7 @@ func (ap auth0Provider) ServeHTTP(c *auth.Context) {
 }
 
 func (ap auth0Provider) LoginURL(c *admin.Context) string {
-	return "/admin/auth/github"
+	return "/auth/github"
 }
 
 func (ap auth0Provider) LogoutURL(c *admin.Context) string {
