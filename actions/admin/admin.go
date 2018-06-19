@@ -49,9 +49,12 @@ func Admin() {
 
 	models.DB.AutoMigrate(&models.User{})
 	media.RegisterCallbacks(models.DB)
-	// Register Auth providers
-	// Allow use username/password
-	Auth.RegisterProvider(password.New(&password.Config{}))
+
+	// Register auth0 auth provider
+	provider := auth0Provider{
+		// TODO: GH key, etc...
+	}
+	Auth.RegisterProvider(provider)
 
 	// Initalize
 	Admin := admin.New(&admin.AdminConfig{
