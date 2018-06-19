@@ -20,6 +20,14 @@ const (
 	logoutPath   = "/admin/auth/logout?provider=github"
 	callbackPath = "/admin/auth/callback?provider=github"
 	userIDKey    = "user_id"
+
+	// Gophersnacks test 1
+	// ghClientID     = "3f53c147b90f7b5725db"
+	// ghClientSecret = "596000348d8467d2dfb42c5d0b26780d02156cf0"
+
+	// Gophersnacks test 2
+	ghClientID     = "86deba66601689994258"
+	ghClientSecret = "4849e71a9026b6aa9232e29c3ee0929f214bf1ab"
 )
 
 type providerAuther interface {
@@ -35,7 +43,8 @@ type providerAuther interface {
 type ghProvider struct{}
 
 func newGHProvider(ghKey, ghSecret, host string) providerAuther {
-	prov := github.New(ghKey, ghSecret, fmt.Sprintf("%s%s", host, callbackPath))
+	callbackURL := "http://localhost:9000/" + callbackPath
+	prov := github.New(ghClientID, ghClientSecret, callbackURL)
 	goth.UseProviders(prov)
 	return &ghProvider{}
 }
