@@ -108,6 +108,8 @@ func (ap ghProvider) ServeHTTP(c *auth.Context) {
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	}).Methods("GET")
 
+	// TODO: handle failure callback paths here
+
 	router.ServeHTTP(c.Writer, c.Request)
 }
 
