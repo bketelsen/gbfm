@@ -159,21 +159,12 @@ func (ap ghProvider) GetCurrentUser(c *admin.Context) qor.CurrentUser {
 	fmt.Println("get current user!")
 	gothUser, err := gothic.GetFromSession(userIDKey, c.Request)
 	if err != nil {
-		gothic.BeginAuthHandler(c.Writer, c.Request)
+		authURL, err := gothic.GetAuthURL(c.Writer, c.Request)
+		if err != nil {
+			return nil
+		}
+		http.Redirect(c.Writer, c.Request, authURL, http.StatusTemporaryRedirect)
 		return nil
 	}
 	return qorCurrentUser{displayName: gothUser}
-	// gothUser, err := gothic.CompleteUserAuth(c.Writer, c.Request)
-	// if err != nil {
-	// 	return nil
-	// }
-
-	// displayName := gothUser.Email
-	// if displayName == "" {
-	// 	displayName = gothUser.Name
-	// }
-	// if displayName == "" {
-	// 	displayName = gothUser.UserID
-	// }
-	// return qorCurrentUser{displayName: displayName}
 }
