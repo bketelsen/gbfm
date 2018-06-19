@@ -28,7 +28,7 @@ func Admin() {
 
 	// Register auth0 auth provider
 	// TODO: GH key, etc...
-	provider := newAuth0Provider("", "", "")
+	provider := newGHProvider("", "", "")
 	Auth.RegisterProvider(provider)
 
 	// Initalize

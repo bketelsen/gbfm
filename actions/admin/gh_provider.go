@@ -27,27 +27,24 @@ type providerAuther interface {
 	admin.Auth
 }
 
-// auth0Provider is a Provider implementation that uses Auth0
+// ghProvider is a Provider implementation that uses Auth0
 // it also implements admin.Auth.
 //
-// don't create this directly, use newAuth0Provider instead. it needs
+// don't create this directly, use newGHProvider instead. it needs
 // to set up global state
-type auth0Provider struct {
-	provider goth.Provider
+type ghProvider struct{}
+
+func newGHProvider(ghKey, ghSecret, host string) providerAuther {
+	prov := github.New(ghKey, ghSecret, fmt.Sprintf("%s%s", host, callbackPath))
+	goth.UseProviders(prov)
+	return &ghProvider{}
 }
 
-// TODO: rename this to GH provider
-func newAuth0Provider(ghKey, ghSecret, host string) providerAuther {
-	ghProvider := github.New(ghKey, ghSecret, fmt.Sprintf("%s%s", host, callbackPath))
-	goth.UseProviders(ghProvider)
-	return &auth0Provider{provider: ghProvider}
-}
-
-func (ap auth0Provider) GetName() string {
+func (ap ghProvider) GetName() string {
 	return "auth0"
 }
 
-func (ap auth0Provider) ConfigAuth(a *auth.Auth) {
+func (ap ghProvider) ConfigAuth(a *auth.Auth) {
 	a.Config.LoginHandler = func(c *auth.Context, fn func(*auth.Context) (*claims.Claims, error)) {
 
 	}
@@ -55,7 +52,7 @@ func (ap auth0Provider) ConfigAuth(a *auth.Auth) {
 }
 
 // /login/github
-func (ap auth0Provider) Login(c *auth.Context) {
+func (ap ghProvider) Login(c *auth.Context) {
 	// fmt.Println("auth0 login")
 	// now := time.Now()
 	// c.Auth.Login(c.Writer, c.Request, &claims.Claims{
@@ -69,7 +66,7 @@ func (ap auth0Provider) Login(c *auth.Context) {
 }
 
 // /logout/github
-func (ap auth0Provider) Logout(c *auth.Context) {
+func (ap ghProvider) Logout(c *auth.Context) {
 	fmt.Println("logout!")
 	// w, r := c.Writer, c.Request
 	// gothic.Logout(w, r)
@@ -77,7 +74,7 @@ func (ap auth0Provider) Logout(c *auth.Context) {
 	// w.WriteHeader(http.StatusTemporaryRedirect)
 }
 
-func (ap auth0Provider) Register(c *auth.Context) {
+func (ap ghProvider) Register(c *auth.Context) {
 	fmt.Println("register!")
 	w, r := c.Writer, c.Request
 
@@ -97,7 +94,7 @@ func (ap auth0Provider) Register(c *auth.Context) {
 
 }
 
-func (ap auth0Provider) Callback(c *auth.Context) {
+func (ap ghProvider) Callback(c *auth.Context) {
 	fmt.Println("callback!")
 	w, r := c.Writer, c.Request
 	gothUser, err := gothic.CompleteUserAuth(w, r)
@@ -112,7 +109,7 @@ func (ap auth0Provider) Callback(c *auth.Context) {
 	return
 }
 
-func (ap auth0Provider) ServeHTTP(c *auth.Context) {
+func (ap ghProvider) ServeHTTP(c *auth.Context) {
 	fmt.Println("serve http!")
 	router := mux.NewRouter()
 
@@ -148,17 +145,17 @@ func (ap auth0Provider) ServeHTTP(c *auth.Context) {
 	router.ServeHTTP(c.Writer, c.Request)
 }
 
-func (ap auth0Provider) LoginURL(c *admin.Context) string {
+func (ap ghProvider) LoginURL(c *admin.Context) string {
 	fmt.Println("login url!")
 	return "/admin/auth/login?provider=github"
 }
 
-func (ap auth0Provider) LogoutURL(c *admin.Context) string {
+func (ap ghProvider) LogoutURL(c *admin.Context) string {
 	fmt.Println("logout url!")
 	return "/admin/auth/logout?provider=github"
 }
 
-func (ap auth0Provider) GetCurrentUser(c *admin.Context) qor.CurrentUser {
+func (ap ghProvider) GetCurrentUser(c *admin.Context) qor.CurrentUser {
 	fmt.Println("get current user!")
 	gothUser, err := gothic.GetFromSession(userIDKey, c.Request)
 	if err != nil {
