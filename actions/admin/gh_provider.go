@@ -90,9 +90,13 @@ func (ap ghProvider) ServeHTTP(c *auth.Context) {
 
 	// GH callback
 	router.HandleFunc(callbackPath, func(w http.ResponseWriter, r *http.Request) {
-		_, err := gothic.CompleteUserAuth(w, r)
+		gothUsr, err := gothic.CompleteUserAuth(w, r)
 		if err != nil {
 			fmt.Fprintln(w, r)
+			return
+		}
+		if err := gothic.StoreInSession(userIDKey, gothUsr.Name, r, w); err != nil {
+			fmt.Fprintf(w, "error: %s", err)
 			return
 		}
 	}).Methods("GET")
