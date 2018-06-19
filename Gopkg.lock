@@ -172,6 +172,12 @@
   revision = "11ca13c05abd73167c56ed10f8874c7c7497f759"
 
 [[projects]]
+  name = "github.com/golang/protobuf"
+  packages = ["proto"]
+  revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
+  version = "v1.1.0"
+
+[[projects]]
   name = "github.com/gorilla/context"
   packages = ["."]
   revision = "1ea25387ff6f684839d82767c1733ff4d4d15d0a"
@@ -286,6 +292,16 @@
     "wait"
   ]
   revision = "0576708c56cea02331f864fe6e157ac7841923e4"
+
+[[projects]]
+  name = "github.com/markbates/goth"
+  packages = [
+    ".",
+    "gothic",
+    "providers/github"
+  ]
+  revision = "aefb600c0c37063c4280d47c42b11984b63cece4"
+  version = "v1.45.7"
 
 [[projects]]
   branch = "master"
@@ -665,10 +681,20 @@
   name = "golang.org/x/net"
   packages = [
     "context",
+    "context/ctxhttp",
     "html",
     "html/atom"
   ]
   revision = "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/oauth2"
+  packages = [
+    ".",
+    "internal"
+  ]
+  revision = "113ce6928c4638e14fd5eba69b9e6ec899d5dd83"
 
 [[projects]]
   branch = "master"
@@ -695,6 +721,20 @@
   version = "v0.3.0"
 
 [[projects]]
+  name = "google.golang.org/appengine"
+  packages = [
+    "internal",
+    "internal/base",
+    "internal/datastore",
+    "internal/log",
+    "internal/remote_api",
+    "internal/urlfetch",
+    "urlfetch"
+  ]
+  revision = "b1f26356af11148e710935ed1ac8a7f5702c7612"
+  version = "v1.1.0"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
@@ -703,6 +743,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fce6d7830c4831125baacf51f46cb8c4a103b24601b084f4321a6addf0a0c757"
+  inputs-digest = "cdac8ad0074cf953c6bc3ad3c85a2678becd53c76e80a3b7b0ee5aab866984c7"
   solver-name = "gps-cdcl"
   solver-version = 1
