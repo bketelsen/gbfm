@@ -26,11 +26,6 @@ const (
 	userIDKey    = "user_id"
 )
 
-// type providerAuther interface {
-// 	auth.Provider
-// 	admin.Auth
-// }
-
 // ghProvider is an admin.Auth implementation that uses GH
 //
 // don't create this directly, use newGHProvider instead. it needs
