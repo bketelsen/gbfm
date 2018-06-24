@@ -6,18 +6,11 @@ import (
 
 	"github.com/gophersnacks/gbfm/models"
 	"github.com/qor/admin"
-	"github.com/qor/auth"
 	"github.com/qor/media"
 
 	"github.com/qor/auth/auth_identity"
 	"github.com/qor/session/manager"
 )
-
-var Auth = auth.New(&auth.Config{
-	DB: models.DB,
-	// User model needs to implement qor.CurrentUser interface (https://godoc.org/github.com/qor/qor#CurrentUser) to use it in QOR Admin
-	UserModel: models.User{},
-})
 
 func Admin() {
 	const (
