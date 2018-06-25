@@ -32,12 +32,12 @@ func Admin() {
 	media.RegisterCallbacks(models.DB)
 
 	// create GH auth impl. TODO: fill in the host
-	provider := newGHProvider(ghClientID, ghClientSecret, "")
+	ghAuth := newGHAuth(ghClientID, ghClientSecret, "")
 
 	// Initalize
 	Admin := admin.New(&admin.AdminConfig{
 		DB:   models.DB,
-		Auth: provider,
+		Auth: ghAuth,
 	})
 
 	topic := Admin.AddResource(&models.Topic{})
@@ -63,7 +63,7 @@ func Admin() {
 
 	// mount the a mux to auth
 	mux := http.NewServeMux()
-	mux.Handle("/", provider)
+	mux.Handle("/", ghAuth)
 	// Admin.MountTo("/auth", mux)
 	Admin.MountTo("/admin", mux)
 

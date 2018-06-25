@@ -30,16 +30,16 @@ const (
 //
 // don't create this directly, use newGHProvider instead. it needs
 // to set up global state
-type ghProvider struct{}
+type ghAuth struct{}
 
-func newGHProvider(ghKey, ghSecret, host string) *ghProvider {
+func newGHAuth(ghKey, ghSecret, host string) *ghAuth {
 	callbackURL := "http://localhost:9000" + callbackPath
 	prov := github.New(ghKey, ghSecret, callbackURL)
 	goth.UseProviders(prov)
-	return &ghProvider{}
+	return &ghAuth{}
 }
 
-func (ap ghProvider) LoginURL(c *admin.Context) string {
+func (ap ghAuth) LoginURL(c *admin.Context) string {
 	loginPath, err := gothic.GetAuthURL(c.Writer, c.Request)
 	if err != nil {
 		return ""
@@ -48,11 +48,11 @@ func (ap ghProvider) LoginURL(c *admin.Context) string {
 	return loginPath
 }
 
-func (ap ghProvider) LogoutURL(c *admin.Context) string {
+func (ap ghAuth) LogoutURL(c *admin.Context) string {
 	return logoutPath
 }
 
-func (ap ghProvider) GetCurrentUser(c *admin.Context) qor.CurrentUser {
+func (ap ghAuth) GetCurrentUser(c *admin.Context) qor.CurrentUser {
 	path := c.Request.URL.Path
 	fmt.Println("get current user with path", path)
 	if strings.HasPrefix(path, loginPath) || strings.HasPrefix(path, callbackPath) {
@@ -78,7 +78,7 @@ func (ap ghProvider) GetCurrentUser(c *admin.Context) qor.CurrentUser {
 	return qorCurrentUser{displayName: gothUser}
 }
 
-func (ap ghProvider) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (ap ghAuth) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("serveHTTP route", r.URL.Path)
 
 	switch r.URL.Path {
