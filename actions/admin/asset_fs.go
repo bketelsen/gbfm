@@ -8,7 +8,7 @@ import (
 )
 
 func adminAssetFS() (assetfs.Interface, error) {
-	abs, err := filepath.Abs("./templates/admin")
+	abs, err := filepath.Abs("vendor/github.com/qor/admin/views")
 	if err != nil {
 		return nil, err
 	}
