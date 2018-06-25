@@ -2,6 +2,7 @@ package admin
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gophersnacks/gbfm/models"
@@ -31,6 +32,7 @@ func App() error {
 
 	models.DB.AutoMigrate(&auth_identity.AuthIdentity{})
 
+	log.Printf("migrating user model")
 	models.DB.AutoMigrate(&models.User{})
 	media.RegisterCallbacks(models.DB)
 
