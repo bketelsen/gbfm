@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"log"
 
 	"github.com/gophersnacks/gbfm/actions/admin"
@@ -29,10 +28,10 @@ func main() {
 		}
 	}()
 	go func() {
-		admin.Admin()
-
-		log.Printf("ERROR: admin app crashed")
-		errCh <- errors.New("admin broke")
+		if err := admin.App(); err != nil {
+			log.Printf("ERROR: admin app crashed")
+			errCh <- err
+		}
 	}()
 	err := <-errCh
 	log.Fatal(err)

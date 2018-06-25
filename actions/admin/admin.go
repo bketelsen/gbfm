@@ -11,7 +11,10 @@ import (
 	"github.com/qor/session/manager"
 )
 
-func Admin() {
+// App creates and starts a new Admin server
+// TODO: return an http.Server instead so that the caller can
+// start and stop the server
+func App() error {
 	const (
 		// Gophersnacks test 1
 		ghClientID     = "3f53c147b90f7b5725db"
@@ -35,9 +38,14 @@ func Admin() {
 	ghAuth := newGHAuth(ghClientID, ghClientSecret, "")
 
 	// Initalize
+	assetFS, err := adminAssetFS()
+	if err != nil {
+		return err
+	}
 	Admin := admin.New(&admin.AdminConfig{
-		DB:   models.DB,
-		Auth: ghAuth,
+		DB:      models.DB,
+		Auth:    ghAuth,
+		AssetFS: assetFS,
 	})
 
 	topic := Admin.AddResource(&models.Topic{})
@@ -71,5 +79,5 @@ func Admin() {
 	for _, path := range []string{"system", "javascripts", "stylesheets", "images"} {
 		mux.Handle(fmt.Sprintf("/%s/", path), http.FileServer(http.Dir("public")))
 	}
-	http.ListenAndServe(":9000", manager.SessionManager.Middleware(mux))
+	return http.ListenAndServe(":9000", manager.SessionManager.Middleware(mux))
 }
