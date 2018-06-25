@@ -107,7 +107,7 @@ func (ap ghProvider) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "storing goth session", http.StatusBadRequest)
 			return
 		}
-		fmt.Fprint(w, "callback finished")
+		http.Redirect(w, r, "/admin", http.StatusSeeOther)
 	// logout
 	case logoutPath:
 		if err := gothic.Logout(w, r); err != nil {
