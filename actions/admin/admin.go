@@ -42,38 +42,38 @@ func App() error {
 	if err != nil {
 		return err
 	}
-	Admin := admin.New(&admin.AdminConfig{
+	adm := admin.New(&admin.AdminConfig{
 		DB:      models.DB,
 		Auth:    ghAuth,
 		AssetFS: assetFS,
 	})
 
-	topic := Admin.AddResource(&models.Topic{})
+	topic := adm.AddResource(&models.Topic{})
 	topic.NewAttrs("-Slug")
 
-	snack := Admin.AddResource(&models.Snack{})
+	snack := adm.AddResource(&models.Snack{})
 	snack.NewAttrs("-Slug")
 
-	series := Admin.AddResource(&models.Series{})
+	series := adm.AddResource(&models.Series{})
 	series.NewAttrs("-Slug")
 
-	episode := Admin.AddResource(&models.Episode{})
+	episode := adm.AddResource(&models.Episode{})
 	episode.Meta(&admin.Meta{Name: "Body", Type: "text"})
 
-	guide := Admin.AddResource(&models.Guide{})
+	guide := adm.AddResource(&models.Guide{})
 	guide.NewAttrs("-Slug")
 
-	u := Admin.AddResource(&models.User{})
+	u := adm.AddResource(&models.User{})
 	u.NewAttrs("-Slug")
 
-	author := Admin.AddResource(&models.Author{})
+	author := adm.AddResource(&models.Author{})
 	author.NewAttrs("-Slug")
 
 	// mount the a mux to auth
 	mux := http.NewServeMux()
 	mux.Handle("/", ghAuth)
 	// Admin.MountTo("/auth", mux)
-	Admin.MountTo("/admin", mux)
+	adm.MountTo("/admin", mux)
 
 	fmt.Println("Listening on: 9000")
 	for _, path := range []string{"system", "javascripts", "stylesheets", "images"} {
