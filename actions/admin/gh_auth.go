@@ -32,7 +32,7 @@ const (
 // to set up global state
 type ghAuth struct{}
 
-func newGHAuth(ghKey, ghSecret, host string) *ghAuth {
+func newGHAuth(ghKey, ghSecret, host string) admin.Auth {
 	callbackURL := "http://localhost:9000" + callbackPath
 	prov := github.New(ghKey, ghSecret, callbackURL)
 	goth.UseProviders(prov)
