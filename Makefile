@@ -27,7 +27,6 @@ test:
 db-up:
 	docker-compose -p dev up -d dev
 	sleep 10
-	$(SODA) migrate up
 
 db-down:
 	docker-compose -p dev down
