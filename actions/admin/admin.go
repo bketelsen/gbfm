@@ -6,9 +6,8 @@ import (
 
 	"github.com/gophersnacks/gbfm/models"
 	"github.com/qor/admin"
-	"github.com/qor/media"
-
 	"github.com/qor/auth/auth_identity"
+	"github.com/qor/media"
 	"github.com/qor/session/manager"
 )
 
@@ -32,7 +31,7 @@ func Admin() {
 	models.DB.AutoMigrate(&models.User{})
 	media.RegisterCallbacks(models.DB)
 
-	// create GH auth inmpl. TODO: fill in the host
+	// create GH auth impl. TODO: fill in the host
 	provider := newGHProvider(ghClientID, ghClientSecret, "")
 
 	// Initalize
