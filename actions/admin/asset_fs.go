@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"log"
 	"path/filepath"
 
 	"github.com/qor/assetfs"
