@@ -12,7 +12,6 @@ func adminAssetFS() (assetfs.Interface, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Printf("setting assetfs templates path to %s", abs)
 	afs := &assetfs.AssetFileSystem{}
 	afs.RegisterPath(abs)
 	return afs, nil
