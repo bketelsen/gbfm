@@ -12,7 +12,7 @@ import (
 // GET /episodes
 func EpisodeList(c buffalo.Context) error {
 	var episodes []models.Episode
-	err := models.DB.Preload("Authors").Preload("Topics").Find(&episodes).Error
+	err := models.GORM.Preload("Authors").Preload("Topics").Find(&episodes).Error
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 
@@ -33,7 +33,7 @@ func EpisodeShow(c buffalo.Context) error {
 		return c.Error(http.StatusBadRequest, err)
 	}
 	var episode models.Episode
-	err = models.DB.Preload("Topics").Preload("Authors").Where(id).First(&episode).Error
+	err = models.GORM.Preload("Topics").Preload("Authors").Where(id).First(&episode).Error
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}

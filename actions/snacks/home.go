@@ -12,7 +12,7 @@ import (
 func homeHandler(c buffalo.Context) error {
 	var snacks []models.Snack
 
-	store, err := paging.NewGORMStore(models.DB, &snacks)
+	store, err := paging.NewGORMStore(models.GORM, &snacks)
 	if err != nil {
 		log.Fatal(err)
 	}

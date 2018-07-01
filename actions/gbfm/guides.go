@@ -10,7 +10,7 @@ import (
 
 func GuideList(c buffalo.Context) error {
 	var guides []models.Guide
-	err := models.DB.Preload("Authors").Preload("Topics").Find(&guides).Error
+	err := models.GORM.Preload("Authors").Preload("Topics").Find(&guides).Error
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 
@@ -29,7 +29,7 @@ func GuideShow(c buffalo.Context) error {
 		return c.Error(http.StatusBadRequest, err)
 	}
 	var guide models.Guide
-	err = models.DB.Preload("Topics").Preload("Authors").Where(id).First(&guide).Error
+	err = models.GORM.Preload("Topics").Preload("Authors").Where(id).First(&guide).Error
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}

@@ -23,17 +23,16 @@ func UsersCreate(c buffalo.Context) error {
 		return errors.WithStack(err)
 	}
 
-	tx := c.Value("tx").(*pop.Connection)
-	verrs, err := u.Create(tx)
-	if err != nil {
+	// tx := c.Value("tx").(*pop.Connection)
+	if err := u.Create(models.GORM); err != nil {
 		return errors.WithStack(err)
 	}
 
-	if verrs.HasAny() {
-		c.Set("user", u)
-		c.Set("errors", verrs)
-		return c.Render(200, r.HTML("users/new.html"))
-	}
+	// if verrs.HasAny() {
+	// 	c.Set("user", u)
+	// 	c.Set("errors", verrs)
+	// 	return c.Render(200, r.HTML("users/new.html"))
+	// }
 
 	c.Session().Set("current_user_id", u.ID)
 	return c.Render(200, r.JSON(u))

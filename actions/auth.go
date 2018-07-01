@@ -71,7 +71,7 @@ func AuthToken(c buffalo.Context) error {
 	claims := jwt.StandardClaims{
 		ExpiresAt: time.Now().Add(oneWeek()).Unix(),
 		Issuer:    fmt.Sprintf("%s.gophersnacks.com", envy.Get("GO_ENV", "development")),
-		Id:        u.ID.String(),
+		Id:        string(u.ID),
 	}
 
 	signingKey, err := ioutil.ReadFile(envy.Get("JWT_KEY_PATH", ""))
@@ -121,7 +121,7 @@ func AuthCreate(c buffalo.Context) error {
 	}
 
 	// confirm that the given password matches the hashed password from the db
-	err = bcrypt.CompareHashAndPassword([]byte(u.PasswordHash), []byte(u.Password))
+	err = bcrypt.CompareHashAndPassword([]byte(u.PasswordHash), []byte(u.PasswordHash))
 	if err != nil {
 		return bad()
 	}

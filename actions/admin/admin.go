@@ -30,11 +30,11 @@ func App() error {
 		// ghClientSecret = "acec4b3eae80de53b494e746d3412a1cb5c183ae"
 	)
 
-	models.DB.AutoMigrate(&auth_identity.AuthIdentity{})
+	models.GORM.AutoMigrate(&auth_identity.AuthIdentity{})
 
 	log.Printf("migrating user model")
-	models.DB.AutoMigrate(&models.User{})
-	media.RegisterCallbacks(models.DB)
+	models.GORM.AutoMigrate(&models.User{})
+	media.RegisterCallbacks(models.GORM)
 
 	// create GH auth impl. TODO: fill in the host
 	ghAuth := newGHAuth(ghClientID, ghClientSecret, "")
@@ -45,7 +45,7 @@ func App() error {
 		return err
 	}
 	adm := admin.New(&admin.AdminConfig{
-		DB:      models.DB,
+		DB:      models.GORM,
 		Auth:    ghAuth,
 		AssetFS: assetFS,
 	})

@@ -55,7 +55,7 @@ func (s Snack) Related(count int) []Snack {
 	// make sure we have a topic
 	if len(s.Topics) > 0 {
 		topic := s.Topics[0]
-		err := DB.Model(&topic).Not("id", s.ID).Limit(4).Related(&snacks, "Snacks")
+		err := GORM.Model(&topic).Not("id", s.ID).Limit(4).Related(&snacks, "Snacks")
 		if err != nil {
 			log.Println("Error related:", err)
 		}
