@@ -29,7 +29,7 @@ var r = render.New("common_layout.html", map[string]interface{}{
 	// of sub-models (i.e. and many_to_many relationship).
 	//
 	// see more documentation on selecterTplFunc
-	"selecter": selecterTplFunc,
+	// "selecter": selecterTplFunc,
 })
 
 // App is where all routes and middleware for the admin interface are defined.
@@ -71,7 +71,7 @@ func App() *buffalo.App {
 
 	//	app.Use(Auth)
 
-	app.GET("/", homeHandler)
+	// app.GET("/", homeHandler)
 	//	app.GET("/admin", homeHandler)
 	//	mResource := &modelResource{}
 
