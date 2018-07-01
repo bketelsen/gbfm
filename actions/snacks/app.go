@@ -1,6 +1,8 @@
 package snacks
 
 import (
+	"context"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/middleware"
 	"github.com/gobuffalo/buffalo/middleware/ssl"
@@ -14,11 +16,12 @@ import (
 var r = render.New("snacks/application.html", map[string]interface{}{})
 
 // App is where all routes and middleware for gophersnacks.com are defined
-func App() *buffalo.App {
+func App(ctx context.Context) *buffalo.App {
 	app := buffalo.New(buffalo.Options{
 		Addr:        "0.0.0.0:3000",
 		Env:         web.ENV,
 		SessionName: "_snacks_session",
+		Context:     ctx,
 	})
 	// Automatically redirect to SSL
 	app.Use(ssl.ForceSSL(secure.Options{

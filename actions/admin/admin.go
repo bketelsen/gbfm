@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,10 +13,8 @@ import (
 	"github.com/qor/session/manager"
 )
 
-// App creates and starts a new Admin server
-// TODO: return an http.Server instead so that the caller can
-// start and stop the server
-func App() error {
+// NewApp creates an admin app but does not start it
+func NewApp(ctx context.Context) (*App, error) {
 	const (
 		// Gophersnacks test 1
 		ghClientID     = "3f53c147b90f7b5725db"
@@ -42,7 +41,7 @@ func App() error {
 	// Initalize
 	assetFS, err := adminAssetFS()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	adm := admin.New(&admin.AdminConfig{
 		DB:      models.GORM,
@@ -77,9 +76,12 @@ func App() error {
 	// Admin.MountTo("/auth", mux)
 	adm.MountTo("/admin", mux)
 
-	fmt.Println("Listening on: 9000")
 	for _, path := range []string{"system", "javascripts", "stylesheets", "images"} {
 		mux.Handle(fmt.Sprintf("/%s/", path), http.FileServer(http.Dir("public")))
 	}
-	return http.ListenAndServe(":9000", manager.SessionManager.Middleware(mux))
+
+	return &App{
+		ctx:     ctx,
+		handler: manager.SessionManager.Middleware(mux),
+	}, nil
 }
