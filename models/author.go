@@ -7,7 +7,8 @@ import (
 // Author is an author
 type Author struct {
 	gorm.Model
-	Slug string `json:"slug" db:"slug"`
+	Slug  string `json:"slug" db:"slug"`
+	Photo string
 
 	Name        string `json:"name" db:"name"`
 	Description string `json:"description" db:"description"`
@@ -23,5 +24,10 @@ type Author struct {
 // Sets the Slug from the Author's Name
 func (author *Author) BeforeSave(scope *gorm.Scope) (err error) {
 	scope.SetColumn("Slug", sluggify(author.Name))
+	return nil
+}
+
+func (author *Author) Create(db *gorm.DB) error {
+	db.Create(&author)
 	return nil
 }

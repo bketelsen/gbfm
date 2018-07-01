@@ -12,7 +12,7 @@ import (
 var _ = grift.Namespace("db", func() {
 	grift.Add("listusers", func(c *grift.Context) error {
 		u := []models.User{}
-		err := models.DB.All(&u)
+		err := models.GORM.Find(&u)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -24,7 +24,7 @@ var _ = grift.Namespace("db", func() {
 
 	grift.Add("listepisodes", func(c *grift.Context) error {
 		ee := []models.Episode{}
-		err := models.DB.All(&ee)
+		err := models.GORM.Find(&ee)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -40,7 +40,7 @@ var _ = grift.Namespace("db", func() {
 		e.Repo = "https://github.com/gophersnacks/episode15"
 		e.Slug = "secret-episode"
 		e.Title = "Secret Episode"
-		err := models.DB.Create(&e)
+		err := e.Create(models.GORM)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -52,10 +52,10 @@ var _ = grift.Namespace("db", func() {
 		// Add DB seeding stuff here
 		brian := models.User{}
 		brian.Email = "brian@gophersnacks.com"
-		brian.Password = "gopher"
+		brian.PasswordHash = "gopher"
 		brian.PasswordConfirmation = "gopher"
 		brian.Admin = true
-		if err, _ := brian.Create(models.DB); err != nil {
+		if err := brian.Create(models.GORM); err != nil {
 			if strings.TrimSpace(err.Error()) != "" {
 				return errors.WithStack(err)
 			}
@@ -63,20 +63,20 @@ var _ = grift.Namespace("db", func() {
 
 		ashley := models.User{}
 		ashley.Email = "ashley@gophersnacks.com"
-		ashley.Password = "gopher"
+		ashley.PasswordHash = "gopher"
 		ashley.PasswordConfirmation = "gopher"
 		ashley.Admin = true
-		if err, _ := ashley.Create(models.DB); err != nil {
+		if err := ashley.Create(models.GORM); err != nil {
 			if strings.TrimSpace(err.Error()) != "" {
 				return errors.WithStack(err)
 			}
 		}
 		aaron := models.User{}
 		aaron.Email = "aaron@gophersnacks.com"
-		aaron.Password = "gopher"
+		aaron.PasswordHash = "gopher"
 		aaron.PasswordConfirmation = "gopher"
 		aaron.Admin = true
-		if err, _ := aaron.Create(models.DB); err != nil {
+		if err := aaron.Create(models.GORM); err != nil {
 			if strings.TrimSpace(err.Error()) != "" {
 				return errors.WithStack(err)
 			}
@@ -86,7 +86,7 @@ var _ = grift.Namespace("db", func() {
 		abrian.Description = "Brian is a guy from Tampa"
 		abrian.Photo = "/assets/images/authors/brian.jpg"
 		abrian.Slug = "brian"
-		if err := models.DB.Create(&abrian); err != nil {
+		if err := abrian.Create(models.GORM); err != nil {
 			return errors.WithStack(err)
 		}
 
@@ -95,7 +95,7 @@ var _ = grift.Namespace("db", func() {
 		aashley.Description = "Ashley is a person from Austin"
 		aashley.Photo = "/assets/images/authors/brian.jpg"
 		aashley.Slug = "ashley"
-		if err := models.DB.Create(&aashley); err != nil {
+		if err := aashley.Create(models.GORM); err != nil {
 			return errors.WithStack(err)
 		}
 
@@ -104,7 +104,7 @@ var _ = grift.Namespace("db", func() {
 		aaaron.Description = "Aaron is a guy from Tampa"
 		aaaron.Photo = "/assets/images/authors/brian.jpg"
 		aaaron.Slug = "aaron"
-		if err := models.DB.Create(&aaaron); err != nil {
+		if err := aaaron.Create(models.GORM); err != nil {
 			return errors.WithStack(err)
 		}
 

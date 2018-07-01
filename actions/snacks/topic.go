@@ -9,7 +9,7 @@ import (
 
 func topicHandler(c buffalo.Context) error {
 	var topics []models.Topic
-	err := models.DB.Find(&topics).Error
+	err := models.GORM.Find(&topics).Error
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 

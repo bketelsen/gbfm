@@ -40,6 +40,8 @@ func App() *buffalo.App {
 		"snacks/partials/footer.html",
 	))
 
+	// TODO: create gorm transaction wrapper middleware
+	//
 	// Wraps each request in a transaction.
 	//  c.Value("tx").(*pop.Connection)
 	// Remove to disable this.

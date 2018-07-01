@@ -20,7 +20,7 @@ func snackHandler(c buffalo.Context) error {
 		return c.Error(http.StatusBadRequest, err)
 	}
 	var snack models.Snack
-	err = models.DB.Preload("Topics").Preload("Authors").Where(id).First(&snack).Error
+	err = models.GORM.Preload("Topics").Preload("Authors").Where(id).First(&snack).Error
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}

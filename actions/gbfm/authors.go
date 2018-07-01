@@ -12,10 +12,8 @@ import (
 // GET /author
 func AuthorList(c buffalo.Context) error {
 	var authors []models.Author
-	err := models.DB.Find(&authors).Error
-	if err != nil {
+	if err := models.GORM.Find(&authors).Error; err != nil {
 		return c.Error(http.StatusInternalServerError, err)
-
 	}
 	c.Set("authors", authors)
 	return c.Render(200, r.HTML("authors/album.html"))
@@ -32,7 +30,7 @@ func AuthorShow(c buffalo.Context) error {
 		return c.Error(http.StatusBadRequest, err)
 	}
 	var author models.Author
-	err = models.DB.Where(id).First(&author).Error
+	err = models.GORM.Where(string(id)).First(&author).Error
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}

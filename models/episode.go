@@ -27,3 +27,8 @@ func (episode *Episode) BeforeSave(scope *gorm.Scope) (err error) {
 	scope.SetColumn("Slug", sluggify(episode.Title))
 	return nil
 }
+
+func (episode *Episode) Create(db *gorm.DB) error {
+	db.Create(episode)
+	return nil
+}
