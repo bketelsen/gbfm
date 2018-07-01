@@ -1,8 +1,11 @@
 package models
 
 import (
+	"fmt"
 	"log"
+	"strconv"
 
+	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop"
 	"github.com/gosimple/slug"
 	"github.com/jinzhu/gorm"
@@ -21,7 +24,25 @@ func init() {
 	var err error
 	//env := envy.Get("GO_ENV", "development")
 	// TODO(BJK) - fix for environments
-	GORM, err = gorm.Open("postgres", "host=127.0.0.1 port=5432 user=postgres sslmode=disable dbname=gbfm_development password=postgres")
+	pgHost := envy.Get("PG_HOST", "127.0.0.1")
+	pgPortStr := envy.Get("PG_PORT", "5432")
+	pgPort, err := strconv.Atoi(pgPortStr)
+	if err != nil {
+		log.Fatalf("invalid PG_PORT %s", pgPort)
+	}
+	pgUser := envy.Get("PG_USER", "postgres")
+	pgSSL := envy.Get("PG_SSL", "disable")
+	pgDB := envy.Get("PG_DB", "gbfm_development")
+	pgPass := envy.Get("PG_PASS", "postgres")
+	connStr := fmt.Sprintf(
+		"host=%s port=%d user=%s sslmode=%s dbname=%s password=%s",
+		pgHost,
+		pgUser,
+		pgSSL,
+		pgDB,
+		pgPass,
+	)
+	GORM, err = gorm.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
 	}
